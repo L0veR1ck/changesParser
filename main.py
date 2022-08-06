@@ -31,7 +31,11 @@ def track_changes(user, url_list, hashes):
         src = requests.get(url).text
         time, milliseconds = str(datetime.datetime.now()).split('.')
         src_hash = hashlib.md5(src.encode()).hexdigest()
-        src_hash_old = hashes[user][i]
+        try:
+            src_hash_old = hashes[user][i]
+        except:
+            src_hash_old = src_hash
+            hashes[user].append(src_hash)
 
         if src_hash != src_hash_old:
             hashes[user][i] = src_hash

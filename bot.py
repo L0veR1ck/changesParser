@@ -19,7 +19,7 @@ def stop(msg):
 
 
 @bot.message_handler(commands=['status'])
-def list(msg):
+def status(msg):
     try:
         output_string = ''
         for url in users[str(msg.chat.id)]:
@@ -48,7 +48,7 @@ def start(msg, res=False):
                 file.write(output_string)
 
         bot.send_message(msg.chat.id, f'Начинаю отслеживать изменения на {url}.\nВведите /stop для отмены\nВведите '
-                                      f'/list чтобы просмотреть список отслеживаемых сайтов')
+                                      f'/status чтобы просмотреть список отслеживаемых сайтов')
     except:
         bot.send_message(msg.chat.id, 'Введите адрес сайта для отслеживания изменений')
 
