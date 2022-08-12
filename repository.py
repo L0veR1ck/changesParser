@@ -48,9 +48,10 @@ class Repository:
     def read(self, key):
         try:
             self.connect(self.db_name)
-            read_query = f'''kek'''
-
+            read_query = f'SELECT * FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(read_query)
+
+            return self.cursor.fetchall()
 
         except sqlite3.Error as error:
             print(error)
@@ -62,7 +63,7 @@ class Repository:
             self.connect(self.db_name)
             select_query = f'SELECT * FROM {self.db_name}'
             self.cursor.execute(select_query)
-            print(self.cursor.fetchall())
+            return self.cursor.fetchall()
 
         except sqlite3.Error as error:
             print(error)
@@ -111,11 +112,12 @@ class Repository:
 
 hashes = Repository()
 hashes.create('lavr', '228')
-hashes.read_all()
+print(hashes.read_all())
 hashes.create('misha', '322')
-hashes.read_all()
+print(hashes.read_all())
 hashes.update('lavr', '111')
-hashes.read_all()
+print(hashes.read_all())
+print(hashes.read('misha'))
 hashes.delete('misha')
-hashes.read_all()
+print(hashes.read_all())
 hashes.delete_table()
