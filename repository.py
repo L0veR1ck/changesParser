@@ -2,23 +2,24 @@ import sqlite3
 
 
 class Repository:
-    def connect(self, db_name: str):
+    def __connect(self, db_name: str):
         self.sqlite_connection = sqlite3.connect(db_name + '.db')
         self.cursor = self.sqlite_connection.cursor()
 
-    def close(self):
+    def __close(self):
         self.cursor.close()
         self.sqlite_connection.close()
 
-    def execute_command(self, command):
+    def __execute_command(self, command):
         try:
-            self.connect(self.db_name)
+            self.__connect(self.db_name)
             return command()
 
         except sqlite3.Error as error:
             print(error)
+
         finally:
-            self.close()
+            self.__close()
 
     def __init__(self, db_name='table1', key_name='key', value_name='value'):
         self.db_name = db_name
@@ -35,7 +36,7 @@ class Repository:
             self.cursor.execute(create_table_query)
             self.sqlite_connection.commit()
 
-        self.execute_command(command)
+        self.__execute_command(command)
 
     def create(self, key, value):
         def command():
@@ -45,7 +46,7 @@ class Repository:
             self.cursor.execute(insert_query)
             self.sqlite_connection.commit()
 
-        self.execute_command(command)
+        self.__execute_command(command)
 
     def read(self, key):
         def command():
@@ -53,7 +54,7 @@ class Repository:
             self.cursor.execute(read_query)
             return self.cursor.fetchall()
 
-        return self.execute_command(command)
+        return self.__execute_command(command)
 
     def read_all(self):
         def command():
@@ -61,14 +62,14 @@ class Repository:
             self.cursor.execute(select_query)
             return self.cursor.fetchall()
 
-        return self.execute_command(command)
+        return self.__execute_command(command)
 
     def delete(self, key):
         def command():
             delete_query = f'DELETE FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(delete_query)
 
-        self.execute_command(command)
+        self.__execute_command(command)
 
     def delete_table(self):
         def command():
@@ -76,7 +77,7 @@ class Repository:
             self.cursor.execute(delete_table_query)
             self.sqlite_connection.commit()
 
-        self.execute_command(command)
+        self.__execute_command(command)
 
     def update(self, key, value):
         def command():
@@ -84,7 +85,7 @@ class Repository:
             self.cursor.execute(update_query)
             self.sqlite_connection.commit()
 
-        self.execute_command(command)
+        self.__execute_command(command)
 
 
 hashes = Repository()
@@ -98,3 +99,4 @@ print(hashes.read('misha'))
 hashes.delete('misha')
 print(hashes.read_all())
 hashes.delete_table()
+print(hashes.__dict__)
