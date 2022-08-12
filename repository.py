@@ -10,10 +10,10 @@ class Repository:
         self.cursor.close()
         self.sqlite_connection.close()
 
-    def main(self, func):
+    def execute_command(self, command):
         try:
             self.connect(self.db_name)
-            func()
+            return command()
 
         except sqlite3.Error as error:
             print(error)
@@ -26,8 +26,8 @@ class Repository:
         self.value_name = value_name
         self.sqlite_connection = None
         self.cursor = None
-        try:
-            self.connect(self.db_name)
+
+        def command():
             create_table_query = (f'CREATE TABLE {self.db_name} (\n'
                                   f'{self.key_name} TEXT NOT NULL,\n'
                                   f'{self.value_name} TEXT NOT NULL);')
@@ -35,85 +35,56 @@ class Repository:
             self.cursor.execute(create_table_query)
             self.sqlite_connection.commit()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        self.execute_command(command)
 
     def create(self, key, value):
-        def create2():
+        def command():
             insert_query = (f'INSERT INTO {self.db_name}\n'
                             f'({self.key_name}, {self.value_name}) '
                             f'VALUES (\'{key}\', \'{value}\');')
-
             self.cursor.execute(insert_query)
             self.sqlite_connection.commit()
 
-        self.main(create2())
+        self.execute_command(command)
 
     def read(self, key):
-        try:
-            self.connect(self.db_name)
+        def command():
             read_query = f'SELECT * FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(read_query)
-
             return self.cursor.fetchall()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        return self.execute_command(command)
 
     def read_all(self):
-        try:
-            self.connect(self.db_name)
+        def command():
             select_query = f'SELECT * FROM {self.db_name}'
             self.cursor.execute(select_query)
             return self.cursor.fetchall()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        return self.execute_command(command)
 
     def delete(self, key):
-        try:
-            self.connect(self.db_name)
+        def command():
             delete_query = f'DELETE FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(delete_query)
 
-            self.sqlite_connection.commit()
-
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        self.execute_command(command)
 
     def delete_table(self):
-        try:
-            self.connect(self.db_name)
+        def command():
             delete_table_query = f'''DROP table if exists {self.db_name}'''
-
             self.cursor.execute(delete_table_query)
             self.sqlite_connection.commit()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        self.execute_command(command)
 
     def update(self, key, value):
-        try:
-            self.connect(self.db_name)
+        def command():
             update_query = f'UPDATE table1 SET {self.value_name} = \'{value}\' where {self.key_name} = \'{key}\''
-
             self.cursor.execute(update_query)
             self.sqlite_connection.commit()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        self.execute_command(command)
 
 
 hashes = Repository()
