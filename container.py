@@ -1,26 +1,28 @@
 class Repository:
-    def __init__(self):
-        self.storage = {}
+    def __init__(self, data=None):
+        if type(data) == dict:
+            self.storage = data
+        else:
+            self.storage = {}
 
-    def create(self, data: dict):
-        self.storage.update(data)
+    def create(self, key, value):
+        self.storage[key] = value
 
-    def read(self, elem=None):
-        if elem is None:
-            return self.storage
-        return self.storage[elem]
+    def read(self, key):
+        return self.storage[key]
 
-    def delete(self, elem):
-        return self.storage.pop(elem)
+    def read_all(self):
+        return self.storage
 
-    def update(self, new_data):
-        self.storage.update(new_data)
+    def delete(self, key):
+        return self.storage.pop(key)
+
+    def update(self, key, value):
+        self.storage[key] = value
 
 
-hashes = Repository()
 lavrHash = {'id': 123, 'value': 'DKFDHDKJFHD'}
-hashes.create(lavrHash)
-print(hashes.read())
-lavrHash = {'id': 123, 'value': 'ZZZZZZZZZ'}
-hashes.update(lavrHash)
-print(hashes.read())
+hashes = Repository(lavrHash)
+print(hashes.read_all())
+hashes.update('value', 'KEK')
+print(hashes.read_all())
