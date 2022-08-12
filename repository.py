@@ -10,6 +10,16 @@ class Repository:
         self.cursor.close()
         self.sqlite_connection.close()
 
+    def main(self, func):
+        try:
+            self.connect(self.db_name)
+            func()
+
+        except sqlite3.Error as error:
+            print(error)
+        finally:
+            self.close()
+
     def __init__(self, db_name='table1', key_name='key', value_name='value'):
         self.db_name = db_name
         self.key_name = key_name
@@ -31,8 +41,7 @@ class Repository:
             self.close()
 
     def create(self, key, value):
-        try:
-            self.connect(self.db_name)
+        def create2():
             insert_query = (f'INSERT INTO {self.db_name}\n'
                             f'({self.key_name}, {self.value_name}) '
                             f'VALUES (\'{key}\', \'{value}\');')
@@ -40,10 +49,7 @@ class Repository:
             self.cursor.execute(insert_query)
             self.sqlite_connection.commit()
 
-        except sqlite3.Error as error:
-            print(error)
-        finally:
-            self.close()
+        self.main(create2())
 
     def read(self, key):
         try:
