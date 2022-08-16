@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class Repository:
+class SQLiteRepository:
     def __connect(self, db_name: str):
         self.sqlite_connection = sqlite3.connect(db_name + '.db')
         self.cursor = self.sqlite_connection.cursor()
@@ -52,7 +52,7 @@ class Repository:
         def command():
             read_query = f'SELECT * FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(read_query)
-            return self.cursor.fetchall()
+            return self.cursor.fetchall()[0][1]
 
         return self.__execute_command(command)
 
@@ -88,15 +88,46 @@ class Repository:
         self.__execute_command(command)
 
 
-hashes = Repository()
-hashes.create('lavr', '228')
-print(hashes.read_all())
-hashes.create('misha', '322')
-print(hashes.read_all())
-hashes.update('lavr', '111')
-print(hashes.read_all())
-print(hashes.read('misha'))
-hashes.delete('misha')
-print(hashes.read_all())
-hashes.delete_table()
-print(hashes.__dict__)
+class FileRepository:
+    storage = {}
+
+    def create(self, key, value):
+        self.storage[key] = value
+
+    def read(self, key):
+        return self.storage[key]
+
+    def read_all(self):
+        temp = []
+        for key in self.storage:
+            temp.append((key, self.storage[key]))
+        return temp
+
+    def delete(self, key):
+        return self.storage.pop(key)
+
+    def update(self, key, value):
+        if key not in self.storage:
+            raise Exception(f'{key} is not created')
+        self.storage[key] = value
+
+
+def test(hashes):
+    hashes.create('lavr', '228')
+    print(hashes.read_all())
+    hashes.create('misha', '322')
+    print(hashes.read_all())
+    hashes.update('lavr', '111')
+    print(hashes.read_all())
+    print(hashes.read('misha'))
+    hashes.delete('misha')
+    print(hashes.read_all())
+
+
+sqlite_hashes = SQLiteRepository()
+file_hashes = FileRepository()
+
+test(sqlite_hashes)
+sqlite_hashes.delete_table()
+print()
+test(file_hashes)
