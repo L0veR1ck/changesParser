@@ -126,14 +126,3 @@ def test(hashes):
     temp.append(hashes.read_all())
     return temp
 
-
-sqlite_hashes = SQLiteRepository()
-file_hashes = FileRepository()
-
-a = test(sqlite_hashes)
-print(*a)
-sqlite_hashes.delete_table()
-print()
-b = test(file_hashes)
-print(*b)
-print(a == b)
