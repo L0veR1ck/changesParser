@@ -68,6 +68,7 @@ class SQLiteRepository:
         def command():
             delete_query = f'DELETE FROM {self.db_name} WHERE {self.key_name} = \'{key}\''
             self.cursor.execute(delete_query)
+            self.sqlite_connection.commit()
 
         self.__execute_command(command)
 
