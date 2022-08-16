@@ -104,7 +104,7 @@ class FileRepository:
         return temp
 
     def delete(self, key):
-        return self.storage.pop(key)
+        self.storage.pop(key)
 
     def update(self, key, value):
         if key not in self.storage:
@@ -113,21 +113,26 @@ class FileRepository:
 
 
 def test(hashes):
+    temp = []
     hashes.create('lavr', '228')
-    print(hashes.read_all())
+    temp.append(hashes.read_all())
     hashes.create('misha', '322')
-    print(hashes.read_all())
+    temp.append(hashes.read_all())
     hashes.update('lavr', '111')
-    print(hashes.read_all())
-    print(hashes.read('misha'))
+    temp.append(hashes.read_all())
+    temp.append(hashes.read('misha'))
     hashes.delete('misha')
-    print(hashes.read_all())
+    temp.append(hashes.read_all())
+    return temp
 
 
 sqlite_hashes = SQLiteRepository()
 file_hashes = FileRepository()
 
-test(sqlite_hashes)
+a = test(sqlite_hashes)
+print(*a)
 sqlite_hashes.delete_table()
 print()
-test(file_hashes)
+b = test(file_hashes)
+print(*b)
+print(a == b)
