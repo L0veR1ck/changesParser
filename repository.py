@@ -82,7 +82,7 @@ class SQLiteRepository:
 
     def update(self, key, value):
         def update_command():
-            update_query = f'UPDATE table1 SET {self.value_name} = \'{value}\' where {self.key_name} = \'{key}\''
+            update_query = f'UPDATE {self.db_name} SET {self.value_name} = \'{value}\' where {self.key_name} = \'{key}\''
             self.cursor.execute(update_query)
             self.sqlite_connection.commit()
 
