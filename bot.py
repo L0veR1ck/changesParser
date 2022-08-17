@@ -1,7 +1,7 @@
 import telebot
 import requests
 from repository import SQLiteRepository
-from main import calc_hash
+from main import calc_hash, save_page
 
 token = '5493314841:AAH-rW6sOPXetnX18V9rYnPx1xWdfR8w09U'
 bot = telebot.TeleBot(token)
@@ -33,6 +33,7 @@ def status(msg):
 
 @bot.message_handler(content_types=['text'])
 def start(msg):
+    global delete_flag
     chat_id = str(msg.chat.id)
 
     if delete_flag:
@@ -44,6 +45,7 @@ def start(msg):
         key = chat_id + '_' + url
         hashes.delete(key)
         bot.send_message(msg.chat.id, f'Вы прекратили отслеживать изменения на {url}')
+        delete_flag = False
         return
 
     try:
@@ -56,11 +58,14 @@ def start(msg):
 
         key = chat_id + '_' + url
         hashes.create(key, src_hash)
+        save_page(src, chat_id, url)
 
-        bot.send_message(msg.chat.id, f'Начинаю отслеживать изменения на {url}.\nВведите /stop для отмены\n'
+        bot.send_message(msg.chat.id, f'Начинаю отслеживать изменения на {url}\n'
+                                      f'Введите /stop для отмены\n'
                                       f'Введите /status чтобы просмотреть список отслеживаемых сайтов')
     except:
         bot.send_message(msg.chat.id, 'Введите адрес сайта для отслеживания изменений')
+        raise
 
 
 if __name__ == '__main__':
