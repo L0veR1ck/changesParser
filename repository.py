@@ -88,6 +88,16 @@ class SQLiteRepository:
 
         self.__execute_command(update_command)
 
+    def check(self, key):
+        def check_command():
+            check_query = f'SELECT * FROM {self.db_name} where {self.key_name} = \'{key}\''
+            self.cursor.execute(check_query)
+            if self.cursor.fetchall():
+                return True
+            return False
+
+        return self.__execute_command(check_command)
+
 
 class FileRepository:
     storage = {}
@@ -112,6 +122,11 @@ class FileRepository:
             raise Exception(f'{key} is not created')
         self.storage[key] = value
 
+    def check(self, key):
+        if key in self.storage:
+            return True
+        return False
+
 
 def test(hashes):
     temp = []
@@ -125,4 +140,3 @@ def test(hashes):
     hashes.delete('misha')
     temp.append(hashes.read_all())
     return temp
-
