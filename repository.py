@@ -46,6 +46,9 @@ class SQLiteRepository:
             self.cursor.execute(insert_query)
             self.sqlite_connection.commit()
 
+        if self.check(key):
+            print(f'Запись с ключом {key} уже создана')
+            return
         self.__execute_command(create_command)
 
     def read(self, key):
@@ -103,6 +106,9 @@ class FileRepository:
     storage = {}
 
     def create(self, key, value):
+        if self.check(key):
+            print(f'Запись с ключом {key} уже создана')
+            return
         self.storage[key] = value
 
     def read(self, key):
@@ -119,13 +125,17 @@ class FileRepository:
 
     def update(self, key, value):
         if key not in self.storage:
-            raise Exception(f'{key} is not created')
+            print(f'{key} is not created')
+            return
         self.storage[key] = value
 
     def check(self, key):
         if key in self.storage:
             return True
         return False
+
+    def delete_table(self):
+        pass
 
 
 def test(hashes):
@@ -136,7 +146,9 @@ def test(hashes):
     temp.append(hashes.read_all())
     hashes.update('lavr', '111')
     temp.append(hashes.read_all())
+    hashes.create('lavr', '000')
     temp.append(hashes.read('misha'))
     hashes.delete('misha')
     temp.append(hashes.read_all())
+    hashes.delete_table()
     return temp
