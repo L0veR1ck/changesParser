@@ -23,6 +23,9 @@ jobs:
       - name: pip install
         run: pip3 install requests pytelegrambotapi
 
+      - name: Answer (bot)
+        run: python3 ./bot.py ${{ secrets.BOT_TOKEN }}
+
       - name: Check urls
         run: python3 ./main.py ${{ secrets.BOT_TOKEN }}
 

@@ -2,8 +2,9 @@ import telebot
 import requests
 from repository import SQLiteRepository
 from main import calc_hash, save_page
+import sys
 
-token = '5493314841:AAH-rW6sOPXetnX18V9rYnPx1xWdfR8w09U'
+token = sys.argv[1]
 bot = telebot.TeleBot(token)
 
 
