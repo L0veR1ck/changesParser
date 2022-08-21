@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   schedule:
-    - cron: '25 9-23 * * *'
+    - cron: '35 4-20 * * *'
   issues:
     types: [opened, edited]
   workflow_dispatch:
