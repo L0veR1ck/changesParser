@@ -2,8 +2,9 @@ import telebot
 import requests
 from repository import SQLiteRepository
 from main import calc_hash, save_page
+import sys
 
-token = '5493314841:AAFyE-O6eYJtwt0yRjwQiyP3k7JZEDulgsI'
+token = sys.argv[1]
 bot = telebot.TeleBot(token)
 
 
@@ -27,9 +28,8 @@ def status(msg):
                 output_string += url + '\n'
 
         bot.send_message(msg.chat.id, output_string)
-    except Exception as a:
+    except:
         bot.send_message(msg.chat.id, 'Ошибка: отслеживаемые сайты не найдены')
-        raise a
 
 
 @bot.message_handler(content_types=['text'])

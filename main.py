@@ -3,6 +3,7 @@ import hashlib
 import telebot
 import datetime
 from os import mkdir
+import sys
 from repository import SQLiteRepository
 
 
@@ -41,7 +42,7 @@ def track_changes(user, url, src_hash_old):
 
 
 if __name__ == "__main__":
-    token = '5493314841:AAH-rW6sOPXetnX18V9rYnPx1xWdfR8w09U'
+    token = sys.argv[1]
     bot = telebot.TeleBot(token)
 
     hashes = SQLiteRepository('hashes', 'chat_id_url', 'hash')
