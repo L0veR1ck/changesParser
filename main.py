@@ -47,5 +47,6 @@ if __name__ == "__main__":
     hashes = SQLiteRepository('hashes', 'chat_id_url', 'hash')
     queue = hashes.read_all()
     for user_url, src_hash_old in queue:
+        print(user_url)
         user, url = user_url.split('_')
         track_changes(user, url, src_hash_old)
