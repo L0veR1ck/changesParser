@@ -2750,25 +2750,35 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 	</p>
 	<small>&copy; 2011 - 2025 <a href="http://aj.ru">AJ.ru</a></small>
 </footer>
+
 <div class="popup_overlay"></div>
 <div class="popup_window send_req">
 	<div class="alarm_no"></div>
 	<div class="alarm_ok"></div>
 	<div class="relative">
 		<h3>Заполните, пожалуйста, форму:</h3>
-		<form>
-		<input name="item" type="hidden" value=""/>
-		<ul>
-			<li><input type="text" name="yourname" placeholder="Имя"></li>
-			<li><input type="text" name="phone" placeholder="Телефон"></li>
-			<li><input type="text" name="email" placeholder="E-mail (не обязательно)"></li>
-			<li><textarea name="message" placeholder="Хотел бы купить MacBook, iPhone, ну и iPod. Спасибо, жду вашего звоночка!"></textarea></li>
-			<!--<li><div class="g-recaptcha" data-sitekey="6LemHhATAAAAAIsMoV7CDUqXKvcLkiiu5P_a0WvU"></div></li>-->
-			<li><a href="#" class="button big">Отправить</a></li>
-		</ul>
-		</form>
+		
+
+<form id="secure-form" method="POST" action="/contact-send-to.php">
+    		<input name="item" type="hidden" value=""/>
+
+    <ul>
+        <li><input type="text" name="yourname" placeholder="Ваше имя" required></li>
+        <li><input type="tel" name="phone" placeholder="Телефон" required></li>
+        <li><input type="text" name="email" placeholder="E-mail (не обязательно)"></li>
+        <li><textarea name="message" placeholder="Хотел бы купить MacBook, iPhone, ну и iPod. Спасибо, жду вашего звоночка!"></textarea></li>
+
+  <!-- Honeypot (боты часто заполняют скрытые поля) -->
+  <input type="text" name="middle_name" style="display:none">
+          <button type="submit" class="big">Отправить</button>
+        </ul>
+</form>
+
+<!-- Google reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	</div>
 </div>
+
 <div class="popup_window thanks">
 	<div class="relative">
 		<p>Спасибо! Наш менеджер свяжется с вами в течение часа (в рабочее время — с 10:00 до 21:00 по Москве).<br>
