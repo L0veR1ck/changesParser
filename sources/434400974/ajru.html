@@ -30,7 +30,7 @@
     <script src="js/jquery.placeholder.min.js" type="text/javascript"></script>
     <script src="js/jquery.jcarousel.min.js" type="text/javascript"></script>
     <script src="js/jquery.lazyload.js" type="text/javascript"></script>
-    <script src="js/custom.js" type="text/javascript"></script>
+    <script src="js/custom_test_2.js" type="text/javascript"></script>
     <script src="js/anon-review-popup.js" type="text/javascript"></script>
 
     <meta name="google-site-verification" content="4s1DqL_eAc9y-AXUnpJDGG3DkJxrDBzl4TJ7XRVU76s" />
@@ -3100,6 +3100,21 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 	</p>
 	<small>&copy; 2011 - 2025 <a href="http://aj.ru">AJ.ru</a></small>
 </footer>
+<style>
+/* нормальный чекбокс */
+input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* стиль для отключённой кнопки */
+button:disabled {
+  opacity: 0.5;         /* полупрозрачная */
+  cursor: not-allowed;  /* курсор "запрещено" */
+}
+</style>
 
 <div class="popup_overlay"></div>
 <div class="popup_window send_req">
@@ -3110,19 +3125,55 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 		
 
 <form id="secure-form" method="POST" action="/contact-send-to.php">
-    		<input name="item" type="hidden" value=""/>
+    <input name="item" type="hidden" value=""/>
 
     <ul>
         <li><input type="text" name="yourname" placeholder="Ваше имя" required></li>
         <li><input type="tel" name="phone" placeholder="Телефон" required></li>
         <li><input type="text" name="email" placeholder="E-mail (не обязательно)"></li>
-        <li><textarea name="message" placeholder="Хотел бы купить MacBook, iPhone, ну и iPod. Спасибо, жду вашего звоночка!"></textarea></li>
+        <li><textarea name="message" placeholder="Ваше сообщение"></textarea></li>
 
-  <!-- Honeypot (боты часто заполняют скрытые поля) -->
-  <input type="text" name="middle_name" style="display:none">
-          <button type="submit" class="big">Отправить</button>
-        </ul>
+        <!-- honeypot -->
+        <input type="text" name="middle_name" style="display:none">
+
+        <!-- чекбоксы -->
+<li>
+  <label style="display:inline-flex; flex-direction:row; align-items:center; gap:8px; cursor:pointer; width:auto; line-height:1;">
+    <input
+      type="checkbox"
+      id="agree1"
+      style="display:inline-block !important; width:16px !important; height:16px !important;
+             flex:0 0 auto !important;
+             align-self:center !important; vertical-align:middle !important; cursor:pointer;">
+    <p style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; margin-bottom: 0px;">
+      Даю согласие на обработку <a href="https://aj.ru/soglasie.html" target="_blank";>персональных данных</a> в соответствии с <a href="#">политикой конфиденциальности</a>
+    </p>
+  </label>
+</li>
+
+<li>
+  <label style="display:inline-flex; flex-direction:row; align-items:center; gap:8px; cursor:pointer; width:auto; line-height:1;">
+    <input
+      type="checkbox"
+      id="agree2"
+      style="display:inline-block !important; width:16px !important; height:16px !important;
+             flex:0 0 auto !important;
+             align-self:center !important; vertical-align:middle !important; cursor:pointer;">
+    <p style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; margin-bottom: 0px;">
+     Ознакомлен, что на устройство нельзя установить RuStore по техническим причинам.
+    </p>
+  </label>
+</li>
+
+<li>
+  <button type="submit" class="big" id="submitBtn" disabled>Отправить</button>
+</li>
+
+    </ul>
 </form>
+
+
+
 
 <!-- Google reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
