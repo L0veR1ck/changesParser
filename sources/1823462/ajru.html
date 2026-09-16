@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <!-- META -->
     <meta charset="utf-8" />
@@ -12,7 +13,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="css/style_main.css?v=2.9.4">
+    <link rel="stylesheet" type="text/css" href="css/style_main.css?v=order-7eaedffe1e6c">
 
     <script>
         if (location.protocol != 'https:') {
@@ -28,7 +29,7 @@
     <script src="js/jquery.placeholder.min.js" type="text/javascript"></script>
     <script src="js/jquery.jcarousel.min.js" type="text/javascript"></script>
     <script src="js/jquery.lazyload.js" type="text/javascript"></script>
-    <script src="js/custom_test_2.js" type="text/javascript"></script>
+    <script src="js/custom_test_2.js?v=order-bbc6f19d4518" type="text/javascript"></script>
     <script src="js/anon-review-popup.js" type="text/javascript"></script>
 
     <meta name="google-site-verification" content="4s1DqL_eAc9y-AXUnpJDGG3DkJxrDBzl4TJ7XRVU76s" />
@@ -62,12 +63,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
+            var $scrollup = $('.scrollup'), scrollupVisible = false;
             $(window).scroll(function() {
-                if ($(this).scrollTop() > 100) {
-                    $('.scrollup').fadeIn();
-                } else {
-                    $('.scrollup').fadeOut();
-                }
+                var visible = $(this).scrollTop() > 100;
+                if (visible === scrollupVisible) return;
+                scrollupVisible = visible;
+                $scrollup.stop(true, true)[visible ? 'fadeIn' : 'fadeOut']();
             });
 
             $('.scrollup').click(function() {
@@ -196,7 +197,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     
     <nav class="nav-menu">
   <ul class="topmenu">
-    <li><a class="topmenu-element" href="#">iPhone</a> / 
+    <li><a class="topmenu-element" href="#iphone_17_pro">iPhone</a> / 
       <ul class="submenu">
               <li><a href="#iphone_17e">iPhone 17e</a></li>
 
@@ -219,7 +220,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <!-- <li><a href="#iphone_xr">iPhone XR</a></li> -->
       </ul>
       </li>
-    <li><a class="topmenu-element" href="#">AirPods</a> / 
+    <li><a class="topmenu-element" href="#airpods_max">AirPods</a> / 
         <ul class="submenu">
     <li><a href="#airpods_max">AirPods Max</a></li>
                 <li><a href="#airpods_pro_3">AirPods Pro 3</a></li>
@@ -230,7 +231,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <li><a href="#airpods-paint">AirPods (окрашенные)</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="#">MacBook</a> / 
+      <li><a class="topmenu-element" href="#macbook_neo">MacBook</a> / 
         <ul class="submenu">
     <li><a href="#macbook_neo">MacBook Neo 13" A18 Pro 2026</a></li>
     <li><a href="#macbook_pro_16_M5_2026">MacBook Pro 14"/16" M5 2026</a></li>
@@ -251,7 +252,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <li><a href="#macbook_air_m1">MacBook Air 13" M1 2020</a></li>
       </ul>
       </li>
-    <li><a class="topmenu-element" href="#">iPad</a> / 
+    <li><a class="topmenu-element" href="#ipadpro-13-2025">iPad</a> / 
         <ul class="submenu">
     <li><a href="#ipadpro-13-2025">iPad Pro 13" M5 2025</a></li>
     <li><a href="#ipadpro-11-2025">iPad Pro 11" M5 2025</a></li>
@@ -275,19 +276,19 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
       </ul>
       </li>
       
-      <li><a class="topmenu-element" href="#">iMac</a> / 
+      <li><a class="topmenu-element" href="#imac-2024">iMac</a> / 
         <ul class="submenu">
     <li><a href="#imac-2024">iMac 2024</a></li>
     <li><a href="#imac-2023">iMac 2023</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="#">Mac Studio</a>&nbsp;/&nbsp;
+      <li><a class="topmenu-element" href="#mac_studio_2025">Mac Studio</a>&nbsp;/&nbsp;
           <ul class="submenu">
               <li><a href="#mac_studio_2025">Mac Studio 2025</a></li>
               <li><a href="#mac_studio_2023">Mac Studio 2023</a></li>
               <li><a href="#mac_studio">Mac Studio 2022</a></li>
           </ul>
-      <li><a class="topmenu-element" href="#">Mac mini</a> / 
+      <li><a class="topmenu-element" href="#macmini24">Mac mini</a> / 
           <ul class="submenu">
               <li><a href="#macmini24">Mac mini M4 2024</a></li>
               <li><a href="#macmini23">Mac mini M2 2023</a></li>
@@ -349,14 +350,14 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                     <li>17 Pro Max 2TB &mdash; <span>звоните!</span></li>
                     </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
                                            <img alt="iPhone 17 Pro" src="images/new.png">
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -377,14 +378,14 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                     <li>Air 1TB &mdash; <span>99 800</span> ₽</li>
                 </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
                                            <img alt="iPhone Air" src="images/new.png">
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -410,14 +411,14 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                     <li style="margin-bottom:15px"></li>
                     </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
                                            <img alt="iPhone 17" src="images/new.png">
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -443,14 +444,14 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                     <li style="margin-bottom:15px"></li>
                     </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
                                            <img alt="iPhone 17e" src="images/new.png">
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -493,12 +494,12 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                     <li>16 Pro Max 1TB &mdash; <span>170 000</span> ₽</li>
                 </ul>
                 </div>
-                                            <li style="margin-bottom:15px"></li>
+                                            <p style="margin-bottom:15px"></p>
 
                 <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>                <p><br /></p>
         </article>
         </li>
         
@@ -537,13 +538,13 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
             <li>16 Plus 512GB &mdash; <span>скоро!</span></li>
                 </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -575,13 +576,13 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                 </ul>
                 </div>
             <img alt="iPhone 16" src="images/new.png">
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
                         <li id="aw">
@@ -662,13 +663,13 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     <li>15 Pro Max 1TB &mdash; <span>звоните!</span></li>
                 </ul>
                 </div>
-                                            <li style="margin-bottom:15px"></li>
+                                            <p style="margin-bottom:15px"></p>
 
                 <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
         </article>
         </li>
         
@@ -707,13 +708,13 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
             <li>15 Plus 512GB &mdash; <span>звоните!</span></li>
                 </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br /></p>
             </article>
             </li>
         
@@ -759,9 +760,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 </div>
                 <a href="#" class="button" style="margin: 0 auto">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-        <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+        <p><br /></p>
         </article>
         </li>
         
@@ -802,13 +803,13 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
             <li>14 Plus 512GB &mdash; <span>звоните!</span></li>
                 </ul>
                 </div>
-                                            <li style="margin-bottom:15px"></li>
+                                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-            <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+            <p><br /></p>
             </article>
             </li>
         
@@ -842,13 +843,13 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
             <li>13 mini 512GB &mdash; <span>79 900</span> ₽ </li>
                 </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-            <li><br /></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+            <p><br /></p>
             </article>
             </li>
             
@@ -865,7 +866,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     <li>iPhone 12 Pro 256GB &mdash; <span>75 000</span> ₽ </li>
                     <li>iPhone 12 Pro 512GB &mdash; <span>79 000</span> ₽ </li>
                 </ul>
-                <!--<li><br /></li>
+                <li><br /></li>
 
                 <ul>
                     <li style="margin-bottom:15px"></li>
@@ -907,12 +908,12 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
             <li>12 mini 256GB &mdash; <span>47 500</span> ₽ </li>
                 </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li><li><br></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p><p><br></p>
             </article>
             </li>
         <a id="iphone_11" class="for_sticky_header"></a>
@@ -930,8 +931,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                 </article>
                 </li>
         <a id="iphone_se_2022" class="for_sticky_header"></a>
@@ -950,8 +951,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px; margin-top: 30px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px; margin-top: 30px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                 </article>
                 </li>
        <!-- <a id="iphone_se" class="for_sticky_header"></a>
@@ -1003,9 +1004,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Амбушюры &mdash; <span>15 500</span> ₽ </li>
                         </ul>
                         </div>
-                                                    <li style="margin-bottom:15px"></li>
+                                                    <p style="margin-bottom:15px"></p>
                         <a href="#" class="button" style="margin: 0 auto;">Купить</a>
-                                                <li style="text-align: center; margin-top: 20px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="text-align: center; margin-top: 20px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1023,8 +1024,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button">Купить</a>
                         <br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                                                                        <li>** в комплекте амбушюр размера M</li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                                                                        <p>** в комплекте амбушюр размера M</p>
                     </article>
                 </li>
         
@@ -1044,8 +1045,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button">Купить</a>
                         <br>
-                        <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                        <li>** в комплекте амбушюр размера M</li>
+                        <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                        <p>** в комплекте амбушюр размера M</p>
                     </article>
                 </li>
 
@@ -1066,7 +1067,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>зарядный кейс для AirPods 4 &mdash; <span>6500</span> ₽ </li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1084,7 +1085,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>зарядный кейс для AirPods 3 с поддержкой MagSafe &mdash; <span>7000</span> ₽ </li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 
@@ -1098,7 +1099,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                           <li>AirPods 4 поколения &mdash; <span>от 14 000</span> ₽ </li>
                         </ul>
                         <a href="#" class="button">Купить</a>
-                                                <li style="margin-top: 180px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 180px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
            <li id="airtag2">
@@ -1113,7 +1114,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Подвеска для AirTag &mdash; <span>4000</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 <li id="airtag">
@@ -1128,7 +1129,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Подвеска для AirTag &mdash; <span>4000</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 
@@ -1145,7 +1146,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>для iPhone 16/ 16 Plus/ 16 Pro/ 16 Pro Max &mdash; <span>6000</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li style="margin-top: 20px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 20px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1158,7 +1159,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>для iPhone 17 Pro Max &mdash; <span>8300</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li style="margin-top: 100px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 100px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1169,7 +1170,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>для iPhone 17/17e/Air/17 Pro/17 Pro Max &mdash; <span>7800</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li style="margin-top: 160px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 160px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1181,7 +1182,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>для iPhone 17 Pro Max &mdash; <span>7800</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1192,7 +1193,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>для iPhone 15/ 15 Plus/ 15 Pro/ 15 Pro Max &mdash; <span>5800</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 <li>
@@ -1207,7 +1208,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1218,7 +1219,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>MagSafe FineWoven Wallet &mdash; <span>7500</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1229,7 +1230,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>MagSafe Leather Wallet &mdash; <span>8500</span> ₽</li>
                         </ul>
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li>
@@ -1240,7 +1241,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
 
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 <li>
@@ -1251,7 +1252,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                     
                         <a href="#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1259,7 +1260,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_neo_">
                     <article class="MacBook_Neo" style="background: 50% 10%  no-repeat; background-size: 88%;" data-original=" images/Neo.jpg">
                         <h2 style="text-align:center;">MacBook Neo 13" A18 Pro 2026*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«цитрусовый жёлтый»/розовый/серебристый/индиго</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«цитрусовый жёлтый»/розовый/серебристый/индиго</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <li>Neo 13" A18 Pro 6-Core/ 8GB/ 256GB SSD 5-core GPU &mdash; <span>68 500</span> ₽</li>
@@ -1270,8 +1271,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>        
         
@@ -1279,7 +1280,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_16_M5_2026_">
                     <article class="MacBook_Pro_14_2026" style="background: 50% 12%  no-repeat; background-size: 78%;" data-original=" images/Pro_14_M5.jpg">
                         <h2 style="text-align:center;">MacBook Pro 14"/16" M5 2026*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1301,8 +1302,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1310,7 +1311,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_14_M5_2025_">
                     <article class="MacBook_Pro_14_2025" style="background: 50% 10%  no-repeat; background-size: 68%;" data-original=" images/Pro_14_m5.jpeg">
                         <h2 style="text-align:center;">MacBook Pro 14" M5 2025*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <li>Pro 14" M5 10-Core/ 16GB/ 512GB SSD 10-core GPU &mdash; <span>187 000</span> ₽</li>
@@ -1324,8 +1325,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1333,7 +1334,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_16_M4_2024_">
                     <article class="MacBook_Pro_16_2024" style="background: 50% 20% no-repeat; background-size: 61%;" data-original=" images/mbp16_space.jpg">
                         <h2 style="text-align:center;">MacBook Pro 16" M4 2024*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1348,8 +1349,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 
@@ -1357,7 +1358,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_14_M4_2024_">
                     <article class="MacBook_Pro_14_2024" style="background: 50% 10%  no-repeat; background-size: 68%;" data-original=" images/mbp14_space.jpg">
                         <h2 style="text-align:center;">MacBook Pro 14" M4 2024*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1374,8 +1375,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1383,7 +1384,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_16_M3_2023_">
                     <article class="MacBook_Pro_16_2023" style="background: 50% 20% no-repeat; background-size: 61%;" data-original=" images/Pro_16_M3.jpg">
                         <h2 style="text-align:center;">MacBook Pro 16" M3 2023*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«чёрный космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1397,8 +1398,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 
@@ -1423,8 +1424,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1432,7 +1433,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_16_2023_">
                     <article class="MacBook_Pro_16_2023" style="background: 50% 15% no-repeat; background-size: 61%;" data-original=" images/Pro_16_M2.jpg">
                         <h2 style="text-align:center;">MacBook Pro 16" M2 2023*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1446,8 +1447,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button button_14" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 
@@ -1455,7 +1456,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <li id="macbook_pro_14_2023_">
                     <article class="MacBook_Pro_14_2023" style="background: 50% 10%  no-repeat; background-size: 68%;" data-original=" images/Pro_14_M2.jpg">
                         <h2 style="text-align:center;">MacBook Pro 14" M2 2023*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <br><br>
                             <br><br>
@@ -1468,8 +1469,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button button_14" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1501,7 +1502,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Pro 13" M1 8-Core/ 8GB/ 256GB SSD 8-core GPU &mdash; <span>115 000</span> ₽ </li>
                             <li>Pro 13" M1 8-Core/ 8GB/ 512GB SSD 8-core GPU &mdash; <span>135 000</span> ₽ </li>
 
-                          <!--  <li>13" M1 8-Core/ 16GB/ 256GB SSD 8-core GPU &mdash; <span>звоните!</span> </li> 
+                            <li>13" M1 8-Core/ 16GB/ 256GB SSD 8-core GPU &mdash; <span>звоните!</span> </li> 
                             <li>Pro 13" M1 8-Core/ 16GB/ 512GB SSD 8-core GPU &mdash; <span>170 000</span> ₽ </li>
 
                             <br><br>
@@ -1543,7 +1544,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </table>
                             <a href="#" class="button small">Купить</a>
                         </hgroup>
-                                                <li style="margin-top: 295px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 295px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                     <article class="right mac12Usb" data-original="../images/accessories/MJ1M2.jpg" style="background-position: 180px 20px;">
                         <hgroup>
@@ -1556,7 +1557,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </table>
                             <a href="#" class="button small">Купить</a>
                         </hgroup>
-                                                <li style="margin-top: 295px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="margin-top: 295px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 		
@@ -1564,7 +1565,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_m5_">
                     <article class="MacBookAirM5" style="background: 50% 30px  no-repeat;  background-size: 75%;" data-original="images/Air_M5.jpg">
                          <h2 style="text-align:center;">MacBook Air 13"/15" M5 2026*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 13" M5 10-Core/ 16GB/ 512GB SSD 8-core GPU, «небесно-голубой»/«сияющая звезда»/«тёмная ночь» &mdash; <span>139 500</span> ₽</li>
                             <li>Air 13" M5 10-Core/ 16GB/ 512GB SSD 8-core GPU, серебристый &mdash; <span>141 000</span> ₽</li>
@@ -1587,8 +1588,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                     
@@ -1596,7 +1597,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_15_m4_">
                     <article class="MacBookAir15M4" style="background: 50% 105px  no-repeat;  background-size: 50%;" data-original="images/Air_15_M4.jpg">
                          <h2 style="text-align:center;">MacBook Air 15" M4*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 15" M4 10-Core/ 16GB/ 256GB SSD 10-core GPU &mdash; <span>131 000</span> ₽ </li>
                             <li>Air 15" M4 10-Core/ 16GB/ 512GB SSD 10-core GPU &mdash; <span>152 000</span> ₽ </li>
@@ -1607,8 +1608,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-                                                <li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                 </li>
@@ -1617,7 +1618,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_15_m3_">
                     <article class="MacBookAir15M3" style="background: 50% 105px  no-repeat;  background-size: 50%;" data-original="images/Air_15_m3.jpg">
                          <h2 style="text-align:center;">MacBook Air 15" M3*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 15" M3 8-Core/ 8GB/ 256GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
                             <li>Air 15" M3 8-Core/ 8GB/ 512GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
@@ -1630,8 +1631,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1639,7 +1640,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_m4_">
                     <article class="MacBookAirM4" style="background: 50% 95px  no-repeat;  background-size: 50%;" data-original="images/Air_13_M4.jpg">
                          <h2 style="text-align:center;">MacBook Air 13" M4*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">                         
                             <li>Air 13" M4 10-Core/ 16GB/ 256GB SSD 8-core GPU &mdash; <span>129 000</span> ₽ </li>
                             <li>Air 13" M4 10-Core/ 16GB/ 512GB SSD 10-core GPU &mdash; <span>140 000</span> ₽ </li>
@@ -1650,8 +1651,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1659,7 +1660,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_m3_">
                     <article class="MacBookAirM3" style="background: 50% 85px  no-repeat;  background-size: 50%;" data-original="images/Air_13_m3.jpg">
                          <h2 style="text-align:center;">MacBook Air 13" M3*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 13" M3 8-Core/ 8GB/ 256GB SSD 8-core GPU &mdash; <span>звоните!</span></li>
                             <li>Air 13" M3 8-Core/ 8GB/ 512GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
@@ -1672,8 +1673,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1681,7 +1682,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_15_m2_">
                     <article class="MacBookAir15M2" style="background: 50% 85px  no-repeat;  background-size: 50%;" data-original="images/MacBookAir15M2.jpg">
                          <h2 style="text-align:center;">MacBook Air 15" M2*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 15" M2 8-Core/ 8GB/ 256GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
                             <li>Air 15" M2 8-Core/ 8GB/ 512GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
@@ -1695,8 +1696,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1704,7 +1705,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_m2_">
                     <article class="MacBookAirM2" style="background: 50% 85px  no-repeat;  background-size: 50%;" data-original="images/macbookair_m2.jpg">
                          <h2 style="text-align:center;">MacBook Air 13" M2*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«тёмная ночь»/«сияющая звезда»/«серый космос»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 13" M2 8-Core/ 8GB/ 256GB SSD 8-core GPU &mdash; <span>звоните!</span></li>
                             <li>Air 13" M2 8-Core/ 8GB/ 512GB SSD 10-core GPU &mdash; <span>звоните!</span></li>
@@ -1716,8 +1717,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 		
@@ -1725,12 +1726,12 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                 <li id="macbook_air_m1_">
                     <article class="MacBookAirM1" style="background: 54.5% 105px  no-repeat;  background-size: 680px 321px;" data-original="images/macbookair_m1_2.png">
                          <h2 style="text-align:center;">MacBook Air 13" M1*</h2>
-                        <li style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый/золотой</li>
+                        <p style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый/золотой</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 13" M1 8-Core/ 8GB/ 256GB SSD 7-core GPU &mdash; <span>68 000</span> ₽ </li>
                           <!--   <li>Air 13" M1 8-Core/ 8GB/ 512GB SSD 8-core GPU &mdash; <span>115 000</span> ₽ </li>
 <br>
-                          <!--  <li>13" M1 8-Core/ 16GB/ 256GB SSD 7-core GPU &mdash; <span>звоните!</span> </li>
+                            <li>13" M1 8-Core/ 16GB/ 256GB SSD 7-core GPU &mdash; <span>звоните!</span> </li>
                             <li>13" M1 8-Core/ 16GB/ 512GB SSD 8-core GPU &mdash; <span>звоните!</span> </li>
                             <li>13" M1 8-Core/ 16GB/ 512GB SSD 7-core GPU &mdash; <span>звоните!</span> </li> -->
                             <br><br>
@@ -1739,8 +1740,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                     
@@ -1778,8 +1779,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <a id="ipadpro-11-2025" class="for_sticky_header"></a>
@@ -1817,8 +1818,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1855,8 +1856,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <a id="ipadpro-11-2024" class="for_sticky_header"></a>
@@ -1892,8 +1893,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -1927,8 +1928,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <a id="ipadpro-11-2022" class="for_sticky_header"></a>
@@ -1961,8 +1962,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
 				<!-- <a id="ipadpro-12-2021" class="for_sticky_header"></a>
@@ -2076,7 +2077,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
         <a id="ipad-2025" class="for_sticky_header"></a>
                 <li id="ipad-2025_">
                     <article class="ipad_2025" data-original="../images/iPad_A16.jpg" style="background-size: 110%; background-position: -200%; height: 580px;">
-                <li style="height: 450px;">
+                <div style="height: 450px;">
 
                     <h2>iPad 2025 (A16)*</h2>
                     <ul>
@@ -2096,18 +2097,18 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <li><br /></li>
                     </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                                    </li>
+                                    </div>
 
                     <br>
                     
-<li style="margin-bottom: 3px; margin-top: 90px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px; margin-top: 90px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                     
                        <a id="ipad-2022" class="for_sticky_header"></a>
                 <li id="ipad-2022_">
                     <article class="ipad_2022" data-original="../images/iPad_2022.jpg" style="background-size: 38%; background-position: 86%;">
-                <li style="height: 455px;">
+                <div style="height: 455px;">
 
                     <h2>iPad 2022 (A14)*</h2>
                     <ul>
@@ -2125,15 +2126,15 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <li><br /></li>
                     </ul>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                        </li>
+                        </div>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
         <a id="ipad-2021" class="for_sticky_header"></a>
                 <li id="ipad-2021_">
                     <article class="ipad_2021" data-original="../images/iPad2021.jpg">
-                <li style="height: 445px;">
+                <div style="height: 445px;">
 
                     <h2>iPad 2021 (A13)*</h2>
                     <ul>
@@ -2151,8 +2152,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     </ul>
                     <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                     <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+</div><p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 
@@ -2222,8 +2223,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                    <img alt="iPad Air 2024" src="images/new.png">
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a><br>
-<li style="margin-bottom: 3px; margin-top: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px; margin-top: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2241,7 +2242,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <li>1TB WiFi + LTE &mdash; <span>114 000</span> ₽ </li>
                         <li><br /></li>
                         <li>128GB WiFi &mdash; <span>73 000</span> ₽ </li>
-                        <li>256GB WiFi &mdash; <span>83 000</span> ₽ </li>
+                        <li>256GB WiFi &mdash; <span>85 000</span> ₽ </li>
                         <li>512GB WiFi &mdash; <span>97 000</span> ₽ </li>
                         <li>1TB WiFi &mdash; <span>звоните!</span></li>
                         <li><br /></li>
@@ -2254,8 +2255,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                    <img alt="iPad Air 2024" src="images/new.png">
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a><br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2287,8 +2288,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2320,9 +2321,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                        <br><li>** подходит для Air; клавиатуры специально для Air не выпускаются.</li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                        <br><p>** подходит для Air; клавиатуры специально для Air не выпускаются.</p>
                     </article>
                 </li>
         
@@ -2354,9 +2355,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                        <br><li>** подходит для Air; клавиатуры специально для Air не выпускаются.</li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                        <br><p>** подходит для Air; клавиатуры специально для Air не выпускаются.</p>
                     </article>
                 </li>
         
@@ -2385,9 +2386,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <br>
                     <a href="#" class="button" style="margin-top:-15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                        <br><li>** подходит для Air; клавиатуры специально для Air не выпускаются.</li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                        <br><p>** подходит для Air; клавиатуры специально для Air не выпускаются.</p>
                     </article>
                 </li>
         <!-- <a id="ipad_air_2020" class="for_sticky_header"></a>
@@ -2418,7 +2419,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 <a id="ipad-mini-2024" class="for_sticky_header"></a>
                <li id="ipad-mini-2024_">
                     <article class="ipad-mini-2024" data-original="../images/ipad_mini_2024.jpg" style="background-size: 110%; background-position: 120px 0; height: 520px;">
-                <li> </li>
+                <p> </p>
 
                     <h2>iPad mini 2024 (A17 Pro)*</h2>
                     <ul>
@@ -2438,15 +2439,15 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     </ul>
                     <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
         <a id="ipad-mini-2021" class="for_sticky_header"></a>
                <li id="ipad-mini-2021_">
                     <article class="ipad-mini-2021" data-original="../images/ipad_mini_2021.jpg" style="background-size: 37%; background-position: 574px 100px;">
-                <li style="height: 430px;" </li>
+                <div style="height: 430px;">
 
                     <h2>iPad mini 2021 (A15)*</h2>
                     <ul>
@@ -2464,8 +2465,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     </ul>
                     <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+</div><p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 
@@ -2509,7 +2510,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         </ul>
                         <a href="#" class="button small">Купить</a><br>
-                                                                        <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                                        <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                     <article class="right applePencil" data-original="../images/Smart_Keyboard.jpg" style="background-size: 47%; background-position: 105% 85%; height: 220px;">
@@ -2528,7 +2529,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         </ul>
                         <a href="https://aj.ru/#" class="button small">Купить</a><br>
-                                                                        <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                                        <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                     
@@ -2546,7 +2547,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 поколение — <span>8 400</span> ₽ </li>
                         </ul>
                         <a href="https://aj.ru/#" class="button small">Купить</a><br>
-                                                                                                <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                                                                <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                     <article class="right applePencil animate" data-original="../images/accessories/Pencil2.png" style="margin-top: 20px; height: 170px; display: block; background-image: url(&quot;../images/accessories/Pencil2.png&quot;); opacity: 1;">
@@ -2562,7 +2563,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>2 поколение — <span>7 800</span> ₽ </li>
                         </ul>
                         <a href="https://aj.ru/#" class="button small">Купить</a><br>
-                                                                                                <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                                                                <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
 
@@ -2582,7 +2583,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Smart Folio для iPad 2022/2025 — <span>9 500</span> ₽ </li>
 
                         </ul>
-                        <a href="https://aj.ru/#" class="button" style="margin-top:15px !important;">Купить</a><br>                                                                                                <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button" style="margin-top:15px !important;">Купить</a><br>                                                                                                <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                 </li>
@@ -2616,7 +2617,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>SwitchEasy Nude — <span>звоните!</span></li>
                             <li>UNIQ — <span>звоните!</span></li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br>                                                                                                <li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br>                                                                                                <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
                 </li>
@@ -2638,8 +2639,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <img alt="iMac 24 Retina 4,5K"  src="images/new.png" >
                             <a href="https://aj.ru/#" class="button">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2662,8 +2663,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                             <a href="https://aj.ru/#" class="button">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2715,13 +2716,13 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     
                     </ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
                                            <img alt="iPhone 17"  src="images/new.png" >
 
             <a href="https://aj.ru/#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
-                <li><br></li>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
+                <p><br></p>
             </article>
             </li>
         
@@ -2744,7 +2745,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 <br>
                         </ul>
                         <a href="https://aj.ru/#" class="button" style="margin:0 auto;">Купить</a><br>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -2779,8 +2780,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="https://aj.ru/#" class="button" style="margin: 10px auto 0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                         <img  src="images/new.png"  alt="Mac Studio">
                     </article>
                 </li> 
@@ -2798,8 +2799,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="https://aj.ru/#" class="button" style="margin: 10px auto 0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li> 
         
@@ -2816,8 +2817,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="https://aj.ru/#" class="button" style="margin: 10px auto 0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li> 
         
@@ -2836,8 +2837,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <img alt="iPad 2022"  src="images/new.png" >
                         <a href="https://aj.ru/#" class="button" style="margin:0 auto;">Купить</a>
-<li style="text-align: center; margin-bottom: 3px; margin-top: 10px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px; margin-top: 10px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                      </article>
                 </li>
         
@@ -2855,8 +2856,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </ul>
                         <a href="https://aj.ru/#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                      </article>
                 </li>
         
@@ -2884,7 +2885,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>с разъёмом USB-C — <span>2990</span> ₽</li>
                         </ul>
                         <a href="https://aj.ru/#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         <li class="cancel">
@@ -2901,7 +2902,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 метр — <span>3000</span> ₽</li>
                             <li>2 метра — <span>3900</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a>                                                                        <br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a>                                                                        <br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
 
                     </article>
                     <article class="right cable-C animate" data-original="../images/USB-C.jpg" style="background-size: 110%; background-position: -250% 10%; height: 200px; opacity: 1;">
@@ -2917,7 +2918,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 метр — <span>2500</span> ₽</li>
                             <li>2 метра — <span>3000</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
             
                 </li><li class="cancel">
@@ -2934,7 +2935,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 метр — <span>2300</span> ₽</li>
                             <li>2 метра — <span>3000</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
                     <article class="right cable-C animate" data-original="../images/cable-C.jpg" style="height: 200px; background-position: 290px 85px; display: block; background-image: url(&quot;../images/cable-C.jpg&quot;); opacity: 1;">
                         <hgroup>
@@ -2949,7 +2950,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 метр — <span>2300</span> ₽</li>
                             <li>2 метра — <span>3000</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
 
                 </li><li class="cancel">
@@ -2965,7 +2966,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>MagSafe Charger 15W — <span>5500</span> ₽</li>
                             <li>MagSafe Duo Charger — <span>13 500</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
                     <article class="right charger animate" data-original="../images/MX6Y3.jpg" style="background-position: 200px -70px; background-size: 86%; height: 200px; display: block; background-image: url(&quot;../images/MX6Y3.jpg&quot;); opacity: 1;"> 
                         <hgroup>
@@ -2979,7 +2980,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>1 метр 25W — <span>4900</span> ₽</li>
                             <li>2 метра 25W — <span>6000</span> ₽</li>
                         </ul>
-                        <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                        <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
                     
 </li><li class="cancel">
@@ -2992,7 +2993,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <td><span>1490</span> ₽</td>
                                 </tr>
                             </tbody></table>
-                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                     <article class="right mac12Usb animate" data-original="../images/usb-c_jack.jpg" style="background-position: 120% 0px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/usb-c_jack.jpg&quot;); opacity: 1;">
@@ -3004,7 +3005,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <td><span>1490</span> ₽</td>
                                 </tr>
                             </tbody></table>
-                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                 </li>
@@ -3018,9 +3019,9 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <td><span>11 000</span> ₽</td>
                                 </tr>
                             </tbody></table>
-                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
-                            <li style="
-    margin-top: 10px; margin-bottom: 3px;">*<i>совместим исключительно с iPhone Air</i></li>
+                            <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
+                            <p style="
+    margin-top: 10px; margin-bottom: 3px;">*<i>совместим исключительно с iPhone Air</i></p>
                         </hgroup>
                     </article>
        </li>
@@ -3042,7 +3043,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             <li>Кабель USB-C для зарядки (2 метра) — <span>3000</span> ₽</li>
                         </ul>
                         <a href="https://aj.ru/#" class="button">Купить</a><br>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
         
@@ -3056,8 +3057,8 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 
                         <a href="https://aj.ru/#" class="button">Купить</a>
                         <br>
-<li style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
                 </li>
                 <a id="vision_pro" class="for_sticky_header"></a>
@@ -3077,12 +3078,12 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                     <li>
                 </li></ul>
                 </div>
-                            <li style="margin-bottom:15px"></li>
+                            <p style="margin-bottom:15px"></p>
 
             <a href="https://aj.ru/#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
-<li style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></li>
-                                                <li style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></li>
+<p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
+                                                <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
             </article>
             </li>
                 <!-- <li>
@@ -3107,7 +3108,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                     <article class="right magic_keyboard_2024" data-original="../images/keyboard_white.jpeg" style="background-size: 55%; background-position: 206px 0px!important;">
@@ -3121,7 +3122,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </tbody></table>
                             <br><br>                            <br><br>
 
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                 </li>
@@ -3137,7 +3138,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table> 
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                     <article class="right magic_keyboard_2021" data-original="../images/magic-keyboard-2021.jpg" style="height: 220px;">
@@ -3151,7 +3152,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </tbody></table>
                             <br><br>                             <br><br>
 
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                 </li>
@@ -3168,7 +3169,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </tbody></table>
                             <br>
                             <br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
                         <img alt="Magic Mouse"  src="images/new.png" style="width: 150px; ">
@@ -3183,7 +3184,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
                         <img alt="Magic Mouse" src="images/new.png" style="width: 150px;">
@@ -3202,7 +3203,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         </tbody></table>
                             <br>
                             <br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                     <article class="right mouse2" data-original="../images/mouse2.png" style="height: 170px; background-position: 90px 20%;">
@@ -3215,7 +3216,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                 </li>
@@ -3231,7 +3232,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
                         <img alt="Magic Trackpad" src="images/new.png" style="width: 150px; ">
@@ -3247,7 +3248,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
                         <img alt="Magic Trackpad"  src="images/new.png" style="width: 150px;">
@@ -3265,7 +3266,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
 
@@ -3279,7 +3280,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                             </tr>
                         </tbody></table>
                             <br><br>
-                            <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                            <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
                 </li>
@@ -3294,7 +3295,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <br>
                                     <span style="color: #fb5a1c;font-size: 18px;">17 300 ₽</span>
 
-                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                                 </hgroup>
                             </hgroup>
                         </hgroup>
@@ -3308,7 +3309,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <br>
                                     <span style="color: #fb5a1c;font-size: 18px;">20 000 ₽</span>
 
-                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                                 </hgroup>
                             </hgroup>
                         </hgroup>
@@ -3327,7 +3328,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <br>
                                     <span style="color: #fb5a1c;font-size: 18px;">20 900 ₽</span>
 
-                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                                 </hgroup>
                             </hgroup>
                         </hgroup>
@@ -3342,7 +3343,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <br>
                                     <span style="color: #fb5a1c;font-size: 18px;">21 000 ₽</span>
 <br><br><br>
-                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                                 </hgroup>
                             </hgroup>
                         </hgroup>
@@ -3360,7 +3361,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                                     <h3>беспроводная&nbsp;клавиатура&nbsp;с&nbsp;цифровой&nbsp;панелью</h3>
                                     <br>
                                     <span style="color: #fb5a1c;font-size: 18px;">16 500 ₽</span>
-                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><li style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></li>
+                                    <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                                 </hgroup>
                             </hgroup>
                         </hgroup>
@@ -3371,65 +3372,104 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
             </ul>
             <nav class="nav-menu">
   <ul class="topmenu">
-    <li><a class="topmenu-element" href="https://aj.ru/#">iPhone</a> / 
+    <li><a class="topmenu-element" href="#iphone_17_pro">iPhone</a> / 
       <ul class="submenu">
-    <li><a href="https://aj.ru/#iphone_15_pro">iPhone 15 Pro</a></li>
-    <li><a href="https://aj.ru/#iphone_15">iPhone 15</a></li>
-    <li><a href="https://aj.ru/#iphone_14_pro">iPhone 14 Pro</a></li>
-    <li><a href="https://aj.ru/#iphone_14">iPhone 14</a></li>
-    <li><a href="https://aj.ru/#iphone_13_pro">iPhone 13 Pro</a></li>
-    <li><a href="https://aj.ru/#iphone_13">iPhone 13</a></li>
-    <!-- <li><a href="#iphone_12_pro">iPhone 12 Pro</a></li> -->
-    <li><a href="https://aj.ru/#iphone_12">iPhone 12</a></li>
-    <li><a href="https://aj.ru/#iphone_11">iPhone 11</a></li>
-    <li><a href="https://aj.ru/#iphone_se_2022">iPhone SE 2022</a></li>
-    <!--<li><a href="#iphone_xr">iPhone XR</a></li>-->
+              <li><a href="#iphone_17e">iPhone 17e</a></li>
+
+           <li><a href="#iphone_17_pro">iPhone 17 Pro</a></li>
+              <li><a href="#iphone_air">iPhone Air</a></li>
+
+    <li><a href="#iphone_17">iPhone 17</a></li>
+    <li><a href="#iphone_16_pro">iPhone 16 Pro</a></li>
+    <li><a href="#iphone_16">iPhone 16</a></li>
+    <li><a href="#iphone_16e">iPhone 16e</a></li>
+    <li><a href="#iphone_15_pro">iPhone 15 Pro</a></li>
+    <li><a href="#iphone_15">iPhone 15</a></li>
+    <li><a href="#iphone_14_pro">iPhone 14 Pro</a></li>
+    <li><a href="#iphone_14">iPhone 14</a></li>
+    <li><a href="#iphone_13">iPhone 13</a></li>
+   <!-- <li><a href="#iphone_12_pro">iPhone 12 Pro</a></li> -->
+    <li><a href="#iphone_12">iPhone 12</a></li>
+    <li><a href="#iphone_11">iPhone 11</a></li>
+    <li><a href="#iphone_se_2022">iPhone SE 2022</a></li>
+    <!-- <li><a href="#iphone_xr">iPhone XR</a></li> -->
       </ul>
       </li>
-    <li><a class="topmenu-element" href="https://aj.ru/#">AirPods</a> / 
+    <li><a class="topmenu-element" href="#airpods_max">AirPods</a> / 
         <ul class="submenu">
-    <li><a href="https://aj.ru/#airpods_max">AirPods Max</a></li>
-    <li><a href="https://aj.ru/#airpods_pro_2">AirPods Pro 2</a></li>
-    <li><a href="https://aj.ru/#airpods_pro">AirPods Pro</a></li>
-    <li><a href="https://aj.ru/#airpods_3">AirPods 3</a></li>
-    <li><a href="https://aj.ru/#airpods_2">AirPods 2</a></li>
-    <li><a href="https://aj.ru/#airpods-paint">AirPods (окрашенные)</a></li>
+    <li><a href="#airpods_max">AirPods Max</a></li>
+                <li><a href="#airpods_pro_3">AirPods Pro 3</a></li>
+
+    <li><a href="#airpods_pro_2">AirPods Pro 2</a></li>
+    <li><a href="#airpods_4">AirPods 4</a></li>
+    <li><a href="#airpods_3">AirPods 3</a></li>
+    <li><a href="#airpods-paint">AirPods (окрашенные)</a></li>
       </ul>
       </li>
-    <li><a class="topmenu-element" href="https://aj.ru/#">iPad</a> / 
+      <li><a class="topmenu-element" href="#macbook_neo">MacBook</a> / 
         <ul class="submenu">
-    <li><a href="https://aj.ru/#ipad-2021">iPad 2021</a></li>
-    <li><a href="https://aj.ru/#ipad_air_2022">iPad Air 2022</a></li>
-   <!-- <li><a href="#ipad_air_2020">iPad Air 2020</a></li> -->
-    <li><a href="https://aj.ru/#ipad-mini-2021">iPad mini 2021</a></li>
-    <li><a href="https://aj.ru/#Keyboard">Keyboard</a></li>
-    <li><a href="https://aj.ru/#Pencil">Pencil</a></li>
+    <li><a href="#macbook_neo">MacBook Neo 13" A18 Pro 2026</a></li>
+    <li><a href="#macbook_pro_16_M5_2026">MacBook Pro 14"/16" M5 2026</a></li>
+    <li><a href="#macbook_pro_14_M5_2025">MacBook Pro 14" M5 2025</a></li>
+    <li><a href="#macbook_pro_16_M4_2024">MacBook Pro 16" M4 2024</a></li>
+    <li><a href="#macbook_pro_14_M4_2024">MacBook Pro 14" M4 2024</a></li>
+    <li><a href="#macbook_pro_16_M3_2023">MacBook Pro 16" M3 2023</a></li>
+    <li><a href="#macbook_pro_14_M3_2023">MacBook Pro 14" M3 2023</a></li>
+    <li><a href="#macbook_pro_16_2023">MacBook Pro 16" M2 2023</a></li>
+    <li><a href="#macbook_pro_14_2023">MacBook Pro 14" M2 2023</a></li>
+    <li><a href="#macbook_air_m5">MacBook Air 13"/15" M5 2026</a></li>
+    <li><a href="#macbook_air_15_m4">MacBook Air 15" M4 2025</a></li>
+    <li><a href="#macbook_air_15_m3">MacBook Air 15" M3 2024</a></li>
+    <li><a href="#macbook_air_15_m2">MacBook Air 15" M2 2023</a></li>
+    <li><a href="#macbook_air_m4">MacBook Air 13" M4 2025</a></li>
+    <li><a href="#macbook_air_m3">MacBook Air 13" M3 2024</a></li>
+	<li><a href="#macbook_air_m2">MacBook Air 13" M2 2022</a></li>
+    <li><a href="#macbook_air_m1">MacBook Air 13" M1 2020</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="https://aj.ru/#">MacBook</a> / 
+    <li><a class="topmenu-element" href="#ipadpro-13-2025">iPad</a> / 
         <ul class="submenu">
-    <li><a href="https://aj.ru/#macbook_pro_16_M3_2023">MacBook Pro 16" M3 2023</a></li>
-    <li><a href="https://aj.ru/#macbook_pro_14_M3_2023">MacBook Pro 14" M3 2023</a></li>
-    <li><a href="https://aj.ru/#macbook_pro_16_2021">MacBook Pro 16" M1 2021</a></li>
-    <li><a href="https://aj.ru/#macbook_pro_14_2021">MacBook Pro 14" M1 2021</a></li>
- 	<li><a href="https://aj.ru/#macbook_pro_13_m2">MacBook Pro 13" M2 2022</a></li>
-    <li><a href="https://aj.ru/#macbook_air_15_m3">MacBook Air 15" M3 2024</a></li>
-    <li><a href="https://aj.ru/#macbook_air_15_m2">MacBook Air 15" M2 2023</a></li>
-    <li><a href="https://aj.ru/#macbook_air_m3">MacBook Air 13" M3 2024</a></li>
-	<li><a href="https://aj.ru/#macbook_air_m2">MacBook Air 13" M2 2022</a></li>
-    <li><a href="https://aj.ru/#macbook_air_m1">MacBook Air 13" M1 2020</a></li>
+    <li><a href="#ipadpro-13-2025">iPad Pro 13" M5 2025</a></li>
+    <li><a href="#ipadpro-11-2025">iPad Pro 11" M5 2025</a></li>
+    <li><a href="#ipadpro-13-2024">iPad Pro 13" M4 2024</a></li>
+    <li><a href="#ipadpro-11-2024">iPad Pro 11" M4 2024</a></li>
+    <li><a href="#ipadpro-12-2022">iPad Pro 12,9" 2022</a></li>
+    <li><a href="#ipadpro-11-2022">iPad Pro 11" 2022</a></li>
+    <li><a href="#ipad-2025">iPad 2025</a></li>
+    <li><a href="#ipad-2022">iPad 2022</a></li>
+    <li><a href="#ipad-2021">iPad 2021</a></li>
+    <li><a href="#ipad_air_11_2026">iPad Air 11"/13" M4 2026</a></li>
+    <li><a href="#ipad_air_13_2025">iPad Air 13" M3 2025</a></li>
+    <li><a href="#ipad_air_11_2025">iPad Air 11" M3 2025</a></li>
+    <li><a href="#ipad_air_13_2024">iPad Air 13" M2 2024</a></li>
+    <li><a href="#ipad_air_11_2024">iPad Air 11" M2 2024</a></li>
+    <li><a href="#ipad_air_2022">iPad Air 2022</a></li>
+    <li><a href="#ipad-mini-2024">iPad mini 2024</a></li>
+    <li><a href="#ipad-mini-2021">iPad mini 2021</a></li>
+    <li><a href="#Keyboard">Keyboard</a></li>
+    <li><a href="#Pencil">Pencil</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="https://aj.ru/#">iMac</a> / 
+      
+      <li><a class="topmenu-element" href="#imac-2024">iMac</a> / 
         <ul class="submenu">
-    <li><a href="https://aj.ru/#imac-2023">iMac 2023</a></li>
-    <li><a href="https://aj.ru/#imac-2021">iMac 2021</a></li>
-    <!--<li><a href="#imac-2020">iMac 2020</a></li>-->
+    <li><a href="#imac-2024">iMac 2024</a></li>
+    <li><a href="#imac-2023">iMac 2023</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="https://aj.ru/#mac_studio">Mac Studio</a>&nbsp;/&nbsp;
-      </li><li><a class="topmenu-element" href="https://aj.ru/#macmini18">Mac mini</a>&nbsp;/&nbsp;
-      </li><li><a class="topmenu-element-last" href="https://aj.ru/#accessories">Аксессуары</a>
+      <li><a class="topmenu-element" href="#mac_studio_2025">Mac Studio</a>&nbsp;/&nbsp;
+          <ul class="submenu">
+              <li><a href="#mac_studio_2025">Mac Studio 2025</a></li>
+              <li><a href="#mac_studio_2023">Mac Studio 2023</a></li>
+              <li><a href="#mac_studio">Mac Studio 2022</a></li>
+          </ul>
+      <li><a class="topmenu-element" href="#macmini24">Mac mini</a> / 
+          <ul class="submenu">
+              <li><a href="#macmini24">Mac mini M4 2024</a></li>
+              <li><a href="#macmini23">Mac mini M2 2023</a></li>
+          </ul>
+      </li>
+      <li><a class="topmenu-element-last" href="#accessories">Аксессуары</a>
         <ul class="submenu">
       </ul>
       </li>
@@ -3439,7 +3479,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 <script src="js/price-refresh.js?v=2" data-minutes="20"></script>
 <!-- END content --><!-- footer  -->
 <footer class="footer">
-    <div id="subMenu"><span class="current">Продукция Apple</span><a href="watch.html">Apple Watch</a><a href="watch_11.html">Apple Watch 2025</a><a href="games.html">Приставки</a><a href="audio.html">Акустика</a><a href="headphones.html">Наушники</a><a href="auto.html">Автоаксессуары</a><a href="handwers.html">Чехлы и аксессуары Handwers</a><a href="chargers.html">Зарядки и аккумуляторы</a><a href="foto.html">Фото и видео</a><a href="sticker.html">Наклейки на MacBook</a></div>	<div class="info">
+    <div id="subMenuFooter"><span class="current">Продукция Apple</span><a href="watch.html">Apple Watch</a><a href="watch_11.html">Apple Watch 2025</a><a href="games.html">Приставки</a><a href="audio.html">Акустика</a><a href="headphones.html">Наушники</a><a href="auto.html">Автоаксессуары</a><a href="handwers.html">Чехлы и аксессуары Handwers</a><a href="chargers.html">Зарядки и аккумуляторы</a><a href="foto.html">Фото и видео</a><a href="sticker.html">Наклейки на MacBook</a></div>	<div class="info">
 		<!-- <ul class="contacts-header">
 			<li class="mail"><a target="_blank" href="mailto:info@aj.ru"><i></i>info@aj.ru</a></li>
 			<li class="skype"><a target="_blank" href="skype:aj.ru.skype?call"><i></i>aj.ru.skype</a></li>
@@ -3468,15 +3508,15 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 	</div>
     <br>
     <div class="company" style="text-align:center;">
+    <h2 style="margin-bottom: 10px;">О компании</h2>
     <ul>
-        <h2 style="margin-bottom: 10px;">О компании</h2>
         <li style="margin-bottom: 5px"><a href="https://aj.ru/details.html" target="_blank">Реквизиты</a></li>
         <li style="margin-bottom: 5px"><a href="https://aj.ru/contacts.html" target="_blank">Контакты</a></li>
         <li style="margin-bottom: 5px"><a href="https://aj.ru/public_offer_agreement.html" target="_blank">Договор оферты</a></li>
         <li style="margin-bottom: 15px"><a href="https://aj.ru/policy.html" target="_blank">Политика конфиденциальности</a></li>
     </ul>
     </div>
-    <a class="button_review" onclick="buttonReview()">Коробка анонимных отзывов</a><br><br>
+    
 	<p>
 	А еще у нас есть твиттер, в котором мы раздаем скидки — <a href="http://twitter.com/applejesus">http://twitter.com/applejesus</a>, и страница в "ВКонтакте" — <a href="http://vk.com/public39915550">vk.com/public39915550</a>! Только тс-с-с!<br/>
     Сайт носит сугубо информационный характер и не является публичной офертой, определяемой Статьей 437 (2) ГК РФ.<br />
@@ -3513,15 +3553,14 @@ button:disabled {
 
 <form id="secure-form" method="POST" action="/contact-send-to.php">
     <input name="item" type="hidden" value=""/>
+    <!-- honeypot -->
+    <input type="text" name="middle_name" style="display:none">
 
     <ul>
         <li><input type="text" name="yourname" placeholder="Ваше имя" required></li>
         <li><input type="tel" name="phone" placeholder="Телефон" required></li>
         <li><input type="text" name="email" placeholder="E-mail (не обязательно)"></li>
         <li><textarea name="message" placeholder="Ваше сообщение"></textarea></li>
-
-        <!-- honeypot -->
-        <input type="text" name="middle_name" style="display:none">
 
         <!-- чекбоксы -->
 <li>
@@ -3532,9 +3571,9 @@ button:disabled {
       style="display:inline-block !important; width:16px !important; height:16px !important;
              flex:0 0 auto !important;
              align-self:center !important; vertical-align:middle !important; cursor:pointer;">
-    <p style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; margin-bottom: 0px;">
+    <span style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; width:auto; height:auto; margin:0; background:none; color:#3c3c3b;">
       Даю согласие на обработку <a href="https://aj.ru/soglasie.html" target="_blank">персональных данных</a> в соответствии с <a href="https://aj.ru/policy.html" target="_blank">политикой конфиденциальности</a>
-    </p>
+    </span>
   </label>
 </li>
 
@@ -3546,9 +3585,9 @@ button:disabled {
       style="display:inline-block !important; width:16px !important; height:16px !important;
              flex:0 0 auto !important;
              align-self:center !important; vertical-align:middle !important; cursor:pointer;">
-    <p style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; margin-bottom: 0px;">
+    <span style="display:inline-block !important; align-self:center !important; vertical-align:middle; line-height:1.2; font-size:14px; text-align:left; width:auto; height:auto; margin:0; background:none; color:#3c3c3b;">
      Ознакомлен, что на устройство нельзя установить RuStore по техническим причинам.
-    </p>
+    </span>
   </label>
 </li>
 
