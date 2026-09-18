@@ -194,14 +194,15 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <!-- END header -->
 <!-- END header -->
 
+<link rel="stylesheet" href="/css/catalog-navigation.5a6e2c884dae.css">
 <!-- content -->
 <section class="content">
     
-    <nav class="nav-menu">
+    <div class="catalog-toolbar" id="catalog-toolbar">
+<nav class="nav-menu" aria-label="Категории товаров">
   <ul class="topmenu">
-    <li><a class="topmenu-element" href="#iphone_duo">iPhone</a> / 
-      <ul class="submenu">
-              <li><a href="#iphone_17e">iPhone 17e</a></li>
+    <li><a class="topmenu-element" href="#iphone_duo" data-category="iPhone">iPhone</a>
+<ul class="submenu">
 
            <li><a href="#iphone_duo">iPhone Duo</a></li>
            <li><a href="#iphone_18_pro">iPhone 18 Pro</a></li>
@@ -209,6 +210,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
               <li><a href="#iphone_air">iPhone Air</a></li>
 
     <li><a href="#iphone_17">iPhone 17</a></li>
+              <li><a href="#iphone_17e">iPhone 17e</a></li>
     <li><a href="#iphone_16_pro">iPhone 16 Pro</a></li>
     <li><a href="#iphone_16">iPhone 16</a></li>
     <li><a href="#iphone_16e">iPhone 16e</a></li>
@@ -224,8 +226,8 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <!-- <li><a href="#iphone_xr">iPhone XR</a></li> -->
       </ul>
       </li>
-    <li><a class="topmenu-element" href="#airpods_max">AirPods</a> / 
-        <ul class="submenu">
+    <li><a class="topmenu-element" href="#airpods_max" data-category="AirPods">AirPods</a>
+<ul class="submenu">
     <li><a href="#airpods_max">AirPods Max</a></li>
                 <li><a href="#airpods_pro_3">AirPods Pro 3</a></li>
 
@@ -236,29 +238,29 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <li><a href="#airpods-paint">AirPods (окрашенные)</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="#macbook_neo">MacBook</a> / 
-        <ul class="submenu">
+      <li><a class="topmenu-element" href="#macbook_neo" data-category="MacBook">MacBook</a>
+<ul class="submenu">
     <li><a href="#macbook_neo">MacBook Neo 13" A18 Pro 2026</a></li>
-    <li><a href="#macbook_pro_16_M5_2026">MacBook Pro 14&quot;/16&quot; M5</a></li>
+    <li><a href="#macbook_pro_16_M5_2026">MacBook Pro 14"/16" M5</a></li>
     
-    <li><a href="#macbook_pro_16_M4_2024">MacBook Pro 14&quot;/16&quot; M4</a></li>
+    <li><a href="#macbook_pro_16_M4_2024">MacBook Pro 14"/16" M4</a></li>
     
-    <li><a href="#macbook_pro_16_M3_2023">MacBook Pro 14&quot;/16&quot; M3</a></li>
+    <li><a href="#macbook_pro_16_M3_2023">MacBook Pro 14"/16" M3</a></li>
     
-    <li><a href="#macbook_pro_16_2023">MacBook Pro 14&quot;/16&quot; M2</a></li>
+    <li><a href="#macbook_pro_16_2023">MacBook Pro 14"/16" M2</a></li>
     
     <li><a href="#macbook_air_m5">MacBook Air 13"/15" M5 2026</a></li>
-    <li><a href="#macbook_air_15_m4">MacBook Air 13&quot;/15&quot; M4</a></li>
-    <li><a href="#macbook_air_15_m3">MacBook Air 13&quot;/15&quot; M3</a></li>
-    <li><a href="#macbook_air_15_m2">MacBook Air 13&quot;/15&quot; M2</a></li>
+    <li><a href="#macbook_air_15_m4">MacBook Air 13"/15" M4</a></li>
+    <li><a href="#macbook_air_15_m3">MacBook Air 13"/15" M3</a></li>
+    <li><a href="#macbook_air_15_m2">MacBook Air 13"/15" M2</a></li>
     
     
 	
     <li><a href="#macbook_air_m1">MacBook Air 13" M1 2020</a></li>
       </ul>
       </li>
-    <li><a class="topmenu-element" href="#ipadpro-13-2025">iPad</a> / 
-        <ul class="submenu">
+    <li><a class="topmenu-element" href="#ipadpro-13-2025" data-category="iPad">iPad</a>
+<ul class="submenu">
     <li><a href="#ipadpro-13-2025">iPad Pro 13" M5 2025</a></li>
     <li><a href="#ipadpro-11-2025">iPad Pro 11" M5 2025</a></li>
     <li><a href="#ipadpro-13-2024">iPad Pro 13" M4 2024</a></li>
@@ -281,32 +283,45 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
       </ul>
       </li>
       
-      <li><a class="topmenu-element" href="#imac-2024">iMac</a> / 
-        <ul class="submenu">
+      <li><a class="topmenu-element" href="#imac-2024" data-category="iMac">iMac</a>
+<ul class="submenu">
     <li><a href="#imac-2024">iMac 2024</a></li>
     <li><a href="#imac-2023">iMac 2023</a></li>
       </ul>
       </li>
-      <li><a class="topmenu-element" href="#mac_studio_2026">Mac Studio</a>&nbsp;/&nbsp;
-          <ul class="submenu">
+      <li><a class="topmenu-element" href="#mac_studio_2026" data-category="Mac Studio">Mac Studio</a>
+<ul class="submenu">
               <li><a href="#mac_studio_2026">Mac Studio 2026</a></li>
            <li><a href="#mac_studio_2025">Mac Studio 2025</a></li>
               <li><a href="#mac_studio_2023">Mac Studio 2023</a></li>
               <li><a href="#mac_studio">Mac Studio 2022</a></li>
           </ul>
-      <li><a class="topmenu-element" href="#macmini26">Mac mini</a> / 
-          <ul class="submenu">
+      </li><li><a class="topmenu-element" href="#macmini26" data-category="Mac mini">Mac mini</a>
+<ul class="submenu">
               <li><a href="#macmini26">Mac mini M6 / M5 Pro</a></li>
            <li><a href="#macmini24">Mac mini M4 2024</a></li>
               <li><a href="#macmini23">Mac mini M2 2023</a></li>
           </ul>
       </li>
-      <li><a class="topmenu-element-last" href="#accessories">Аксессуары</a>
-        <ul class="submenu">
+      <li><a class="topmenu-element-last" href="#accessories" data-category="Аксессуары">Аксессуары</a>
+<ul class="submenu">
       </ul>
       </li>
   </ul>
 </nav>
+<div class="catalog-search" role="search" aria-label="Поиск по каталогу">
+  <div class="catalog-search-field">
+    <svg aria-hidden="true" width="16" height="16" viewbox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7"></circle><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
+    <input id="catalog-search-input" type="search" placeholder="Найти модель" aria-label="Найти модель" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="catalog-search-results" autocomplete="off" spellcheck="false">
+    <button class="catalog-search-clear" type="button" aria-label="Очистить поиск" hidden>×</button>
+  </div>
+  <div class="catalog-search-panel" hidden>
+    <p class="catalog-search-summary" aria-live="polite"></p>
+    <ul id="catalog-search-results" role="listbox" aria-label="Найденные модели"></ul>
+    <p class="catalog-search-hint">↑ ↓ — выбрать · Enter — перейти · Esc — закрыть</p>
+  </div>
+</div>
+</div>
     <ul class="container">
         
         
@@ -1125,7 +1140,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 <h2>AirPods 5*</h2>
 <img class="autumn-photo" src="images/catalog-20260918/airpods5-wireless.jpg?v=6d7d8e4ad870" alt="AirPods 5 с беспроводным зарядным футляром" width="976" height="916">
 <p class="autumn-feature">Активное шумоподавление в обеих версиях</p>
-<ul class="autumn-options"><li>AirPods 5 с зарядным футляром USB-C &mdash; <span>звоните!</span></li><li>AirPods 5 с беспроводным зарядным футляром &mdash; <span>звоните!</span></li></ul>
+<ul class="autumn-options"><li>AirPods 5 с зарядным футляром USB-C &mdash; <span>30 000</span> ₽</li><li>AirPods 5 с беспроводным зарядным футляром &mdash; <span>34 000</span> ₽</li></ul>
 <img class="autumn-new" src="images/new.png" alt="Новинка">
 <a href="#" class="button">Купить</a>
 <div class="autumn-footnotes"><p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p></div>
@@ -2002,7 +2017,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
                         <li><br /></li>
                         <li>128GB WiFi &mdash; <span>67 000</span> ₽</li>
                         <li>256GB WiFi &mdash; <span>80 000</span> ₽</li>
-                        <li>512GB WiFi &mdash; <span>107 000</span> ₽</li>
+                        <li>512GB WiFi &mdash; <span>109 000</span> ₽</li>
                         <li>1TB WiFi &mdash; <span>125 000</span> ₽</li>
                         <li><br /></li>
                         <li><b>iPad Air 13" 2026 (M4)</b></li>
@@ -2614,7 +2629,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
 <article class="autumn-product autumn-mac macmini">
 <h2>Mac mini M6 / M5 Pro*</h2>
 <ul class="autumn-options"><li>M6 12-Core / 16GB / 256GB SSD, 12-Core GPU &mdash; <span>звоните!</span></li><li>M6 12-Core / 16GB / 512GB SSD, 12-Core GPU &mdash; <span>звоните!</span></li><li>M6 12-Core / 24GB / 512GB SSD, 12-Core GPU &mdash; <span>звоните!</span></li><li>M5 Pro 15-Core / 24GB / 512GB SSD, 16-Core GPU &mdash; <span>звоните!</span></li><li class="autumn-custom">Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li></ul>
-<img class="autumn-photo" src="images/catalog-20260918/macmini-2026-white.jpg?v=c5ed6465e3b1" alt="Mac mini M6 / M5 Pro" width="952" height="380">
+<img class="autumn-photo" src="images/catalog-20260918/macmini-2026-transparent.webp?v=1a8c3cc5fe3d" alt="Mac mini M6 / M5 Pro" width="1986" height="792">
 <img class="autumn-new" src="images/new.png" alt="Новинка">
 <a href="#" class="button">Купить</a>
 <div class="autumn-footnotes"><p>* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p><p>* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p></div>
@@ -3171,7 +3186,6 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
   <ul class="topmenu">
     <li><a class="topmenu-element" href="#iphone_duo">iPhone</a> / 
       <ul class="submenu">
-              <li><a href="#iphone_17e">iPhone 17e</a></li>
 
            <li><a href="#iphone_duo">iPhone Duo</a></li>
            <li><a href="#iphone_18_pro">iPhone 18 Pro</a></li>
@@ -3179,6 +3193,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
               <li><a href="#iphone_air">iPhone Air</a></li>
 
     <li><a href="#iphone_17">iPhone 17</a></li>
+              <li><a href="#iphone_17e">iPhone 17e</a></li>
     <li><a href="#iphone_16_pro">iPhone 16 Pro</a></li>
     <li><a href="#iphone_16">iPhone 16</a></li>
     <li><a href="#iphone_16e">iPhone 16e</a></li>
@@ -3278,6 +3293,7 @@ transition: all 0.4s ease-out;" href="http://aj.ru/watch.html">Подробне�
   </ul>
 </nav>
 </section>
+<script src="/js/catalog-navigation.7ba40772511c.js" defer></script>
 <script src="js/price-refresh.js?v=focus-e770d8eb9ce1" data-minutes="20"></script>
 <!-- END content --><!-- footer  -->
 <footer class="footer">
