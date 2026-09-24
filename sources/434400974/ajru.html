@@ -14,6 +14,7 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
     <link rel="stylesheet" type="text/css" href="css/style_main.css?v=focus-e4417a86942b">
+    <link rel="stylesheet" href="/css/semantic-headings.f63c331a5064.css">
     <link rel="stylesheet" href="css/iphone18-pro.css?v=e40f7d35c788">
     <script>
         if (location.protocol != 'https:') {
@@ -106,12 +107,12 @@
     button.textContent = pendingSubmit ? 'Подготовка отправки…' : 'Отправить';
   }
   function productTitle(button) {
-    var nodes = Array.prototype.slice.call(button.parentElement.querySelectorAll('h2'));
+    var nodes = Array.prototype.slice.call(button.parentElement.querySelectorAll('h2, h1.aj-heading'));
     if (!nodes.length) {
       var parent = button.parentElement;
       while (parent && parent.parentElement) {
         Array.prototype.forEach.call(parent.parentElement.children, function (node) {
-          if (node !== parent && node.tagName === 'H2' && nodes.indexOf(node) < 0) nodes.push(node);
+          if (node !== parent && (node.tagName === 'H2' || (node.tagName === 'H1' && node.classList.contains('aj-heading'))) && nodes.indexOf(node) < 0) nodes.push(node);
         });
         parent = parent.parentElement;
       }
@@ -272,7 +273,7 @@
     <script src="js/jquery.easing.1.3.js" type="text/javascript" defer></script>
     <script src="js/jquery.placeholder.min.js" type="text/javascript" defer></script>
         
-    <script src="js/custom-deferred.8d7834bb69ce.js" type="text/javascript" defer></script>
+    <script src="js/custom-deferred.074e24b8b7da.js" type="text/javascript" defer></script>
     
 
     <meta name="google-site-verification" content="4s1DqL_eAc9y-AXUnpJDGG3DkJxrDBzl4TJ7XRVU76s" />
@@ -293,10 +294,10 @@
 		<link rel="stylesheet" type="text/css" media="all" href="css/ie6.css"/>
 	<![endif]-->
 
-    <title>Техника Apple и аксессуары — каталог AJ.ru</title>
-<meta name="description" content="iPhone, MacBook, iPad, Apple Watch, AirPods, Mac и аксессуары в каталоге AJ.ru. Модели, фотографии, цены и оформление заявки на сайте.">
+    <title>Магазин техники Apple в Москве — iPhone, MacBook, iPad | AJ.ru</title>
+<meta name="description" content="Магазин техники Apple в Москве: iPhone, MacBook, iPad, Apple Watch, AirPods, Mac и аксессуары. Модели и цены, оформление заявки, доставка и самовывоз.">
 <link rel="canonical" href="https://aj.ru/">
-    <style type="text/css">
+        <style type="text/css">
         @media (max-width: 950px) {
             .covid-alert {
                 font-size: 20px !important;
@@ -426,6 +427,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <link rel="stylesheet" href="/css/silicone-cases.2ad9e9a54950.css">
 <link rel="stylesheet" href="/css/accessories-20260923.3297ab7a99c4.css">
 <!-- content -->
+<link rel="stylesheet" href="/css/product-images.18b27d448abf.css">
 <section class="content">
     
     <div class="catalog-toolbar" id="catalog-toolbar">
@@ -618,7 +620,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 </li>
 
 <li id="iphone_17_pro_"><span id="iphone_17_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17_pro" data-original="../images/iPhone_17_Pro.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone17_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_17_Pro.jpg" alt="iPhone 17 Pro" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 17 Pro*</h2>
                 <ul>
@@ -677,7 +679,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_air_"><span id="iphone_air" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphoneair" data-original="../images/iPhone_Air.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphoneair aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_Air.jpg" alt="iPhone Air" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone Air*</h2>
                 <ul>
@@ -706,7 +708,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_17_"><span id="iphone_17" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17" data-original="../images/iPhone_17.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_17.jpg" alt="iPhone 17" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 17*</h2>
                 <ul>
@@ -739,7 +741,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
                 
         <li id="iphone_17e_"><span id="iphone_17e" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17" data-original="../images/iphone_17e.jpg" style="background-size: 100%; background-position: 80% 20%; text-align: center;">
+            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 20%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone_17e.jpg" alt="iPhone 17e" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:20%;transform:translate(-80%,-20%);"></span>
 
                 <h2>iPhone 17e*</h2>
                 <ul>
@@ -772,7 +774,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_16_pro_"><span id="iphone_16_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone16_pro" data-original="../images/iPhone_16_Pro.jpg" style="background-size: 90%; background-position: 50% 20%; text-align: center;">
+            <article class="iphone16_pro aj-product-image-card" style="background-size: 90%; background-position: 50% 20%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_16_Pro.jpg" alt="iPhone 16 Pro" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:20%;transform:translate(-50%,-20%);"></span>
 
                 <h2>iPhone 16 Pro*</h2>
                 <ul>
@@ -820,7 +822,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_16_"><span id="iphone_16" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone16" data-original="../images/iPhone_16.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone16 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_16.jpg" alt="iPhone 16" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 16*</h2>
                 <ul>
@@ -865,7 +867,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_16e_"><span id="iphone_16e" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone16" data-original="../images/iPhone16e.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone16 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone16e.jpg" alt="iPhone 16e" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 16e*</h2>
                 <ul>
@@ -901,7 +903,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
             </article>
             </li>
                         <li id="aw">
-                    <article class="watch_all" data-original="../images/Watch_new.jpeg" style="background-position: 50% 304%!important;">
+                    <article class="watch_all aj-product-image-card" style="background-position: 50% 304%!important;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Watch_new.jpeg" alt="Apple Watch" width="960" height="1000" loading="lazy" decoding="async" style="width:52%;height:auto;left:50%;top:304%;transform:translate(-50%,-304%);"></span>
                         <h2>Apple Watch</h2>
                         <ul>
                             <li>Series 12, Series 11, Series 10, Series 9, SE, Ultra 4, Ultra 3, Ultra 2</li>
@@ -942,7 +944,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
         <span id="iphone_15_pro" class="for_sticky_header"></span>
         <li id="iphone_15_pro_">
-            <article class="iphone15_pro" data-original="/images/optimized/iPhone_15_Pro.4af03610fdc7.webp" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone15_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/iPhone_15_Pro.4af03610fdc7.webp" alt="iPhone 15 Pro" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 15 Pro*</h2>
                 <ul>
@@ -990,7 +992,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         <li id="iphone_15_"><span id="iphone_15" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone15" data-original="../images/iPhone_15.jpg" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone15 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_15.jpg" alt="iPhone 15" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 15*</h2>
                 <ul>
@@ -1035,7 +1037,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                
         <li id="iphone_14_pro_"><span id="iphone_14_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone14_pro" data-original="/images/optimized/iPhone_14_Pro.cbfcecb141cb.webp" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone14_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/iPhone_14_Pro.cbfcecb141cb.webp" alt="iPhone 14 Pro" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 14 Pro*</h2>
                 <ul>
@@ -1083,7 +1085,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         <li id="iphone_14_"><span id="iphone_14" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone14" data-original="/images/optimized/iPhone_14_new.763daf19a2e9.webp" style="background-size: 100%; background-position: 80% 10%; text-align: center;">
+            <article class="iphone14 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/iPhone_14_new.763daf19a2e9.webp" alt="iPhone 14" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
 
                 <h2>iPhone 14*</h2>
                 <ul>
@@ -1129,7 +1131,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         <li id="iphone_13_"><span id="iphone_13" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone13" data-original="../images/iphone_13_.jpg" style="text-align: center; background-size: 50%; background-position: center -35%;">
+            <article class="iphone13 aj-product-image-card" style="text-align: center; background-size: 50%; background-position: center -35%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone_13_.jpg" alt="iPhone 13" width="470" height="556" loading="lazy" decoding="async" style="width:50%;height:auto;left:50%;top:-35%;transform:translate(-50%,35%);"></span>
 
                 <h2>iPhone 13*</h2>
                 <ul>
@@ -1197,7 +1199,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         </li> -->
         
         <li id="iphone_12_"><span id="iphone_12" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone12" style="background-position: center 35%; background-size: 47%; text-align: center;" data-original="../images/iphone_12_new.jpg">
+            <article class="iphone12 aj-product-image-card" style="background-position: center 35%; background-size: 47%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone_12_new.jpg" alt="iPhone 12" width="441" height="332" loading="lazy" decoding="async" style="width:47%;height:auto;left:50%;top:35%;transform:translate(-50%,-35%);"></span>
 
                 <h2>iPhone 12*</h2>
                 <ul>
@@ -1232,7 +1234,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
             </li>
         
                 <li id="iphone_11_"><span id="iphone_11" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="iphone11" data-original="../images/iphone11_2.png" style="background-size: 30%; background-position: 88%;">
+                    <article class="iphone11 aj-product-image-card" style="background-size: 30%; background-position: 88%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone11_2.png" alt="iPhone 11" width="457" height="515" loading="lazy" decoding="async" style="width:30%;height:auto;left:88%;top:50%;transform:translate(-88%,-50%);"></span>
 
                         <h2>iPhone 11*</h2>
                         <ul>
@@ -1251,7 +1253,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
                 <li id="iphone_se_2022_"><span id="iphone_se_2022" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="iphoneSE2022" data-original="../images/iPhoneSE2022.jpg" style="background-size: 36%; background-position: 90% 500%; height: 330px;">
+                    <article class="iphoneSE2022 aj-product-image-card" style="background-size: 36%; background-position: 90% 500%; height: 330px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhoneSE2022.jpg" alt="iPhone SE (2022)" width="470" height="556" loading="lazy" decoding="async" style="width:36%;height:auto;left:90%;top:500%;transform:translate(-90%,-500%);"></span>
 
                         <h2>iPhone SE (2022)*</h2>
                         <ul>
@@ -1307,7 +1309,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 
 
                 <li id="airpods_max_"><span id="airpods_max" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="airpodsMax" data-original="../images/AirPods_Max.jpg" style="background-size: 40%; background-position: center 75px; text-align: center;">
+                    <article class="airpodsMax aj-product-image-card" style="background-size: 40%; background-position: center 75px; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirPods_Max.jpg" alt="AirPods Max" width="976" height="916" loading="lazy" decoding="async" style="width:40%;height:auto;left:50%;top:75px;transform:translate(-50%,0px);"></span>
 
                         <h2>AirPods Max*</h2>
                         <div style="display: flex; margin-top: 41%; justify-content: space-evenly;">
@@ -1326,7 +1328,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="airpods_pro_3_"><span id="airpods_pro_3" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="airpods_pro" data-original="../images/AirPods_Pro_3.jpeg" style="background-size: 32%; background-position: 93%;">
+                    <article class="airpods_pro aj-product-image-card" style="background-size: 32%; background-position: 93%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirPods_Pro_3.jpeg" alt="AirPods Pro 3" width="976" height="916" loading="lazy" decoding="async" style="width:32%;height:auto;left:93%;top:50%;transform:translate(-93%,-50%);"></span>
                         <h2>AirPods Pro 3*</h2>
                         <ul>
                             <li>AirPods Pro 3 с разъёмом USB-C &mdash; <span>19 300</span> ₽</li>
@@ -1345,7 +1347,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="airpods_pro_2_"><span id="airpods_pro_2" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="airpods_pro" data-original="../images/AirPods_Pro_2.jpg" style="background-size: 32%; background-position: 93%;">
+                    <article class="airpods_pro aj-product-image-card" style="background-size: 32%; background-position: 93%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirPods_Pro_2.jpg" alt="AirPods Pro 2" width="1144" height="1144" loading="lazy" decoding="async" style="width:32%;height:auto;left:93%;top:50%;transform:translate(-93%,-50%);"></span>
                         <h2>AirPods Pro 2*</h2>
                         <ul>
                             <li>AirPods Pro 2 с разъёмом USB-C &mdash; <span>18 700</span> ₽</li>
@@ -1377,7 +1379,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article></li>
 
 <li id="airpods_4_"><span id="airpods_4" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="airpods_4" data-original="../images/AirPods_4.jpg" style="background-size: 32%; background-position: 93%;">
+                    <article class="airpods_4 aj-product-image-card" style="background-size: 32%; background-position: 93%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirPods_4.jpg" alt="AirPods 4" width="976" height="916" loading="lazy" decoding="async" style="width:32%;height:auto;left:93%;top:50%;transform:translate(-93%,-50%);"></span>
                         <h2>AirPods 4*</h2>
                         <ul>
                          <li>AirPods 4 &mdash; <span>11 200</span> ₽ </li>
@@ -1398,7 +1400,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         <li id="airpods_3_"><span id="airpods_3" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="airpods_3" data-original="../images/AirPods_3_new.jpeg" style="background-size: 32%; background-position: 93%;">
+                    <article class="airpods_3 aj-product-image-card" style="background-size: 32%; background-position: 93%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirPods_3_new.jpeg" alt="AirPods 3" width="1144" height="1144" loading="lazy" decoding="async" style="width:32%;height:auto;left:93%;top:50%;transform:translate(-93%,-50%);"></span>
                         <h2>AirPods 3*</h2>
                         <ul>
                          <li>AirPods 3 &mdash; <span>10 100</span> ₽ </li>
@@ -1416,7 +1418,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 
         
                 <li id="airpods-paint_"><span id="airpods-paint" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="new_imac5K-2017" style="background-size: 530px; height:370px;" data-original="../images/Airpods2_colours2.png">
+                    <article class="new_imac5K-2017 aj-product-image-card" style="background-size: 530px; height:370px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Airpods2_colours2.png" alt="AirPods (окрашенные)" width="739" height="341" loading="lazy" decoding="async" style="width:530px;height:auto;left:50%;top:100%;transform:translate(-50%,-100%);"></span>
                         <h2>AirPods (окрашенные)*</h2>
                         <ul>
                           <li>AirPods Pro 3 &mdash; <span>от 25 000</span> ₽ </li>
@@ -1428,7 +1430,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 <li id="airtag">
-                    <article class="airpods_pro" data-original="../images/AirTag2.jpg" style="background-size: 35%; background-position: 585px;">
+                    <article class="airpods_pro aj-product-image-card" style="background-size: 35%; background-position: 585px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/AirTag2.jpg" alt="Apple AirTag" width="1190" height="821" loading="lazy" decoding="async" style="width:35%;height:auto;left:585px;top:50%;transform:translate(0px,-50%);"></span>
                         <span id="airtag2" aria-hidden="true"></span>
                         <h2>Apple AirTag*</h2>
                         <ul>
@@ -1520,7 +1522,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article>
                 </li>
         <li>
-                    <article class="MagSafe1" data-original="/images/optimized/Finewoven.cfbde8b9e423.webp" style="background-size: 35%; background-position: 92%;">
+                    <article class="MagSafe1 aj-product-image-card" style="background-size: 35%; background-position: 92%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Finewoven.cfbde8b9e423.webp" alt="FineWoven чехол" width="1200" height="1200" loading="lazy" decoding="async" style="width:35%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></span>
                         <h2>FineWoven чехол*</h2>
                         <br />
                         <ul>
@@ -1531,7 +1533,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 <li>
-                    <article class="MagSafe1" data-original="/images/optimized/Leather_case.0f50cb3f1847.webp" style="background-size: 33%; background-position: 92%;">
+                    <article class="MagSafe1 aj-product-image-card" style="background-size: 33%; background-position: 92%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Leather_case.0f50cb3f1847.webp" alt="Кожаный чехол" width="1036" height="1144" loading="lazy" decoding="async" style="width:33%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></span>
                         <h2>Кожаный чехол*</h2>
                         <br />
                         <ul>
@@ -1568,7 +1570,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article>
                 </li>
         <li>
-                    <article class="MagSafe1" data-original="../images/Leather_wallet.png" style="background-size: 23%; background-position: 91%; height: 180px;">
+                    <article class="MagSafe1 aj-product-image-card" style="background-size: 23%; background-position: 91%; height: 180px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Leather_wallet.png" alt="MagSafe Leather Wallet" width="578" height="500" loading="lazy" decoding="async" style="width:23%;height:auto;left:91%;top:50%;transform:translate(-91%,-50%);"></span>
                         <h2>MagSafe Leather Wallet*</h2>
                         <br />
                         <ul>
@@ -1579,7 +1581,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
         <li>
-                    <article class="homepod_2023" data-original="../images/HomePod_2023.jpg" style="background-size: 28%; background-position: 89%;">
+                    <article class="homepod_2023 aj-product-image-card" style="background-size: 28%; background-position: 89%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/HomePod_2023.jpg" alt="HomePod 2023" width="540" height="540" loading="lazy" decoding="async" style="width:28%;height:auto;left:89%;top:50%;transform:translate(-89%,-50%);"></span>
                         <h2>HomePod 2023*</h2>
                         <ul>
                             <li>«тёмная ночь»/белая &mdash; <span>38 500</span> ₽</li>
@@ -1590,7 +1592,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 <li>
-                    <article class="homepod_mini" data-original="../images/HomePod_mini_color.png" style="background-size: 45%; background-position: 101% 115%;">
+                    <article class="homepod_mini aj-product-image-card" style="background-size: 45%; background-position: 101% 115%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/HomePod_mini_color.png" alt="HomePod mini" width="704" height="424" loading="lazy" decoding="async" style="width:45%;height:auto;left:101%;top:115%;transform:translate(-101%,-115%);"></span>
                         <h2>HomePod mini*</h2>
                         <ul>
                             <li>чёрная/белая/оранжевая/жёлтая/синяя &mdash; <span>15 800</span> ₽</li>
@@ -1603,7 +1605,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
 
         <li id="macbook_neo_"><span id="macbook_neo" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="MacBook_Neo" style="background: 50% 10%  no-repeat; background-size: 88%;" data-original=" images/Neo.jpg">
+                    <article class="MacBook_Neo aj-product-image-card" style="background: 50% 10%  no-repeat; background-size: 88%;"><span class="aj-product-image-layer"><img class="aj-product-image" src=" images/Neo.jpg" alt="MacBook Neo 13&quot; A18 Pro 2026" width="5120" height="3280" loading="lazy" decoding="async" style="width:88%;height:auto;left:50%;top:10%;transform:translate(-50%,-10%);"></span>
                         <h2 style="text-align:center;">MacBook Neo 13" A18 Pro 2026*</h2>
                         <p style="font-size: 20px; text-align: center; margin-top: -18px">«цитрусовый жёлтый»/розовый/серебристый/индиго</p>
                         <ul style="margin-top: 41%; text-align:center;">
@@ -1612,7 +1614,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li>Neo 13" A18 Pro 6-Core/ 8GB/ 512GB SSD 5-core GPU с Touch ID &mdash; <span>78 000</span> ₽</li>
                             <li class="catalog-list-spacing" aria-hidden="true"><br><br></li>
                         </ul>
-                                                                   <img alt="MacBook Neo" src="images/new.png">
+                                                                   <img alt="Новинка" src="images/new.png">
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
@@ -1748,7 +1750,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li> -->
 
                 <li class="pre_cancel">
-                    <article class="left mac12multiPort" data-original="../images/accessories/MJ1K2.jpg">
+                    <article class="left mac12multiPort aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/accessories/MJ1K2.jpg" alt="Многопортовый цифровой AV-адаптер USB-C" width="400" height="400" loading="lazy" decoding="async" style="width:65%;height:auto;left:100%;top:40px;transform:translate(-100%,0px);"></span>
                         <hgroup>
                             <h2>Многопортовый цифровой AV-адаптер USB-C*</h2>
 
@@ -1761,7 +1763,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         </hgroup>
                                                 <p style="margin-top: 295px;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                     </article>
-                    <article class="right mac12Usb" data-original="../images/accessories/MJ1M2.jpg" style="background-position: 180px 20px;">
+                    <article class="right mac12Usb aj-product-image-card" style="background-position: 180px 20px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/accessories/MJ1M2.jpg" alt="USB-C &lt;-&gt; USB адаптер" width="400" height="400" loading="lazy" decoding="async" style="width:65%;height:auto;left:180px;top:20px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2 style="width:195px">USB-C <-> USB адаптер*</h2>
 
@@ -1778,7 +1780,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 		
                     
                 <li id="macbook_air_m5_"><span id="macbook_air_m5" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="MacBookAirM5" style="background: 50% 30px  no-repeat;  background-size: 75%;" data-original="images/Air_M5.jpg">
+                    <article class="MacBookAirM5 aj-product-image-card" style="background: 50% 30px  no-repeat;  background-size: 75%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="images/Air_M5.jpg" alt="MacBook Air 13&quot;/15&quot; M5 2026" width="1960" height="1308" loading="lazy" decoding="async" style="width:75%;height:auto;left:50%;top:30px;transform:translate(-50%,0px);"></span>
                          <h2 style="text-align:center;">MacBook Air 13"/15" M5 2026*</h2>
                         <p style="font-size: 20px; text-align: center; margin-top: -18px">«небесно-голубой»/«сияющая звезда»/«тёмная ночь»/серебристый</p>
                         <ul style="margin-top: 41%; text-align:center;">
@@ -1798,7 +1800,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
                             <li class="catalog-list-spacing" aria-hidden="true"><br><br></li>
                         </ul>
-                                                                                                                   <img alt="MacBook Air 13 M5" src="images/new.png">
+                                                                                                                   <img alt="Новинка" src="images/new.png">
 
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
@@ -1857,7 +1859,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 		
         
                 <li id="macbook_air_m1_"><span id="macbook_air_m1" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="MacBookAirM1" style="background: 54.5% 105px  no-repeat;  background-size: 680px 321px;" data-original="images/macbookair_m1_2.png">
+                    <article class="MacBookAirM1 aj-product-image-card" style="background: 54.5% 105px  no-repeat;  background-size: 680px 321px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="images/macbookair_m1_2.png" alt="MacBook Air 13&quot; M1" width="800" height="368" loading="lazy" decoding="async" style="width:680px;height:321px;left:54.5%;top:93px;transform:translate(-54.5%,0px);"></span>
                          <h2 style="text-align:center;">MacBook Air 13" M1*</h2>
                         <p style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый/золотой</p>
                         <ul style="margin-top: 41%; text-align:center;">
@@ -1880,7 +1882,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     
         
                 <li id="ipadpro-13-2025_"><span id="ipadpro-13-2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipadpro-13-2025" data-original="../images/iPad_Pro_13_2025.jpg" style="background-position: -20% 0%; background-size: 130%;">
+                    <article class="ipadpro-13-2025 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Pro_13_2025.jpg" alt="iPad Pro 13&quot; 2025 (M5)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></span>
 
                         <h2>iPad Pro 13" 2025 (M5)*</h2>
                         <ul>
@@ -1908,7 +1910,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li>Apple Pencil Pro &mdash; <span>11 500</span> ₽</li>
                             <li><br /></li>
                         </ul>
-                                           <img alt="iPad Pro 13 M5" src="images/new.png">
+                                           <img alt="Новинка" src="images/new.png">
 
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
@@ -1918,7 +1920,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
                 <li id="ipadpro-11-2025_"><span id="ipadpro-11-2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipadpro-11-2025" data-original="../images/iPad_Pro_11_2025.jpg" style="background-position: -20% 0%; background-size: 130%;">
+                    <article class="ipadpro-11-2025 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Pro_11_2025.jpg" alt="iPad Pro 11&quot; 2025 (M5)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></span>
 
                         <h2>iPad Pro 11" 2025 (M5)*</h2>
                         <ul>
@@ -1947,7 +1949,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li>Apple Pencil Pro &mdash; <span>11 500</span> ₽</li>
                             <li><br /></li>
                         </ul>
-                                                                   <img alt="iPad Pro 11 M5" src="images/new.png">
+                                                                   <img alt="Новинка" src="images/new.png">
 
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
@@ -1958,7 +1960,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                     
                 <li id="ipadpro-13-2024_"><span id="ipadpro-13-2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipadpro-13-2024" data-original="../images/iPad_Pro_13_2024___.jpg" style="background-position: -20% 0%; background-size: 130%;">
+                    <article class="ipadpro-13-2024 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Pro_13_2024___.jpg" alt="iPad Pro 13&quot; 2024 (M4)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></span>
 
                         <h2>iPad Pro 13" 2024 (M4)*</h2>
                         <ul>
@@ -1995,7 +1997,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
                 <li id="ipadpro-11-2024_"><span id="ipadpro-11-2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipadpro-11-2024" data-original="../images/iPad_Pro_2024__.jpg" style="background-position: -20% 0%; background-size: 130%;">
+                    <article class="ipadpro-11-2024 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Pro_2024__.jpg" alt="iPad Pro 11&quot; 2024 (M4)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></span>
 
                         <h2>iPad Pro 11" 2024 (M4)*</h2>
                         <ul>
@@ -2145,7 +2147,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li> -->
         
                 <li id="ipad-2025_"><span id="ipad-2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad_2025" data-original="../images/iPad_A16.jpg" style="background-size: 110%; background-position: -200%; height: 580px;">
+                    <article class="ipad_2025 aj-product-image-card" style="background-size: 110%; background-position: -200%; height: 580px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_A16.jpg" alt="iPad 2025 (A16)" width="5120" height="2880" loading="lazy" decoding="async" style="width:110%;height:auto;left:-200%;top:50%;transform:translate(200%,-50%);"></span>
                 <div style="height: 450px;">
 
                     <h2>iPad 2025 (A16)*</h2>
@@ -2176,7 +2178,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     
                        <span id="ipad-2022" class="for_sticky_header"></span>
                 <li id="ipad-2022_">
-                    <article class="ipad_2022" data-original="../images/iPad_2022.jpg" style="background-size: 38%; background-position: 86%;">
+                    <article class="ipad_2022 aj-product-image-card" style="background-size: 38%; background-position: 86%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_2022.jpg" alt="iPad 2022 (A14)" width="507" height="523" loading="lazy" decoding="async" style="width:38%;height:auto;left:86%;top:50%;transform:translate(-86%,-50%);"></span>
                 <div style="height: 455px;">
 
                     <h2>iPad 2022 (A14)*</h2>
@@ -2202,7 +2204,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
         <span id="ipad-2021" class="for_sticky_header"></span>
                 <li id="ipad-2021_">
-                    <article class="ipad_2021" data-original="../images/iPad2021.jpg">
+                    <article class="ipad_2021 aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad2021.jpg" alt="iPad 2021 (A13)" width="750" height="808" loading="lazy" decoding="async" style="width:40%;height:auto;left:550px;top:50%;transform:translate(0px,-50%);"></span>
                 <div style="height: 445px;">
 
                     <h2>iPad 2021 (A13)*</h2>
@@ -2251,7 +2253,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                 
                 <li id="ipad_air_11_2026_"><span id="ipad_air_11_2026" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018" data-original="../images/iPad_Air_2026.jpg" style="background-size: 150%; background-position: -50px 50px; height: 1180px;">
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 150%; background-position: -50px 50px; height: 1180px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_2026.jpg" alt="iPad Air 11&quot;/13&quot; 2026 (M4)" width="5120" height="2880" loading="lazy" decoding="async" style="width:150%;height:auto;left:-50px;top:50px;transform:translate(0px,0px);"></span>
                     <h2>iPad Air 11"/13" 2026 (M4)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2289,7 +2291,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 						<li>Apple Pencil Pro &mdash; <span>11 500</span> ₽</li>
                         <li><br /></li>
                     </ul>
-                   <img alt="iPad Air 2024" src="images/new.png">
+                   <img alt="Новинка" src="images/new.png">
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a><br>
 <p style="margin-bottom: 3px; margin-top: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
@@ -2299,7 +2301,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_13_2025_"><span id="ipad_air_13_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018" data-original="../images/iPad_Air_13_2025.jpg" style="background-size: 90%; background-position: 330% 100%; height: 720px;">
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 720px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_13_2025.jpg" alt="iPad Air 13&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></span>
                     <h2>iPad Air 13" 2025 (M3)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2321,7 +2323,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 						<li>Apple Pencil Pro &mdash; <span>11 500</span> ₽</li>
                         <li><br /></li>
                     </ul>
-                   <img alt="iPad Air 2024" src="images/new.png">
+                   <img alt="Новинка" src="images/new.png">
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a><br>
 <p style="margin-bottom: 3px;">* <i>товар с дефектом — отсутствует российский магазин приложений RuStore</i></p>
@@ -2331,7 +2333,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_11_2025_"><span id="ipad_air_11_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018" data-original="../images/iPad_Air_11_2025.jpg" style="background-size: 95%; background-position: 450%; height: 720px;">
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 95%; background-position: 450%; height: 720px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_11_2025.jpg" alt="iPad Air 11&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="width:95%;height:auto;left:450%;top:50%;transform:translate(-450%,-50%);"></span>
                     <h2>iPad Air 11" 2025 (M3)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2353,7 +2355,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 						<li>Apple Pencil Pro &mdash; <span>11 500</span> ₽</li>
                         <li><br /></li>
                     </ul>
-                   <img alt="iPad Air 2024" src="images/new.png">
+                   <img alt="Новинка" src="images/new.png">
                         <br>
                         <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
                         <br>
@@ -2364,7 +2366,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_13_2024_"><span id="ipad_air_13_2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018" data-original="../images/iPad_Air_13_2024.jpg" style="background-size: 90%; background-position: 330% 100%; height: 750px;">
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 750px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_13_2024.jpg" alt="iPad Air 13&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></span>
                     <h2>iPad Air 13" 2024 (M2)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2398,7 +2400,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_11_2024_"><span id="ipad_air_11_2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018" data-original="../images/iPad_Air_2024_.jpg" style="background-size: 105%; background-position: -500%; height: 750px;">
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 105%; background-position: -500%; height: 750px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_2024_.jpg" alt="iPad Air 11&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="width:105%;height:auto;left:-500%;top:50%;transform:translate(500%,-50%);"></span>
                     <h2>iPad Air 11" 2024 (M2)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2459,7 +2461,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li> -->
 
                <li id="ipad-mini-2024_"><span id="ipad-mini-2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad-mini-2024" data-original="/images/optimized/ipad_mini_2024.bc44519089ad.webp" style="background-size: 110%; background-position: 120px 0; height: 520px;">
+                    <article class="ipad-mini-2024 aj-product-image-card" style="background-size: 110%; background-position: 120px 0; height: 520px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/ipad_mini_2024.bc44519089ad.webp" alt="iPad mini 2024 (A17 Pro)" width="5120" height="2880" loading="lazy" decoding="async" style="width:110%;height:auto;left:120px;top:0px;transform:translate(0px,0px);"></span>
                 <p> </p>
 
                     <h2>iPad mini 2024 (A17 Pro)*</h2>
@@ -2487,7 +2489,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                <li id="ipad-mini-2021_"><span id="ipad-mini-2021" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad-mini-2021" data-original="../images/ipad_mini_2021.jpg" style="background-size: 37%; background-position: 574px 100px;">
+                    <article class="ipad-mini-2021 aj-product-image-card" style="background-size: 37%; background-position: 574px 100px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/ipad_mini_2021.jpg" alt="iPad mini 2021 (A15)" width="540" height="530" loading="lazy" decoding="async" style="width:37%;height:auto;left:574px;top:100px;transform:translate(0px,0px);"></span>
                 <div style="height: 430px;">
 
                     <h2>iPad mini 2021 (A15)*</h2>
@@ -2534,7 +2536,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>  -->
                 
                 <li class="pre_cancel"><span id="Keyboard" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="left applePencil" data-original="../images/Magic_Keyboard.jpg" style="background-size: 47%; background-position: 102% 5%; height: 220px;">
+                    <article class="left applePencil aj-product-image-card" style="background-size: 47%; background-position: 102% 5%; height: 220px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Magic_Keyboard.jpg" alt="Magic Keyboard для iPad" width="1144" height="1144" loading="lazy" decoding="async" style="width:47%;height:auto;left:102%;top:5%;transform:translate(-102%,-5%);"></span>
                         <hgroup>
                             <h2 style="width: 340px;">Magic Keyboard для iPad*</h2>
                             <h3>чёрная/белая</h3>
@@ -2554,7 +2556,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                                                                         <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
-                    <article class="right applePencil" data-original="../images/Smart_Keyboard.jpg" style="background-size: 47%; background-position: 105% 85%; height: 220px;">
+                    <article class="right applePencil aj-product-image-card" style="background-size: 47%; background-position: 105% 85%; height: 220px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Smart_Keyboard.jpg" alt="Smart Keyboard Folio для iPad" width="1144" height="1144" loading="lazy" decoding="async" style="width:47%;height:auto;left:105%;top:85%;transform:translate(-105%,-85%);"></span>
                         <hgroup>
                             <h2 style="width: 350px;">Smart Keyboard Folio для iPad*</h2>
                         </hgroup>
@@ -2575,7 +2577,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                     
                     <span id="Pencil" class="for_sticky_header"></span>
-                    <article class="left applePencil animate" data-original="../images/accessories/Apple_Pencil.png" style="margin-top: 20px; height: 170px; display: block; background-image: url(&quot;../images/accessories/Apple_Pencil.png&quot;); opacity: 1;">
+                    <article class="left applePencil animate aj-product-image-card" style="margin-top: 20px; height: 170px; display: block; background-image: url(&quot;../images/accessories/Apple_Pencil.png&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/accessories/Apple_Pencil.png" alt="Apple Pencil" width="276" height="565" loading="lazy" decoding="async" style="width:22%;height:auto;left:105%;top:0px;transform:translate(-105%,0px);"></span>
                         <hgroup>
                             <h2>Apple Pencil*</h2>
                             <h3>для iPad Pro 12,9" (2015-2017), 10,5", 9,7", iPad 2018</h3>
@@ -2591,7 +2593,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                                                                                                 <p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
 
                     </article>
-                    <article class="right applePencil animate" data-original="../images/accessories/Pencil2.png" style="margin-top: 20px; height: 170px; display: block; background-image: url(&quot;../images/accessories/Pencil2.png&quot;); opacity: 1;">
+                    <article class="right applePencil animate aj-product-image-card" style="margin-top: 20px; height: 170px; display: block; background-image: url(&quot;../images/accessories/Pencil2.png&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/accessories/Pencil2.png" alt="Apple Pencil 2" width="551" height="1128" loading="lazy" decoding="async" style="width:22%;height:auto;left:105%;top:0px;transform:translate(-105%,0px);"></span>
                         <hgroup>
                             <h2>Apple Pencil 2*</h2>
                             <h3>для iPad Pro 12,9" (2018) и 11"</h3>
@@ -2610,7 +2612,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 
 
                 </li><li>
-                    <article class="ipadCase ipadCases animate" data-original="/images/optimized/Smart_Case.74604f883b83.webp" style="background-position: 87% 55%; display: block; background-image: url(&quot;/images/optimized/Smart_Case.74604f883b83.webp&quot;); opacity: 1;">
+                    <article class="ipadCase ipadCases animate aj-product-image-card" style="background-position: 87% 55%; display: block; background-image: url(&quot;/images/optimized/Smart_Case.74604f883b83.webp&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Smart_Case.74604f883b83.webp" alt="Smart Folio для iPad" width="1303" height="1144" loading="lazy" decoding="async" style="width:30%;height:auto;left:87%;top:55%;transform:translate(-87%,-55%);"></span>
 
                         <h2>Smart Folio для iPad*</h2>
                         <ul>
@@ -2646,7 +2648,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li> -->
 
                 <li>
-                    <article class="speck animate" data-original="../images/speck.jpg" style="height: 350px; display: block; background-image: url(&quot;../images/speck.jpg&quot;); opacity: 1;">
+                    <article class="speck animate aj-product-image-card" style="height: 350px; display: block; background-image: url(&quot;../images/speck.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/speck.jpg" alt="Чехол пластиковый" width="373" height="303" loading="lazy" decoding="async" style="width:auto;height:auto;left:556px;top:57px;transform:translate(0px,0px);"></span>
                         <h2>Чехол пластиковый* </h2>
                         <ul>
                             <li style="font-size:24px; margin-bottom:15px">Для MacBook Air 13" и MacBook Pro 13":</li>
@@ -2666,7 +2668,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                 <li id="imac-2024_"><span id="imac-2024" class="for_sticky_header catalog-section-anchor"></span>
 
-                    <article class="new_imac5K-2017 animate" style="background-size: 430px; height: 500px; display: block; background-image: url(&quot;../images/imac-2024.jpg&quot;); opacity: 1;" data-original="../images/imac-2024.jpg">
+                    <article class="new_imac5K-2017 animate aj-product-image-card" style="background-size: 430px; height: 500px; display: block; background-image: url(&quot;../images/imac-2024.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/imac-2024.jpg" alt="iMac 24&quot; 2024" width="876" height="322" loading="lazy" decoding="async" style="width:430px;height:auto;left:50%;top:100%;transform:translate(-50%,-100%);"></span>
                         <h2>iMac 24" 2024*</h2>
                         <ul>
                             <li>синий/зелёный/розовый/серебристый/жёлтый/оранжевый/фиолетовый</li>
@@ -2677,7 +2679,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li><br></li>
                             <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
                         </ul>
-                            <img alt="iMac 24 Retina 4,5K"  src="images/new.png" >
+                            <img alt="Новинка"  src="images/new.png" >
                             <a href="https://aj.ru/#" class="button">Купить</a>
                         <br>
 <p style="margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
@@ -2688,7 +2690,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                 <li id="imac-2023_"><span id="imac-2023" class="for_sticky_header catalog-section-anchor"></span>
 
-                    <article class="new_imac5K-2017 animate" style="background-size: 430px; height: 580px; display: block; background-image: url(&quot;../images/iMac_2023.jpg&quot;); opacity: 1;" data-original="../images/iMac_2023.jpg">
+                    <article class="new_imac5K-2017 animate aj-product-image-card" style="background-size: 430px; height: 580px; display: block; background-image: url(&quot;../images/iMac_2023.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iMac_2023.jpg" alt="iMac 24&quot; 2023" width="872" height="376" loading="lazy" decoding="async" style="width:430px;height:auto;left:50%;top:100%;transform:translate(-50%,-100%);"></span>
                         <h2>iMac 24" 2023*</h2>
                         <ul>
                             <li>синий/зелёный/розовый/серебристый</li>
@@ -2712,7 +2714,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     
    
                 <li id="Studio_Display_" style="background-image: none;"><span id="Studio_Display" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="StudioDisplay animate" style="background: url(&quot;images/Studio_XDR.jpg&quot;) center 20px / 90% no-repeat; display: block; opacity: 1;" data-original="images/Studio_XDR.jpg">
+                    <article class="StudioDisplay animate aj-product-image-card" style="background: url(&quot;images/Studio_XDR.jpg&quot;) center 20px / 90% no-repeat; display: block; opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="images/Studio_XDR.jpg" alt="Studio Display" width="1960" height="1104" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:20px;transform:translate(-50%,0px);"></span>
 
                 <h2 style="text-align: center;">Studio Display*</h2>
                 <div style="display: flex; margin-top: 41%; justify-content: space-evenly;">
@@ -2758,7 +2760,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </ul>
                 </div>
                             <p style="margin-bottom:15px"></p>
-                                           <img alt="iPhone 17"  src="images/new.png" >
+                                           <img alt="Новинка"  src="images/new.png" >
 
             <a href="https://aj.ru/#" class="button" style="margin: 0 auto;">Купить</a>
                 <br>
@@ -2769,7 +2771,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="Pro_Display_XDR_"><span id="Pro_Display_XDR" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ProDisplayXDR animate" style="background: url(&quot;/images/optimized-20260924/pro-display-xdr.56334a400da6.jpg&quot;) 50% 15% / 60% no-repeat; display: block; opacity: 1;" data-original="/images/optimized-20260924/pro-display-xdr.56334a400da6.jpg">
+                    <article class="ProDisplayXDR animate aj-product-image-card" style="background: url(&quot;/images/optimized-20260924/pro-display-xdr.56334a400da6.jpg&quot;) 50% 15% / 60% no-repeat; display: block; opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized-20260924/pro-display-xdr.56334a400da6.jpg" alt="Pro Display XDR" width="1200" height="900" loading="lazy" decoding="async" style="width:60%;height:auto;left:50%;top:15%;transform:translate(-50%,-15%);"></span>
                          <h2 style="text-align:center;">Pro Display XDR*</h2>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Стандартное стекло — <span>565 000</span> ₽</li>
@@ -2820,7 +2822,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article></li>
 
 <li id="mac_studio_2025_"><span id="mac_studio_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="mac_studio animate" data-original="/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg" style="background-position: 50% 215px; background-size: 90%; height: 750px; text-align: center; opacity: 1; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg&quot;);">
+                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 215px; background-size: 90%; height: 750px; text-align: center; opacity: 1; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg&quot;);"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg" alt="Mac Studio 2025" width="2000" height="1537" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:215px;transform:translate(-50%,0px);"></span>
                         <h2>Mac Studio 2025*</h2>
                         <ul>
                             <li>Mac Studio M4 Max 14-Core/ 36GB/ 512GB SSD 32-core GPU — <span>330 000</span> ₽</li>
@@ -2833,13 +2835,13 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         <br>
 <p style="text-align: center; margin-bottom: 3px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
                                                 <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
-                        <img  src="images/new.png"  alt="Mac Studio">
+                        <img  src="images/new.png"  alt="Новинка">
                     </article>
                 </li> 
         
         
                 <li id="mac_studio_2023_"><span id="mac_studio_2023" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="mac_studio animate" data-original="/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg" style="background-position: 50% 235px; background-size: 75%; height: 700px; text-align: center; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg&quot;); opacity: 1;">
+                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 235px; background-size: 75%; height: 700px; text-align: center; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg" alt="Mac Studio 2023" width="2000" height="1537" loading="lazy" decoding="async" style="width:75%;height:auto;left:50%;top:235px;transform:translate(-50%,0px);"></span>
                         <h2>Mac Studio 2023*</h2>
                         <ul>
                             <li>Mac Studio M2 Max 12-Core/ 32GB/ 512GB SSD 30-core GPU — <span>242 000</span> ₽</li>
@@ -2857,7 +2859,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
 
                 <li id="mac_studio_"><span id="mac_studio" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="mac_studio animate" data-original="/images/optimized/Mac_Studio.bedcda90074d.webp" style="background-position: 50% 155px; background-size: 75%; height: 550px; text-align: center; display: block; background-image: url(&quot;/images/optimized/Mac_Studio.bedcda90074d.webp&quot;); opacity: 1;">
+                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 155px; background-size: 75%; height: 550px; text-align: center; display: block; background-image: url(&quot;/images/optimized/Mac_Studio.bedcda90074d.webp&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Mac_Studio.bedcda90074d.webp" alt="Mac Studio 2022" width="2000" height="1536" loading="lazy" decoding="async" style="width:75%;height:auto;left:50%;top:155px;transform:translate(-50%,0px);"></span>
                         <h2>Mac Studio 2022*</h2>
                         <ul>
                             <li>Mac Studio M1 Max 10-Core/ 32GB/ 512GB SSD 24-core GPU — <span>240 000</span> ₽ </li>
@@ -2885,7 +2887,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article></li>
 
 <li id="macmini24_"><span id="macmini24" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="new_mac_mini animate" data-original="../images/mac-mini-2024.jpg" style="background-size: 60%; background-position: 48% 210%; display: block; background-image: url(&quot;../images/mac-mini-2024.jpg&quot;); opacity: 1;">
+                    <article class="new_mac_mini animate aj-product-image-card" style="background-size: 60%; background-position: 48% 210%; display: block; background-image: url(&quot;../images/mac-mini-2024.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/mac-mini-2024.jpg" alt="Mac mini M4" width="4000" height="3074" loading="lazy" decoding="async" style="width:60%;height:auto;left:48%;top:210%;transform:translate(-48%,-210%);"></span>
                         <h2>Mac mini M4*</h2>
                         <ul>
                             <li>Mac mini 2024 M4 10-Core/ 16GB/ 256GB SSD 10-core GPU — <span>78 000</span> ₽</li>
@@ -2896,7 +2898,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
                             <li class="catalog-list-spacing" aria-hidden="true"><br></li>
                         </ul>
-                        <img alt="iPad 2022"  src="images/new.png" >
+                        <img alt="Новинка"  src="images/new.png" >
                         <a href="https://aj.ru/#" class="button" style="margin:0 auto;">Купить</a>
 <p style="text-align: center; margin-bottom: 3px; margin-top: 10px;">* <i>товар с дефектом —&nbsp;отсутствует российский магазин приложений RuStore</i></p>
                                                 <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
@@ -2922,7 +2924,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                 
                 <li id="accessories_"><span id="accessories" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ucho-1 animate" data-original="../images/uho-1.jpg" style="display: block; background-image: url(&quot;../images/uho-1.jpg&quot;); opacity: 1;">
+                    <article class="ucho-1 animate aj-product-image-card" style="display: block; background-image: url(&quot;../images/uho-1.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/uho-1.jpg" alt="EarPods with Remote and Mic" width="318" height="391" loading="lazy" decoding="async" style="width:auto;height:auto;left:470px;top:0%;transform:translate(0px,0%);"></span>
                         <h2><strong>EarPods</strong> with <br>Remote and Mic*</h2>
                         <ul>
                             <li>с разъёмом Mini-jack 3.5mm — <span>2500</span> ₽</li>
@@ -2934,7 +2936,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
         <li class="cancel">
-                    <article class="left cable-A animate" data-original="../images/USB-C_plet.jpg" style="background-size: 100%; background-position: 150px 20px; height: 200px; display: block; background-image: url(&quot;../images/USB-C_plet.jpg&quot;); opacity: 1;">
+                    <article class="left cable-A animate aj-product-image-card" style="background-size: 100%; background-position: 150px 20px; height: 200px; display: block; background-image: url(&quot;../images/USB-C_plet.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/USB-C_plet.jpg" alt="USB-C/USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:100%;height:auto;left:150px;top:20px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2>USB-C/USB-C*</h2>
                             <h3>Плетёный кабель</h3>
@@ -2950,7 +2952,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         <a href="https://aj.ru/#" class="button small">Купить</a>                                                                        <br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
 
                     </article>
-                    <article class="right cable-C animate" data-original="../images/USB-C.jpg" style="background-size: 110%; background-position: -250% 10%; height: 200px; opacity: 1;">
+                    <article class="right cable-C animate aj-product-image-card" style="background-size: 110%; background-position: -250% 10%; height: 200px; opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/USB-C.jpg" alt="USB-C/USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:110%;height:auto;left:-250%;top:10%;transform:translate(250%,-10%);"></span>
                         <hgroup>
                             <h2>USB-C/USB-C*</h2>
                             <h3>Кабель</h3>
@@ -2967,7 +2969,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
             
                 </li><li class="cancel">
-                    <article class="left cable-A animate" data-original="../images/cable-A.jpg" style="height: 200px; background-position: 290px 85px; display: block; background-image: url(&quot;../images/cable-A.jpg&quot;); opacity: 1;">
+                    <article class="left cable-A animate aj-product-image-card" style="height: 200px; background-position: 290px 85px; display: block; background-image: url(&quot;../images/cable-A.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/cable-A.jpg" alt="USB/Lightning" width="900" height="1200" loading="lazy" decoding="async" style="width:30%;height:auto;left:290px;top:85px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2>USB/Lightning*</h2>
                             <h3>Кабель</h3>
@@ -2982,7 +2984,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         </ul>
                         <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
-                    <article class="right cable-C animate" data-original="../images/cable-C.jpg" style="height: 200px; background-position: 290px 85px; display: block; background-image: url(&quot;../images/cable-C.jpg&quot;); opacity: 1;">
+                    <article class="right cable-C animate aj-product-image-card" style="height: 200px; background-position: 290px 85px; display: block; background-image: url(&quot;../images/cable-C.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/cable-C.jpg" alt="USB-C/Lightning" width="896" height="996" loading="lazy" decoding="async" style="width:40%;height:auto;left:290px;top:85px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2 style="width: 190px;">USB-C/Lightning*</h2>
                             <h3>Кабель</h3>
@@ -2999,7 +3001,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
 
                 </li><li class="cancel">
-                    <article class="left charger animate" data-original="../images/magsafe-charger.jpg" style="background-position: 110% 60px; height: 200px; display: block; background-image: url(&quot;../images/magsafe-charger.jpg&quot;); opacity: 1;">
+                    <article class="left charger animate aj-product-image-card" style="background-position: 110% 60px; height: 200px; display: block; background-image: url(&quot;../images/magsafe-charger.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magsafe-charger.jpg" alt="MagSafe Charger 2020" width="900" height="1200" loading="lazy" decoding="async" style="width:40%;height:auto;left:110%;top:60px;transform:translate(-110%,0px);"></span>
                         <hgroup>
                             <h2>MagSafe&nbsp;Charger&nbsp;2020*</h2>
                         </hgroup>
@@ -3013,7 +3015,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         </ul>
                         <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                     </article>
-                    <article class="right charger animate" data-original="../images/MX6Y3.jpg" style="background-position: 200px -70px; background-size: 86%; height: 200px; display: block; background-image: url(&quot;../images/MX6Y3.jpg&quot;); opacity: 1;"> 
+                    <article class="right charger animate aj-product-image-card" style="background-position: 200px -70px; background-size: 86%; height: 200px; display: block; background-image: url(&quot;../images/MX6Y3.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/MX6Y3.jpg" alt="MagSafe Charger 2024" width="2000" height="2000" loading="lazy" decoding="async" style="width:86%;height:auto;left:200px;top:-70px;transform:translate(0px,0px);"></span> 
                         <hgroup>
                             <h2>MagSafe&nbsp;Charger&nbsp;2024*</h2>
                         </hgroup>
@@ -3029,7 +3031,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                     
 </li><li class="cancel">
-                    <article class="left mac12multiPort animate" data-original="../images/lightning_jack.jpg" style="background-position: 120% 0px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/lightning_jack.jpg&quot;); opacity: 1;">
+                    <article class="left mac12multiPort animate aj-product-image-card" style="background-position: 120% 0px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/lightning_jack.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/lightning_jack.jpg" alt="Переходник Lightning to 3.5 mm" width="1144" height="1144" loading="lazy" decoding="async" style="width:55%;height:auto;left:120%;top:0px;transform:translate(-120%,0px);"></span>
                         <hgroup>
                             <h2>Переходник Lightning to 3.5 mm*</h2>
 
@@ -3041,7 +3043,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small" style="margin: 10px 0 0 0;">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
-                    <article class="right mac12Usb animate" data-original="../images/usb-c_jack.jpg" style="background-position: 120% 0px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/usb-c_jack.jpg&quot;); opacity: 1;">
+                    <article class="right mac12Usb animate aj-product-image-card" style="background-position: 120% 0px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/usb-c_jack.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/usb-c_jack.jpg" alt="Переходник USB-C to 3.5 mm" width="1144" height="1144" loading="lazy" decoding="async" style="width:55%;height:auto;left:120%;top:0px;transform:translate(-120%,0px);"></span>
                         <hgroup>
                             <h2 style="width:195px">Переходник USB-C to 3.5 mm*</h2>
 
@@ -3055,7 +3057,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
         <li class="cancel">
-        <article class="left mac12multiPort animate" data-original="../images/Air_Battery.jpeg" style="background-position: 120% -45px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/Air_Battery.jpeg&quot;); opacity: 1;">
+        <article class="left mac12multiPort animate aj-product-image-card" style="background-position: 120% -45px; height: 200px; background-size: 55% !important; display: block; background-image: url(&quot;../images/Air_Battery.jpeg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Air_Battery.jpeg" alt="iPhone Air MagSafe Battery" width="2000" height="2000" loading="lazy" decoding="async" style="width:55%;height:auto;left:120%;top:-45px;transform:translate(-120%,0px);"></span>
                         <hgroup>
                             <h2 style="width: 190px!important">iPhone Air MagSafe Battery*</h2>
 
@@ -3071,7 +3073,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
        </li>
                 <li>
-                    <article class="MagSafe1 animate" style="height: 480px; background-position: 105% center; display: block; background-image: url(&quot;../images/usb-c.jpg&quot;); opacity: 1;" data-original="../images/usb-c.jpg">
+                    <article class="MagSafe1 animate aj-product-image-card" style="height: 480px; background-position: 105% center; display: block; background-image: url(&quot;../images/usb-c.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/usb-c.jpg" alt="Адаптер питания USB-C" width="447" height="337" loading="lazy" decoding="async" style="width:auto;height:auto;left:105%;top:50%;transform:translate(-105%,-50%);"></span>
                         <h2>Адаптер питания USB-C*</h2>
                         <h3>кабель USB-C не входит в комплект</h3>
                         <br>
@@ -3094,7 +3096,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
         <li>
-                    <article class="atv4" data-original="../images/Apple_TV_2022.jpg" style="background-size: 35%; background-position: 550px -16px;">
+                    <article class="atv4 aj-product-image-card" style="background-size: 35%; background-position: 550px -16px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Apple_TV_2022.jpg" alt="Apple TV 2022" width="470" height="556" loading="lazy" decoding="async" style="width:35%;height:auto;left:550px;top:-16px;transform:translate(0px,0px);"></span>
                         <h2>Apple TV 2022*</h2>
                         <ul>
                             <li><span><b>2022</b></span> Apple TV 4K 64GB WiFi — <span>19 900</span> ₽</li>
@@ -3109,7 +3111,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
                 
         <li id="vision_pro_"><span id="vision_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="vision_pro" style="background-position: center 30%; background-size: 57%; text-align: center;" data-original="../images/Vision.jpg">
+            <article class="vision_pro aj-product-image-card" style="background-position: center 30%; background-size: 57%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Vision.jpg" alt="Apple Vision Pro" width="1200" height="757" loading="lazy" decoding="async" style="width:57%;height:auto;left:50%;top:30%;transform:translate(-50%,-30%);"></span>
 
                 <h2>Apple Vision Pro*</h2>
                 <ul>
@@ -3144,7 +3146,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li> -->
 <li class="pre_cancel">
-                    <article class="left magic_keyboard_2024" data-original="../images/keyboard_white_touch.jpeg" style="background-size: 55%; background-position: 207px 0px!important;">
+                    <article class="left magic_keyboard_2024 aj-product-image-card" style="background-size: 55%; background-position: 207px 0px!important;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/keyboard_white_touch.jpeg" alt="Magic Keyboard 2024 с Touch ID, USB-C" width="1144" height="1144" loading="lazy" decoding="async" style="width:55%;height:auto;left:207px;top:0px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Keyboard 2024 с Touch ID, USB-C*</h2>
                             <h3 style="width: 180px!important">беспроводная клавиатура c английской или англо-русской раскладкой</h3>
@@ -3157,7 +3159,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
-                    <article class="right magic_keyboard_2024" data-original="../images/keyboard_white.jpeg" style="background-size: 55%; background-position: 206px 0px!important;">
+                    <article class="right magic_keyboard_2024 aj-product-image-card" style="background-size: 55%; background-position: 206px 0px!important;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/keyboard_white.jpeg" alt="Magic Keyboard 2024, USB-C" width="1144" height="1144" loading="lazy" decoding="async" style="width:55%;height:auto;left:206px;top:0px;transform:translate(0px,0px);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Keyboard 2024, USB-C*</h2>
                             <h3 style="width: 180px!important">беспроводная клавиатура c английской или англо-русской раскладкой</h3>
@@ -3174,7 +3176,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
                 <li class="pre_cancel">
-                    <article class="left magic_keyboard_2021" data-original="../images/magic-keyboard-with-touch-id.jpg" style="height: 220px;">
+                    <article class="left magic_keyboard_2021 aj-product-image-card" style="height: 220px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magic-keyboard-with-touch-id.jpg" alt="Magic Keyboard 2021 с Touch ID, Lightning" width="1000" height="1000" loading="lazy" decoding="async" style="width:150%;height:auto;left:-60%;top:40%;transform:translate(60%,-40%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Keyboard 2021 с Touch ID, Lightning*</h2>
                             <h3 style="width: 180px!important">беспроводная клавиатура c английской или англо-русской раскладкой</h3>
@@ -3187,7 +3189,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
-                    <article class="right magic_keyboard_2021" data-original="../images/magic-keyboard-2021.jpg" style="height: 220px;">
+                    <article class="right magic_keyboard_2021 aj-product-image-card" style="height: 220px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magic-keyboard-2021.jpg" alt="Magic Keyboard 2021, Lightning" width="1000" height="1000" loading="lazy" decoding="async" style="width:150%;height:auto;left:-60%;top:40%;transform:translate(60%,-40%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Keyboard 2021, Lightning*</h2>
                             <h3 style="width: 180px!important">беспроводная клавиатура c английской или англо-русской раскладкой</h3>
@@ -3204,7 +3206,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
 
         <li class="pre_cancel">
-                    <article class="left mouse2" data-original="../images/MXK63.jpg" style="background-size: 65%; background-position: 100% 20%; height: 170px;">
+                    <article class="left mouse2 aj-product-image-card" style="background-size: 65%; background-position: 100% 20%; height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/MXK63.jpg" alt="Magic Mouse 3, USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:65%;height:auto;left:100%;top:20%;transform:translate(-100%,-20%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Mouse 3, USB-C*</h2>
                             <h3>беспроводная мышь</h3>
@@ -3218,9 +3220,9 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
-                        <img alt="Magic Mouse"  src="images/new.png" style="width: 150px; ">
+                        <img alt="Новинка"  src="images/new.png" style="width: 150px; ">
                     </article>
-                    <article class="right mouse2" data-original="../images/MXK53.jpg" style="background-size: 65%; background-position: 100% 20%; height: 170px;">
+                    <article class="right mouse2 aj-product-image-card" style="background-size: 65%; background-position: 100% 20%; height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/MXK53.jpg" alt="Magic Mouse 3, USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:65%;height:auto;left:100%;top:20%;transform:translate(-100%,-20%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Mouse 3, USB-C*</h2>
                             <h3>беспроводная мышь</h3>
@@ -3233,12 +3235,12 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
-                        <img alt="Magic Mouse" src="images/new.png" style="width: 150px;">
+                        <img alt="Новинка" src="images/new.png" style="width: 150px;">
                     </article>
                 </li>
         
                 <li class="pre_cancel">
-                    <article class="left mouse2" data-original="../images/Magic_Mouse_Black.jpg" style="background-size: 65%; background-position: 100% 20%; height: 170px;">
+                    <article class="left mouse2 aj-product-image-card" style="background-size: 65%; background-position: 100% 20%; height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Magic_Mouse_Black.jpg" alt="Magic Mouse 3, Lightning" width="572" height="572" loading="lazy" decoding="async" style="width:65%;height:auto;left:100%;top:20%;transform:translate(-100%,-20%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Mouse 3, Lightning*</h2>
                             <h3>беспроводная мышь</h3>
@@ -3252,7 +3254,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                     </article>
-                    <article class="right mouse2" data-original="../images/mouse2.png" style="height: 170px; background-position: 90px 20%;">
+                    <article class="right mouse2 aj-product-image-card" style="height: 170px; background-position: 90px 20%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/mouse2.png" alt="Magic Mouse 3, Lightning" width="1088" height="618" loading="lazy" decoding="async" style="width:100%;height:auto;left:90px;top:20%;transform:translate(0px,-20%);"></span>
                         <hgroup>
                             <h2 style="width: 100%!important">Magic Mouse 3, Lightning*</h2>
                             <h3>беспроводная мышь</h3>
@@ -3268,7 +3270,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
 
         <li class="pre_cancel">
-                    <article class="left magic_trackpad_2021" data-original="../images/MXK93.jpg" style="height: 170px;">
+                    <article class="left magic_trackpad_2021 aj-product-image-card" style="height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/MXK93.jpg" alt="Magic Trackpad 3, USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:50%;height:auto;left:78%;top:-30%;transform:translate(-78%,30%);"></span>
                         <hgroup>
                             <h2 style="width:100%">Magic Trackpad 3, USB-C*</h2>
                             <h3>трекпад</h3>
@@ -3281,10 +3283,10 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
-                        <img alt="Magic Trackpad" src="images/new.png" style="width: 150px; ">
+                        <img alt="Новинка" src="images/new.png" style="width: 150px; ">
                     </article>
 
-                    <article class="right magic_trackpad_2021" data-original="../images/MXKA3.jpg" style="height: 170px;">
+                    <article class="right magic_trackpad_2021 aj-product-image-card" style="height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/MXKA3.jpg" alt="Magic Trackpad 3, USB-C" width="2000" height="2000" loading="lazy" decoding="async" style="width:50%;height:auto;left:78%;top:-30%;transform:translate(-78%,30%);"></span>
                         <hgroup>
                             <h2 style="width:100%">Magic Trackpad 3, USB-C*</h2>
                             <h3>трекпад</h3>
@@ -3297,12 +3299,12 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             <a href="https://aj.ru/#" class="button small">Купить</a><br><p style="text-align: left;">* <i>все цены указаны с учётом акционной скидки<br> за оплату наличными</i></p>
                         </hgroup>
                         
-                        <img alt="Magic Trackpad"  src="images/new.png" style="width: 150px;">
+                        <img alt="Новинка"  src="images/new.png" style="width: 150px;">
                     </article>
                 </li>
         
                 <li class="pre_cancel">
-                    <article class="left magic_trackpad_2021" data-original="../images/magic-trackpad-2021.jpg" style="height: 170px;">
+                    <article class="left magic_trackpad_2021 aj-product-image-card" style="height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magic-trackpad-2021.jpg" alt="Magic Trackpad 3, Lightning" width="572" height="572" loading="lazy" decoding="async" style="width:50%;height:auto;left:78%;top:-30%;transform:translate(-78%,30%);"></span>
                         <hgroup>
                             <h2 style="width:100%">Magic Trackpad 3, Lightning*</h2>
                             <h3>трекпад</h3>
@@ -3316,7 +3318,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         </hgroup>
                     </article>
 
-                    <article class="right magic_trackpad_2021" data-original="../images/Magic_Trackpad_Black.jpg" style="height: 170px;">
+                    <article class="right magic_trackpad_2021 aj-product-image-card" style="height: 170px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Magic_Trackpad_Black.jpg" alt="Magic Trackpad 3, Lightning" width="572" height="572" loading="lazy" decoding="async" style="width:50%;height:auto;left:78%;top:-30%;transform:translate(-78%,30%);"></span>
                         <hgroup>
                             <h2 style="width:100%">Magic Trackpad 3, Lightning*</h2>
                             <h3>трекпад</h3>
@@ -3332,7 +3334,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
          <li class="pre_cancel" style="display: flex; justify-content: space-between;">
-                    <article style="background-position: 185px 35px!important; background-size: 50%; height: 200px;" class="left keyboard_with_num_2024" data-original="../images/keyboard_num.jpeg">
+                    <article style="background-position: 185px 35px!important; background-size: 50%; height: 200px;" class="left keyboard_with_num_2024 aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/keyboard_num.jpeg" alt="Magic Keyboard 2024 с Touch ID, USB-C" width="1144" height="1144" loading="lazy" decoding="async" style="width:50%;height:auto;left:185px;top:35px;transform:translate(0px,0px);"></span>
                         <hgroup style="width: 100%; height: 160px; margin-top: -4px;">
                             <hgroup>
                                 <hgroup>
@@ -3346,7 +3348,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                             </hgroup>
                         </hgroup>
                     </article>
-                    <article style="background-position: 185px 35px !important; background-size: 50%; height: 200px;" class="right" data-original="../images/keyboard_black_num.jpeg">
+                    <article style="background-position: 185px 35px !important; background-size: 50%; height: 200px;" class="right aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/keyboard_black_num.jpeg" alt="Magic Keyboard 2024 с Touch ID, USB-C" width="1144" height="1144" loading="lazy" decoding="async" style="width:50%;height:auto;left:185px;top:35px;transform:translate(0px,0px);"></span>
                         <hgroup style="width: 100%; height: 160px; margin-top: -4px;">
                             <hgroup>
                                 <hgroup>
@@ -3365,7 +3367,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
                 <li class="pre_cancel" style="display: flex; justify-content: space-between;">
-                    <article style="background-position: 160px 40px !important; height: 200px;" class="left keyboard_with_num_2021" data-original="../images/magic-keyboard-with-num.jpg">
+                    <article style="background-position: 160px 40px !important; height: 200px;" class="left keyboard_with_num_2021 aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magic-keyboard-with-num.jpg" alt="Magic Keyboard 2021 с Touch ID, Lightning" width="1000" height="1000" loading="lazy" decoding="async" style="width:50%;height:auto;left:160px;top:40px;transform:translate(0px,0px);"></span>
                         <hgroup style="width: 100%; height: 140px; margin-top: -4px;">
                             <hgroup>
                                 <hgroup>
@@ -3380,7 +3382,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         </hgroup>
 
                     </article>
-                    <article style="background-position: 160px 96px !important; background-size: 61%; height: 200px;" class="right" data-original="../images/whitemagic.png">
+                    <article style="background-position: 160px 96px !important; background-size: 61%; height: 200px;" class="right aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/whitemagic.png" alt="Magic Keyboard 2021, Lightning" width="865" height="355" loading="lazy" decoding="async" style="width:61%;height:auto;left:160px;top:96px;transform:translate(0px,0px);"></span>
                         <hgroup style="width: 100%; height: 140px; margin-top: -4px;">
                             <hgroup>
                                 <hgroup>
@@ -3399,7 +3401,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
         
         <li class="pre_cancel" style="display: flex; justify-content: space-between;">
-                    <article style="background-position: 160px 40px !important; height: 200px;" class="left keyboard_with_num_2021" data-original="../images/magic-keyboard-with-num-black.jpg">
+                    <article style="background-position: 160px 40px !important; height: 200px;" class="left keyboard_with_num_2021 aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/magic-keyboard-with-num-black.jpg" alt="Magic Keyboard 2021 с Touch ID, Lightning" width="572" height="572" loading="lazy" decoding="async" style="width:50%;height:auto;left:160px;top:40px;transform:translate(0px,0px);"></span>
                         <hgroup style="width: 100%; height: 160px; margin-top: -4px;">
                             <hgroup>
                                 <hgroup>
@@ -3577,7 +3579,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
 	</p>
     
-	<small>&copy; 2011 - 2026 <a href="http://aj.ru">AJ.ru</a></small>
+	<small>&copy; 2011 - 2026 <a href="/">AJ.ru</a></small>
 </footer>
 <style>
 /* нормальный чекбокс */
