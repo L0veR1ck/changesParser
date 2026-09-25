@@ -4,6 +4,136 @@
     <!-- META -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=950">
+<script data-aj-image-scale>
+/* Raise responsive-image quality for actual page zoom; initial choices stay in HTML. */
+(function (window, document) {
+  'use strict';
+  if (window.AJImageScale) return;
+  var viewport = window.visualViewport;
+  var records = [], byImage = new WeakMap();
+  var started = false, scanned = false, managed = false, timer = 0, pendingFrame = 0;
+  var previousFloor = 1, reconcile = false;
+  var frame = window.requestAnimationFrame || function (callback) { return setTimeout(callback, 16); };
+  var phone430 = window.matchMedia('(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse)');
+  var phone500 = window.matchMedia('(max-device-width: 500px) and (orientation: portrait) and (pointer: coarse)');
+
+  function floor() { return phone430.matches ? 0.5 : phone500.matches ? 0.6 : 1; }
+  function factor() {
+    var minimum = floor(), scale = viewport && Number(viewport.scale);
+    // A safety margin applies only after genuine zoom beyond the static floor.
+    // At normal desktop scale, 1 must remain 1 (not 1.05 and the next candidate).
+    return scale > minimum + 0.001 ? scale * 1.05 : minimum;
+  }
+  function collect(root) {
+    var found = [], sources = root.querySelectorAll('source[data-aj-image-size]');
+    for (var i = 0; i < sources.length; i++) {
+      var source = sources[i], picture = source.parentNode;
+      var base = Number(source.getAttribute('data-aj-image-size'));
+      if (!(base > 0 && isFinite(base)) || !picture || picture.nodeName !== 'PICTURE') continue;
+      var img = picture.querySelector('img');
+      if (!img) continue;
+      var record = byImage.get(img);
+      if (!record) {
+        record = {img: img, sources: [], factor: 0};
+        byImage.set(img, record);
+        records.push(record);
+      }
+      if (!record.sources.some(function (entry) { return entry.node === source; })) {
+        record.sources.push({node: source, base: base});
+      }
+      if (found.indexOf(record) < 0) found.push(record);
+    }
+    return found;
+  }
+  function raise(record, requested) {
+    // Never overwrite normal responsive markup merely to restate its default.
+    if (!record.factor && viewport && requested <= floor()) return;
+    var next = Math.max(record.factor, requested);
+    if (next <= record.factor) return;
+    record.sources.forEach(function (entry) {
+      // Gallery error fallback may deliberately remove srcset; do not undo it.
+      if (!entry.node.hasAttribute('srcset')) return;
+      var value = (Math.round(entry.base * next * 1000) / 1000) + 'px';
+      if (entry.node.getAttribute('sizes') !== value) entry.node.setAttribute('sizes', value);
+    });
+    record.factor = next;
+    managed = true;
+  }
+  function run() {
+    pendingFrame = 0;
+    if (!started) return;
+    var requested = viewport ? factor() : 1;
+    var mustReconcile = reconcile;
+    reconcile = false;
+    if (viewport && requested <= floor() && !mustReconcile) return;
+    if (!scanned) { collect(document); scanned = true; }
+    var left = viewport ? viewport.offsetLeft : 0;
+    var top = viewport ? viewport.offsetTop : 0;
+    var right = left + (viewport ? viewport.width : window.innerWidth);
+    var bottom = top + (viewport ? viewport.height : window.innerHeight);
+    var visible = [];
+    // Batch layout reads before sizes writes. Do not activate inert noscript frames.
+    records.forEach(function (record) {
+      if (!record.img.isConnected || requested <= record.factor) return;
+      if (viewport && !record.factor && requested <= floor()) return;
+      var rect = record.img.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0 && rect.right > left && rect.left < right && rect.bottom > top && rect.top < bottom) visible.push(record);
+    });
+    visible.forEach(function (record) { raise(record, requested); });
+  }
+  function schedule(force) {
+    if (!started) return;
+    var currentFloor = floor();
+    if (force === true || (managed && currentFloor !== previousFloor)) reconcile = true;
+    previousFloor = currentFloor;
+    // A rotated, already-managed image may still need the new baseline when
+    // it later enters view; normal untouched pages do no scroll layout work.
+    if (managed && records.some(function (record) { return record.img.isConnected && record.factor > 0 && record.factor < currentFloor; })) reconcile = true;
+    if (viewport && factor() <= currentFloor && !reconcile) return;
+    window.clearTimeout(timer);
+    // Pinch/pan event bursts result in one pass after the gesture settles.
+    timer = window.setTimeout(function () {
+      timer = 0;
+      if (!pendingFrame) pendingFrame = frame(run);
+    }, 85);
+  }
+  function reveal(source) {
+    if (!source || !source.parentNode) return false;
+    var template = document.createElement('template');
+    template.innerHTML = source.textContent;
+    // template.content is inert: no smaller request can start before sizes is set.
+    var found = collect(template.content);
+    var requested = viewport && document.readyState === 'loading' ? floor() : viewport ? factor() : 1;
+    found.forEach(function (record) { raise(record, requested); });
+    source.parentNode.insertBefore(template.content, source);
+    source.parentNode.removeChild(source);
+    return true;
+  }
+  window.AJImageScale = Object.freeze({
+    reveal: reveal,
+    refresh: function () { scanned = false; schedule(true); }
+  });
+  function start() {
+    // visualViewport.scale can transiently be 1 while the initial HTML is parsing.
+    // Wait for the first complete layout before deciding to raise any live image.
+    frame(function () {
+      started = true;
+      previousFloor = floor();
+      schedule(!viewport);
+    });
+  }
+  if (viewport) {
+    viewport.addEventListener('resize', schedule, {passive: true});
+    viewport.addEventListener('scroll', schedule, {passive: true});
+  }
+  window.addEventListener('resize', schedule, {passive: true});
+  window.addEventListener('scroll', schedule, {passive: true});
+  window.addEventListener('pageshow', function () { schedule(managed); }, {passive: true});
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
+  else start();
+})(window, document);
+
+</script>
     <link rel="apple-touch-icon" href="apple-touch-favicon.png" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -12,11 +142,11 @@
     <meta http-equiv="Expires" content="0" />
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="css/style_main.css?v=focus-e4417a86942b">
-    <link rel="stylesheet" href="/css/semantic-headings.f63c331a5064.css">
-    <link rel="stylesheet" href="/css/cards-visible.efb44c5a07f6.css">
-    <link rel="stylesheet" href="css/iphone18-pro.css?v=e40f7d35c788">
+    <link rel="stylesheet" type="text/css" href="css/reset.min.78aba5572649.css" />
+    <link rel="stylesheet" type="text/css" href="css/style_main.min.b833da461f1c.css">
+    <link rel="stylesheet" href="/css/semantic-headings.min.ce4f9acc3af7.css">
+    <link rel="stylesheet" href="/css/cards-visible.min.96fccd464704.css">
+    <link rel="stylesheet" href="css/iphone18-pro.min.f74b97686b23.css">
     <script>
         if (location.protocol != 'https:') {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
@@ -260,15 +390,14 @@
   parsedNow();
 }());
     </script>
-        <!-- JS -->
+            <!-- JS -->
     <script src="js/jquery-1.7.1.min.js" type="text/javascript" defer></script>
-    <script src="js/jquery.transit.min.js" type="text/javascript" defer></script>
-    <script src="js/jquery.easing.1.3.js" type="text/javascript" defer></script>
-    <script src="js/jquery.placeholder.min.js" type="text/javascript" defer></script>
-        
-    <script src="js/custom-deferred.49b498b25fe9.js" type="text/javascript" defer></script>
+        <script src="js/jquery.easing.1.3.js" type="text/javascript" defer></script>
+            
+    <script src="js/custom-deferred.1072dcf5683e.js" type="text/javascript" defer></script>
     
 
+    
     <meta name="google-site-verification" content="4s1DqL_eAc9y-AXUnpJDGG3DkJxrDBzl4TJ7XRVU76s" />
 
     
@@ -299,8 +428,9 @@
 
     </style>
     <script src="/js/chat-start.8291210b4ad0.js" data-jivo-src="https://code-eu1.jivosite.com/widget/xqSQBRpli3" defer></script>
-        <script src="/js/scrollup-deferred.7b422351aac2.js" defer></script>
-        <!-- Yandex.Metrika counter -->
+            <script src="/js/scrollup-deferred.7b422351aac2.js" defer></script>
+        
+    <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -313,11 +443,12 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/105525274" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-    <link rel="stylesheet" href="css/catalog-20260918.css?v=e7381b1293bf">    <script src="/js/inp-monitor.3191a497c2ca.js" defer></script>
+    <link rel="stylesheet" href="css/catalog-20260918.min.e23367ee1971.css">    <script src="/js/inp-monitor.3191a497c2ca.js" defer></script>
     <!-- AJ_MOBILE_INPUTS -->
-    <link rel="stylesheet" href="/css/mobile-inputs.b1f359d7ef6b.css">
+    
+        <link rel="stylesheet" href="/css/mobile-inputs.min.350aeb80f59a.css">
     <script src="/js/mobile-inputs.1a612dc68670.js"></script>
-    <!-- /AJ_MOBILE_INPUTS -->
+        <!-- /AJ_MOBILE_INPUTS -->
 </head>
 <body>
 <!-- header-->
@@ -368,7 +499,7 @@
 
 		<ul class="socials">
 						<li class="vkontakte"><a href="https://vk.com/ajlovesyou" target="_blank" style="background-image: url(../images/vk.png); background-position: 0 0!important;"></a></li>
-            <li class="telegram" style="margin-left: 5px!important;"><a href="https://t.me/applejesuschannel" target="_blank" style="background-image: url(../images/telegram.jpg); background-size: 100%; border-radius: 5px;"></a></li>
+            <li class="telegram" style="margin-left: 5px!important;"><a href="https://t.me/applejesuschannel" target="_blank" style="background-image: url(/images/responsive-20260925b/telegram-100.b1de83b56a9b.webp); background-size: 100%; border-radius: 5px;"></a></li>
 			<li class="twitter" style="margin-left: 5px!important;"><a href="https://x.com/applejesus" target="_blank"></a></li>
 		</ul>
 		<!-- <address>
@@ -416,11 +547,11 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <!-- END header -->
 <!-- END header -->
 
-<link rel="stylesheet" href="/css/catalog-navigation.5a6e2c884dae.css">
-<link rel="stylesheet" href="/css/silicone-cases.2ad9e9a54950.css">
-<link rel="stylesheet" href="/css/accessories-20260923.3297ab7a99c4.css">
+<link rel="stylesheet" href="/css/catalog-navigation.min.925d66ccfee0.css">
+<link rel="stylesheet" href="/css/silicone-cases.min.7f606a2ceb96.css">
+<link rel="stylesheet" href="/css/accessories-20260923.min.eb382559249a.css">
 <!-- content -->
-<link rel="stylesheet" href="/css/product-images.18b27d448abf.css">
+<link rel="stylesheet" href="/css/product-images.min.665f23d647b0.css">
 <section class="content">
     
     <div class="catalog-toolbar" id="catalog-toolbar">
@@ -555,7 +686,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <h2>iPhone Duo*</h2>
 <p class="autumn-arrival">Скоро</p>
 <ul class="autumn-colors"><li>Night Sky / Star White</li></ul>
-<div class="duo-gallery"><div class="duo-view"><picture><source type="image/webp" srcset="/images/optimized-20260924/duo-night-sky.ce4fe43ad37b.webp"><img class="duo-photo" src="images/catalog-20260918/duo-night-sky.png?v=9d119d315d93" alt="iPhone Duo — Night Sky" width="940" height="1112"></picture></div><div class="duo-view"><picture><source type="image/webp" srcset="/images/optimized-20260924/duo-star-white.b84ceca203e8.webp"><img class="duo-photo" src="images/catalog-20260918/duo-star-white.png?v=3599027fb177" alt="iPhone Duo — Star White" width="940" height="1112"></picture></div></div>
+<div class="duo-gallery"><div class="duo-view"><picture><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/duo-night-sky-424.257d9d117e7c.webp 424w, /images/responsive-20260925b/duo-night-sky-840.41c432835015.webp 840w, /images/responsive-20260925b/duo-night-sky-940.6d3f70ac9a5b.webp 940w" data-aj-image-size="420" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 210px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 252px, 420px"><img style="aspect-ratio:940 / 1112;" class="duo-photo" src="images/catalog-20260918/duo-night-sky.png?v=9d119d315d93" alt="iPhone Duo — Night Sky" width="940" height="1112"></picture></div><div class="duo-view"><picture><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/duo-star-white-424.57979c074199.webp 424w, /images/responsive-20260925b/duo-star-white-840.5f22cb9d3d7a.webp 840w, /images/responsive-20260925b/duo-star-white-940.4f0e7ef40549.webp 940w" data-aj-image-size="420" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 210px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 252px, 420px"><img style="aspect-ratio:940 / 1112;" class="duo-photo" src="images/catalog-20260918/duo-star-white.png?v=3599027fb177" alt="iPhone Duo — Star White" width="940" height="1112"></picture></div></div>
 <ul class="autumn-options"><li class="autumn-sim">eSIM + eSIM</li>
 <li>Duo 256GB &mdash; <span>звоните!</span></li><li>Duo 512GB &mdash; <span>звоните!</span></li><li>Duo 1TB &mdash; <span>звоните!</span></li><li>Duo 2TB &mdash; <span>звоните!</span></li></ul>
 <img class="autumn-new" src="images/new.png" alt="Новинка">
@@ -567,7 +698,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
   <article class="iphone18_pro" style="text-align:center;">
     <h2>iPhone 18 Pro*</h2>
     <ul class="iphone18-colors"><li>чёрный/серебристый/«ледниковый голубой»/бордовый</li></ul>
-    <img class="iphone18-photo" src="images/iphone18-pro.jpg?v=a81ef4681ac4" alt="iPhone 18 Pro: чёрный, серебристый, ледниковый голубой и бордовый" width="1000" height="949">
+    <picture style="display: contents;" data-aj-iphone18-responsive><source type="image/webp" srcset="/images/optimized/two-images-20260925/iphone18-pro-512.f97996eb9091.webp 512w, /images/optimized/two-images-20260925/iphone18-pro-640.ad0ba7e71ad0.webp 640w, /images/optimized/two-images-20260925/iphone18-pro-800.8d6925dd8010.webp 800w, /images/optimized/two-images-20260925/iphone18-pro-1000.da376d458de3.webp 1000w" sizes="(scripting: enabled) and (max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) 190px, (scripting: enabled) and (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) 228px, 380px" data-aj-image-size="380"><img style="position:static;display:block;width:100%;height:360px;object-fit:contain;margin:-17px auto 0;clip-path:inset(17px 0 0)" class="iphone18-photo" src="images/iphone18-pro.jpg?v=a81ef4681ac4" alt="iPhone 18 Pro: чёрный, серебристый, ледниковый голубой и бордовый" width="1000" height="949"></picture>
     <div class="iphone18-options">
 <ul>
 <li class="iphone18-sim">eSIM + nano-SIM</li>
@@ -613,7 +744,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 </li>
 
 <li id="iphone_17_pro_"><span id="iphone_17_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_17_Pro.jpg" alt="iPhone 17 Pro" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphone17_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925/iphone-17-pro-960.55c9468c0115.webp 960w, /images/responsive-20260925/iphone-17-pro-1920.28609f6733a0.webp 1920w, /images/responsive-20260925/iphone-17-pro-2880.50af38c3e5f7.webp 2880w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="../images/iPhone_17_Pro.jpg" alt="iPhone 17 Pro" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone 17 Pro*</h2>
                 <ul>
@@ -672,7 +803,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_air_"><span id="iphone_air" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphoneair aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_Air.jpg" alt="iPhone Air" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphoneair aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925/iphone-air-960.e878e64c8cac.webp 960w, /images/responsive-20260925/iphone-air-1920.5bdc97e4e674.webp 1920w, /images/responsive-20260925/iphone-air-2880.f1d85ac77c1f.webp 2880w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="../images/iPhone_Air.jpg" alt="iPhone Air" width="5120" height="2880" loading="eager" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone Air*</h2>
                 <ul>
@@ -701,7 +832,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_17_"><span id="iphone_17" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_17.jpg" alt="iPhone 17" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPhone_17-1728.044fd84dc813.webp 1728w, /images/iPhone_17.jpg 5120w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="../images/iPhone_17.jpg" alt="iPhone 17" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone 17*</h2>
                 <ul>
@@ -734,7 +865,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
                 
         <li id="iphone_17e_"><span id="iphone_17e" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 20%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone_17e.jpg" alt="iPhone 17e" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:20%;transform:translate(-80%,-20%);"></span>
+            <article class="iphone17 aj-product-image-card" style="background-size: 100%; background-position: 80% 20%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iphone_17e-1728.7ba6b45b0c8d.webp 1728w, /images/iphone_17e.jpg 5120w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="../images/iphone_17e.jpg" alt="iPhone 17e" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:20%;transform:translate(-80%,-20%);"></picture>
 
                 <h2>iPhone 17e*</h2>
                 <ul>
@@ -767,7 +898,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_16_pro_"><span id="iphone_16_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone16_pro aj-product-image-card" style="background-size: 90%; background-position: 50% 20%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_16_Pro.jpg" alt="iPhone 16 Pro" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:20%;transform:translate(-50%,-20%);"></span>
+            <article class="iphone16_pro aj-product-image-card" style="background-size: 90%; background-position: 50% 20%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPhone_16_Pro-1568.3715a74bafd0.webp 1568w, /images/iPhone_16_Pro.jpg 5120w" data-aj-image-size="855" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 427.5px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 513px, 855px"><img class="aj-product-image" src="../images/iPhone_16_Pro.jpg" alt="iPhone 16 Pro" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:20%;transform:translate(-50%,-20%);"></picture>
 
                 <h2>iPhone 16 Pro*</h2>
                 <ul>
@@ -815,7 +946,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
         
         
         <li id="iphone_16_"><span id="iphone_16" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone16 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPhone_16.jpg" alt="iPhone 16" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphone16 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPhone_16-1728.7059d7e52541.webp 1728w, /images/iPhone_16.jpg 5120w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="../images/iPhone_16.jpg" alt="iPhone 16" width="5120" height="2880" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone 16*</h2>
                 <ul>
@@ -1030,7 +1161,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                
         <li id="iphone_14_pro_"><span id="iphone_14_pro" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone14_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/iPhone_14_Pro.cbfcecb141cb.webp" alt="iPhone 14 Pro" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphone14_pro aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/iphone-14-pro-952.56734318a411.webp 952w, /images/responsive-20260925b/iphone-14-pro-1904.6aa0ce8ee50f.webp 1904w, /images/responsive-20260925b/iphone-14-pro-2560.76496e81f624.webp 2560w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="/images/optimized/iPhone_14_Pro.cbfcecb141cb.webp" alt="iPhone 14 Pro" width="2560" height="1440" loading="lazy" decoding="async" style="aspect-ratio:2560 / 1440;width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone 14 Pro*</h2>
                 <ul>
@@ -1078,7 +1209,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         <li id="iphone_14_"><span id="iphone_14" class="for_sticky_header catalog-section-anchor"></span>
-            <article class="iphone14 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/iPhone_14_new.763daf19a2e9.webp" alt="iPhone 14" width="2560" height="1440" loading="lazy" decoding="async" style="width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></span>
+            <article class="iphone14 aj-product-image-card" style="background-size: 100%; background-position: 80% 10%; text-align: center;"><picture class="aj-product-image-layer"><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/iphone-14-952.1d3c582c8cdd.webp 952w, /images/responsive-20260925b/iphone-14-1904.9105142b25a0.webp 1904w, /images/responsive-20260925b/iphone-14-2560.ea7770ce7a69.webp 2560w" data-aj-image-size="950" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 475px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 570px, 950px"><img class="aj-product-image" src="/images/optimized/iPhone_14_new.763daf19a2e9.webp" alt="iPhone 14" width="2560" height="1440" loading="lazy" decoding="async" style="aspect-ratio:2560 / 1440;width:100%;height:auto;left:80%;top:10%;transform:translate(-80%,-10%);"></picture>
 
                 <h2>iPhone 14*</h2>
                 <ul>
@@ -1460,12 +1591,12 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         </div>
         <figure class="scs-colors">
             <div class="scs-photos">
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-black.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Чёрный" decoding="async" loading="lazy"></div>
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-navy-blue.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Тёмно-синий" decoding="async" loading="lazy"></div>
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-crisp-blue.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Голубой" decoding="async" loading="lazy"></div>
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-burgundy.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Бордовый" decoding="async" loading="lazy"></div>
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-olive.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Оливковый" decoding="async" loading="lazy"></div>
-<div class="scs-photo"><img src="/images/silicone-20260923/iphone18-pro-silicone-magenta.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Маджента" decoding="async" loading="lazy"></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-black-254.008937fd8bcf.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-black-508.b22e95e735b2.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-black-762.4fdb9420932e.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-black.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Чёрный" decoding="async" loading="lazy"></picture></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-navy-blue-254.9f87794ed1f7.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-navy-blue-508.736b797e0026.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-navy-blue-762.630ac8a4cb81.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-navy-blue.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Тёмно-синий" decoding="async" loading="lazy"></picture></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-crisp-blue-254.3c95c7abc78e.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-crisp-blue-508.526f6ef08b51.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-crisp-blue-762.5b62f763f8c7.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-crisp-blue.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Голубой" decoding="async" loading="lazy"></picture></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-burgundy-254.05893657f345.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-burgundy-508.bd8b69155d6d.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-burgundy-762.d48ac131d08a.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-burgundy.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Бордовый" decoding="async" loading="lazy"></picture></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-olive-254.bc98316f6773.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-olive-508.d4d036fedb81.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-olive-762.d76201a8af90.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-olive.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Оливковый" decoding="async" loading="lazy"></picture></div>
+<div class="scs-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 3dppx)" srcset="/images/responsive-20260925c/iphone18-pro-silicone-magenta-254.7508aa717f75.webp 254w, /images/responsive-20260925c/iphone18-pro-silicone-magenta-508.208beb6e7b84.webp 508w, /images/responsive-20260925c/iphone18-pro-silicone-magenta-762.81c35eb25310.webp 762w" data-aj-image-size="254" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 127px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 152.4px, 254px"><img src="/images/silicone-20260923/iphone18-pro-silicone-magenta.jpg" width="1144" height="1144" alt="Силиконовый чехол iPhone 18 Pro — Маджента" decoding="async" loading="lazy"></picture></div>
 </div>
             <figcaption>Цвета чехлов для iPhone 18 Pro / Pro Max</figcaption>
         </figure>
@@ -1501,12 +1632,12 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         </div>
         <figure class="twc-colors">
             <div class="twc-photos">
-<div class="twc-photo"><picture><source type="image/webp" srcset="/images/optimized-20260924/techwoven-black.ec36b7edf174.webp"><img src="/images/accessories-20260923/techwoven-cases/black.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Чёрный" decoding="async" loading="lazy"></picture></div>
-<div class="twc-photo"><img src="/images/accessories-20260923/techwoven-cases/chambrayblue.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Джинсовый синий" decoding="async" loading="lazy"></div>
-<div class="twc-photo"><picture><source type="image/webp" srcset="/images/optimized-20260924/techwoven-taupe.6c20c30ce8b4.webp"><img src="/images/accessories-20260923/techwoven-cases/taupe.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Серо-коричневый" decoding="async" loading="lazy"></picture></div>
-<div class="twc-photo"><img src="/images/accessories-20260923/techwoven-cases/olive.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Оливковый" decoding="async" loading="lazy"></div>
-<div class="twc-photo"><img src="/images/accessories-20260923/techwoven-cases/mulberry.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Тутовый" decoding="async" loading="lazy"></div>
-<div class="twc-photo"><picture><source type="image/webp" srcset="/images/optimized-20260924/techwoven-burgundy.acaa7196adc8.webp"><img src="/images/accessories-20260923/techwoven-cases/burgundy.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Бордовый" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/techwoven-black-508.55911afd5a42.webp 508w" sizes="254px"><source type="image/webp" srcset="/images/optimized-20260924/techwoven-black.ec36b7edf174.webp"><img src="/images/accessories-20260923/techwoven-cases/black.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Чёрный" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/chambrayblue-508.6dd972afb6d0.webp 508w" sizes="254px"><img src="/images/accessories-20260923/techwoven-cases/chambrayblue.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Джинсовый синий" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/techwoven-taupe-508.69b8f0c68536.webp 508w" sizes="254px"><source type="image/webp" srcset="/images/optimized-20260924/techwoven-taupe.6c20c30ce8b4.webp"><img src="/images/accessories-20260923/techwoven-cases/taupe.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Серо-коричневый" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/olive-508.8a8c8ff277fc.webp 508w" sizes="254px"><img src="/images/accessories-20260923/techwoven-cases/olive.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Оливковый" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/mulberry-508.c9047f5568d8.webp 508w" sizes="254px"><img src="/images/accessories-20260923/techwoven-cases/mulberry.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Тутовый" decoding="async" loading="lazy"></picture></div>
+<div class="twc-photo"><picture><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/techwoven-burgundy-508.bcb2ca639550.webp 508w" sizes="254px"><source type="image/webp" srcset="/images/optimized-20260924/techwoven-burgundy.acaa7196adc8.webp"><img src="/images/accessories-20260923/techwoven-cases/burgundy.jpg" width="1144" height="1144" alt="TechWoven для iPhone 18 Pro — Бордовый" decoding="async" loading="lazy"></picture></div>
 </div>
             <figcaption>Цвета TechWoven для iPhone 18 Pro / Pro Max</figcaption>
         </figure>
@@ -1515,7 +1646,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article>
                 </li>
         <li>
-                    <article class="MagSafe1 aj-product-image-card" style="background-size: 35%; background-position: 92%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Finewoven.cfbde8b9e423.webp" alt="FineWoven чехол" width="1200" height="1200" loading="lazy" decoding="async" style="width:35%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></span>
+                    <article class="MagSafe1 aj-product-image-card" style="background-size: 35%; background-position: 92%;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925/finewoven-cases-336.0db549bb0fe0.webp 336w, /images/responsive-20260925c/optimized-Finewoven.cfbde8b9e423-512.e17496b6eec0.webp 512w, /images/responsive-20260925/finewoven-cases-672.1c51c438c864.webp 672w, /images/responsive-20260925/finewoven-cases-1008.28406df28143.webp 1008w" data-aj-image-size="332.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 166.25px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 199.5px, 332.5px"><img class="aj-product-image" src="/images/optimized/Finewoven.cfbde8b9e423.webp" alt="FineWoven чехол" width="1200" height="1200" loading="lazy" decoding="async" style="width:35%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></picture>
                         <h2>FineWoven чехол*</h2>
                         <br />
                         <ul>
@@ -1526,7 +1657,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 <li>
-                    <article class="MagSafe1 aj-product-image-card" style="background-size: 33%; background-position: 92%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/Leather_case.0f50cb3f1847.webp" alt="Кожаный чехол" width="1036" height="1144" loading="lazy" decoding="async" style="width:33%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></span>
+                    <article class="MagSafe1 aj-product-image-card" style="background-size: 33%; background-position: 92%;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925/leather-cases-320.5a7daf853d32.webp 320w, /images/responsive-20260925c/optimized-Leather_case.0f50cb3f1847-480.ba438dc024db.webp 480w, /images/responsive-20260925/leather-cases-640.19b8864334b3.webp 640w, /images/responsive-20260925/leather-cases-960.7cc5f8e6dfb4.webp 960w" data-aj-image-size="313.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 156.75px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 188.1px, 313.5px"><img class="aj-product-image" src="/images/optimized/Leather_case.0f50cb3f1847.webp" alt="Кожаный чехол" width="1036" height="1144" loading="lazy" decoding="async" style="aspect-ratio:1036 / 1144;width:33%;height:auto;left:92%;top:50%;transform:translate(-92%,-50%);"></picture>
                         <h2>Кожаный чехол*</h2>
                         <br />
                         <ul>
@@ -1551,12 +1682,12 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
     </div>
     <figure class="fw-wallet-colors">
         <div class="fw-wallet-photos">
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-black.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Чёрный" decoding="async" loading="lazy"></div>
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-navy.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Тёмно-синий" decoding="async" loading="lazy"></div>
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-wildflower-blue.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Васильковый" decoding="async" loading="lazy"></div>
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-dark-olive.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Тёмно-оливковый" decoding="async" loading="lazy"></div>
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-magenta.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Пурпурный" decoding="async" loading="lazy"></div>
-<div class="fw-wallet-photo"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-burgundy.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Бордовый" decoding="async" loading="lazy"></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-black-604.1ae230ec316d.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-black.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Чёрный" decoding="async" loading="lazy"></picture></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-navy-604.bf6f3694b2b1.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-navy.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Тёмно-синий" decoding="async" loading="lazy"></picture></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-wildflower-blue-604.492e44aca809.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-wildflower-blue.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Васильковый" decoding="async" loading="lazy"></picture></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-dark-olive-604.5604696ae25d.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-dark-olive.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Тёмно-оливковый" decoding="async" loading="lazy"></picture></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-magenta-604.89c9c50cfc27.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-magenta.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Пурпурный" decoding="async" loading="lazy"></picture></div>
+<div class="fw-wallet-photo"><picture style="display:contents"><source type="image/webp" media="(max-resolution: 2dppx)" srcset="/images/responsive-20260925c/finewoven-wallet-burgundy-604.c7d93a6dfc7d.webp 604w" sizes="302px"><img src="/images/accessories-20260923/finewoven-wallet/finewoven-wallet-burgundy.jpg" width="1000" height="1000" alt="FineWoven Wallet с MagSafe — Бордовый" decoding="async" loading="lazy"></picture></div>
 </div>
     </figure>
     <p class="fw-wallet-footnote">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
@@ -1585,7 +1716,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 <li>
-                    <article class="homepod_mini aj-product-image-card" style="background-size: 45%; background-position: 101% 115%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/HomePod_mini_color.png" alt="HomePod mini" width="704" height="424" loading="lazy" decoding="async" style="width:45%;height:auto;left:101%;top:115%;transform:translate(-101%,-115%);"></span>
+                    <article class="homepod_mini aj-product-image-card" style="background-size: 45%; background-position: 101% 115%;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/HomePod_mini_color-672.76a0aead5b68.webp 672w, /images/HomePod_mini_color.png 704w" data-aj-image-size="427.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 213.75px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 256.5px, 427.5px"><img class="aj-product-image" src="../images/HomePod_mini_color.png" alt="HomePod mini" width="704" height="424" loading="lazy" decoding="async" style="width:45%;height:auto;left:101%;top:115%;transform:translate(-101%,-115%);"></picture>
                         <h2>HomePod mini*</h2>
                         <ul>
                             <li>чёрная/белая/оранжевая/жёлтая/синяя &mdash; <span>15 800</span> ₽</li>
@@ -1598,7 +1729,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
 
         <li id="macbook_neo_"><span id="macbook_neo" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="MacBook_Neo aj-product-image-card" style="background: 50% 10%  no-repeat; background-size: 88%;"><span class="aj-product-image-layer"><img class="aj-product-image" src=" images/Neo.jpg" alt="MacBook Neo 13&quot; A18 Pro 2026" width="5120" height="3280" loading="lazy" decoding="async" style="width:88%;height:auto;left:50%;top:10%;transform:translate(-50%,-10%);"></span>
+                    <article class="MacBook_Neo aj-product-image-card" style="background: 50% 10%  no-repeat; background-size: 88%;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/Neo-1280.ed843d287f28.webp 1280w, /images/Neo.jpg 5120w" data-aj-image-size="836" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 418px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 501.6px, 836px"><img class="aj-product-image" src=" images/Neo.jpg" alt="MacBook Neo 13&quot; A18 Pro 2026" width="5120" height="3280" loading="lazy" decoding="async" style="width:88%;height:auto;left:50%;top:10%;transform:translate(-50%,-10%);"></picture>
                         <h2 style="text-align:center;">MacBook Neo 13" A18 Pro 2026*</h2>
                         <p style="font-size: 20px; text-align: center; margin-top: -18px">«цитрусовый жёлтый»/розовый/серебристый/индиго</p>
                         <ul style="margin-top: 41%; text-align:center;">
@@ -1640,7 +1771,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 <article class="MacBook_Pro_16_2024 merged-macbook-pro merged-macbook-pro-m4">
 <h2>MacBook Pro 14&quot;/16&quot; M4*</h2>
 <p class="merged-pro-colors">«чёрный космос»/серебристый</p>
-<div class="merged-pro-photo-frame"><picture><source type="image/webp" srcset="/images/optimized-20260924/macbook-pro-m4.8882b2130f7b.webp"><img class="merged-pro-photo" src="images/mbp16_space.jpg" alt="MacBook Pro M4" loading="lazy" decoding="async" width="4000" height="3074"></picture></div>
+<div class="merged-pro-photo-frame"><picture><source type="image/webp" srcset="/images/responsive-20260925c/mbp16_space-1056.471884dfeef8.webp 1056w, /images/optimized-20260924/macbook-pro-m4.8882b2130f7b.webp 2000w" data-aj-image-size="578.156" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 289.078px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 346.8936px, 578.156px"><source type="image/webp" srcset="/images/optimized-20260924/macbook-pro-m4.8882b2130f7b.webp"><img class="merged-pro-photo" src="images/mbp16_space.jpg" alt="MacBook Pro M4" loading="lazy" decoding="async" width="4000" height="3074"></picture></div>
 <ul class="merged-pro-options"><li>Pro 14" M4 10-Core/ 16GB/ 512GB SSD 10-core GPU — <span>171 000</span> ₽</li><li>Pro 14" M4 10-Core/ 16GB/ 1TB SSD 10-core GPU — <span>179 000</span> ₽</li><li>Pro 14" M4 10-Core/ 24GB/ 1TB SSD 10-core GPU — <span>186 000</span> ₽</li><li class="merged-pro-group-start">Pro 14" M4 Pro 12-Core/ 24GB/ 512GB SSD 16-core GPU — <span>214 000</span> ₽</li><li>Pro 14" M4 Pro 14-Core/ 24GB/ 1TB SSD 20-core GPU — <span>224 000</span> ₽</li><li>Pro 14" M4 Max 14-Core/ 36GB/ 1TB SSD 32-core GPU — <span>290 000</span> ₽</li><li class="merged-pro-group-start">Pro 16" M4 Pro 14-Core/ 24GB/ 512GB SSD 20-core GPU — <span>217 000</span> ₽</li><li>Pro 16" M4 Pro 14-Core/ 48GB/ 512GB SSD 20-core GPU — <span>257 000</span> ₽</li><li>Pro 16" M4 Max 14-Core/ 36GB/ 1TB SSD 32-core GPU — <span>307 000</span> ₽</li><li>Pro 16" M4 Max 16-Core/ 48GB/ 1TB SSD 40-core GPU — <span>348 000</span> ₽</li><li class="merged-pro-group-start">Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li></ul>
 
 <a href="#" class="button">Купить</a>
@@ -1657,7 +1788,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 <article class="MacBook_Pro_16_2023 merged-macbook-pro merged-macbook-pro-m3">
 <h2>MacBook Pro 14&quot;/16&quot; M3*</h2>
 <p class="merged-pro-colors">M3 — «серый космос»/серебристый<br>M3 Pro / M3 Max — «чёрный космос»/серебристый</p>
-<div class="merged-pro-photo-frame"><img class="merged-pro-photo" src="images/Pro_16_M3.jpg" alt="MacBook Pro M3" loading="lazy" decoding="async" width="2000" height="1537"></div>
+<div class="merged-pro-photo-frame"><picture style="display:contents"><source type="image/webp" srcset="/images/responsive-20260925c/Pro_16_M3-1056.3cddf6ae9bfe.webp 1056w, /images/Pro_16_M3.jpg 2000w" data-aj-image-size="578.156" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 289.078px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 346.8936px, 578.156px"><img class="merged-pro-photo" src="images/Pro_16_M3.jpg" alt="MacBook Pro M3" loading="lazy" decoding="async" width="2000" height="1537"></picture></div>
 <ul class="merged-pro-options"><li>Pro 14" M3 8-Core/ 8GB/ 512GB SSD 10-core GPU — <span>114 000</span> ₽ </li><li>Pro 14" M3 8-Core/ 8GB/ 1TB SSD 10-core GPU — <span>124 000</span> ₽ </li><li class="merged-pro-group-start">Pro 14" M3 Pro 11-Core/ 18GB/ 512GB SSD 14-core GPU — <span>148 000</span> ₽ </li><li>Pro 14" M3 Pro 12-Core/ 18GB/ 1TB SSD 18-core GPU — <span>170 000</span> ₽ </li><li>Pro 14" M3 Max 14-Core/ 36GB/ 1TB SSD 30-core GPU — <span>235 000</span> ₽ </li><li class="merged-pro-group-start">Pro 16" M3 Pro 12-Core/ 18GB/ 512GB SSD 18-core GPU — <span>213 000</span> ₽ </li><li>Pro 16" M3 Pro 12-Core/ 36GB/ 512GB SSD 18-core GPU — <span>247 500</span> ₽ </li><li>Pro 16" M3 Max 14-Core/ 36GB/ 1TB SSD 30-core GPU — <span>290 000</span> ₽ </li><li>Pro 16" M3 Max 16-Core/ 48GB/ 1TB SSD 40-core GPU — <span>330 000</span> ₽ </li><li class="merged-pro-group-start">Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li></ul>
 
 <a href="#" class="button">Купить</a>
@@ -1674,7 +1805,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 <article class="MacBook_Pro_16_2023 merged-macbook-pro merged-macbook-pro-m2">
 <h2>MacBook Pro 14&quot;/16&quot; M2*</h2>
 <p class="merged-pro-colors">«серый космос»/серебристый</p>
-<div class="merged-pro-photo-frame"><img class="merged-pro-photo" src="/images/optimized/Pro_16_M2.fea6e7483fcb.webp" alt="MacBook Pro M2" loading="lazy" decoding="async" width="1280" height="983"></div>
+<div class="merged-pro-photo-frame"><picture><source type="image/webp" srcset="/images/responsive-20260925/macbook-pro-m2-640.a8ee00a55697.webp 640w, /images/responsive-20260925c/optimized-Pro_16_M2.fea6e7483fcb-896.2d9414012834.webp 896w, /images/optimized/Pro_16_M2.fea6e7483fcb.webp 1280w" data-aj-image-size="578.16" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 289.08px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 346.896px, 578.16px"><img style="aspect-ratio:1280 / 983;" class="merged-pro-photo" src="/images/optimized/Pro_16_M2.fea6e7483fcb.webp" alt="MacBook Pro M2" loading="lazy" decoding="async" width="1280" height="983"></picture></div>
 <ul class="merged-pro-options"><li>Pro 14" M2 Pro 10-Core/ 16GB/ 512GB SSD 16-core GPU — <span>160 000</span> ₽</li><li>Pro 14" M2 Pro 12-Core/ 16GB/ 1TB SSD 19-core GPU — <span>168 000</span> ₽</li><li>Pro 14" M2 Max 12-Core/ 32GB/ 1TB SSD 30-core GPU — <span>254 000</span> ₽</li><li class="merged-pro-group-start">Pro 16" M2 Pro 12-Core/ 16GB/ 512GB SSD 19-core GPU — <span>206 000</span> ₽</li><li>Pro 16" M2 Pro 12-Core/ 16GB/ 1TB SSD 19-core GPU — <span>225 000</span> ₽</li><li>Pro 16" M2 Max 12-Core/ 32GB/ 1TB SSD 38-core GPU — <span>320 000</span> ₽</li><li class="merged-pro-group-start">Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li></ul>
 
 <a href="#" class="button">Купить</a>
@@ -1875,7 +2006,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     
         
                 <li id="ipadpro-13-2025_"><span id="ipadpro-13-2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipadpro-13-2025 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Pro_13_2025.jpg" alt="iPad Pro 13&quot; 2025 (M5)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></span>
+                    <article class="ipadpro-13-2025 aj-product-image-card" style="background-position: -20% 0%; background-size: 130%;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPad_Pro_13_2025-1856.702188b6b952.webp 1856w, /images/iPad_Pro_13_2025.jpg 5120w" data-aj-image-size="1235" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 617.5px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 741px, 1235px"><img class="aj-product-image" src="../images/iPad_Pro_13_2025.jpg" alt="iPad Pro 13&quot; 2025 (M5)" width="5120" height="2880" loading="lazy" decoding="async" style="width:130%;height:auto;left:-20%;top:0%;transform:translate(20%,0%);"></picture>
 
                         <h2>iPad Pro 13" 2025 (M5)*</h2>
                         <ul>
@@ -2294,7 +2425,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_13_2025_"><span id="ipad_air_13_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 720px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_13_2025.jpg" alt="iPad Air 13&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></span>
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 720px;"><picture class="aj-product-image-layer"><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/ipad-air-13-m3-856.077e42b515ba.webp 856w, /images/responsive-20260925b/ipad-air-13-m3-1712.a5ac2a5b30d9.webp 1712w, /images/responsive-20260925b/ipad-air-13-m3-2568.604ccdfca3fa.webp 2568w" data-aj-image-size="855" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 427.5px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 513px, 855px"><img class="aj-product-image" src="../images/iPad_Air_13_2025.jpg" alt="iPad Air 13&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="aspect-ratio:5120 / 2880;width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></picture>
                     <h2>iPad Air 13" 2025 (M3)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2326,7 +2457,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_11_2025_"><span id="ipad_air_11_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018 aj-product-image-card" style="background-size: 95%; background-position: 450%; height: 720px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_11_2025.jpg" alt="iPad Air 11&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="width:95%;height:auto;left:450%;top:50%;transform:translate(-450%,-50%);"></span>
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 95%; background-position: 450%; height: 720px;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPad_Air_11_2025-1376.20bf79b05852.webp 1376w, /images/iPad_Air_11_2025.jpg 5120w" data-aj-image-size="902.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 451.25px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 541.5px, 902.5px"><img class="aj-product-image" src="../images/iPad_Air_11_2025.jpg" alt="iPad Air 11&quot; 2025 (M3)" width="5120" height="2880" loading="lazy" decoding="async" style="width:95%;height:auto;left:450%;top:50%;transform:translate(-450%,-50%);"></picture>
                     <h2>iPad Air 11" 2025 (M3)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2359,7 +2490,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_13_2024_"><span id="ipad_air_13_2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 750px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_13_2024.jpg" alt="iPad Air 13&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></span>
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 90%; background-position: 330% 100%; height: 750px;"><picture class="aj-product-image-layer"><source style="display:none;" type="image/webp" srcset="/images/responsive-20260925b/ipad-air-13-m2-856.65d670d01d68.webp 856w, /images/responsive-20260925c/iPad_Air_13_2024-1312.df488a62c477.webp 1312w, /images/responsive-20260925b/ipad-air-13-m2-1712.54a8e4a2af05.webp 1712w, /images/responsive-20260925b/ipad-air-13-m2-2568.d6fe8f9f4ae3.webp 2568w" data-aj-image-size="855" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 427.5px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 513px, 855px"><img class="aj-product-image" src="../images/iPad_Air_13_2024.jpg" alt="iPad Air 13&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="aspect-ratio:5120 / 2880;width:90%;height:auto;left:330%;top:100%;transform:translate(-330%,-100%);"></picture>
                     <h2>iPad Air 13" 2024 (M2)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2393,7 +2524,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="ipad_air_11_2024_"><span id="ipad_air_11_2024" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="ipad2018 aj-product-image-card" style="background-size: 105%; background-position: -500%; height: 750px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_Air_2024_.jpg" alt="iPad Air 11&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="width:105%;height:auto;left:-500%;top:50%;transform:translate(500%,-50%);"></span>
+                    <article class="ipad2018 aj-product-image-card" style="background-size: 105%; background-position: -500%; height: 750px;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/iPad_Air_2024_-1504.ef0f99854bcd.webp 1504w, /images/iPad_Air_2024_.jpg 5120w" data-aj-image-size="997.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 498.75px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 598.5px, 997.5px"><img class="aj-product-image" src="../images/iPad_Air_2024_.jpg" alt="iPad Air 11&quot; 2024 (M2)" width="5120" height="2880" loading="lazy" decoding="async" style="width:105%;height:auto;left:-500%;top:50%;transform:translate(500%,-50%);"></picture>
                     <h2>iPad Air 11" 2024 (M2)*</h2>
                     <ul>
                         <li>«серый космос»/«сияющая звезда»/</li>
@@ -2815,7 +2946,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article></li>
 
 <li id="mac_studio_2025_"><span id="mac_studio_2025" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 215px; background-size: 90%; height: 750px; text-align: center; opacity: 1; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg&quot;);"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg" alt="Mac Studio 2025" width="2000" height="1537" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:215px;transform:translate(-50%,0px);"></span>
+                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 215px; background-size: 90%; height: 750px; text-align: center; opacity: 1; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg&quot;);"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/optimized-20260924-mac-studio-m4.30cd0808efa4-1312.c0ea3e0159b7.webp 1312w, /images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg 2000w" data-aj-image-size="855" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 427.5px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 513px, 855px"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-m4.30cd0808efa4.jpg" alt="Mac Studio 2025" width="2000" height="1537" loading="lazy" decoding="async" style="width:90%;height:auto;left:50%;top:215px;transform:translate(-50%,0px);"></picture>
                         <h2>Mac Studio 2025*</h2>
                         <ul>
                             <li>Mac Studio M4 Max 14-Core/ 36GB/ 512GB SSD 32-core GPU — <span>330 000</span> ₽</li>
@@ -2834,7 +2965,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
                 <li id="mac_studio_2023_"><span id="mac_studio_2023" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 235px; background-size: 75%; height: 700px; text-align: center; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg" alt="Mac Studio 2023" width="2000" height="1537" loading="lazy" decoding="async" style="width:75%;height:auto;left:50%;top:235px;transform:translate(-50%,0px);"></span>
+                    <article class="mac_studio animate aj-product-image-card" style="background-position: 50% 235px; background-size: 75%; height: 700px; text-align: center; display: block; background-image: url(&quot;/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg&quot;); opacity: 1;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/optimized-20260924-mac-studio-2023.7bde985bb1dc-1088.9134571669da.webp 1088w, /images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg 2000w" data-aj-image-size="712.5" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 356.25px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 427.5px, 712.5px"><img class="aj-product-image" src="/images/optimized-20260924/mac-studio-2023.7bde985bb1dc.jpg" alt="Mac Studio 2023" width="2000" height="1537" loading="lazy" decoding="async" style="width:75%;height:auto;left:50%;top:235px;transform:translate(-50%,0px);"></picture>
                         <h2>Mac Studio 2023*</h2>
                         <ul>
                             <li>Mac Studio M2 Max 12-Core/ 32GB/ 512GB SSD 30-core GPU — <span>242 000</span> ₽</li>
@@ -2880,7 +3011,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </article></li>
 
 <li id="macmini24_"><span id="macmini24" class="for_sticky_header catalog-section-anchor"></span>
-                    <article class="new_mac_mini animate aj-product-image-card" style="background-size: 60%; background-position: 48% 210%; display: block; background-image: url(&quot;../images/mac-mini-2024.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/mac-mini-2024.jpg" alt="Mac mini M4" width="4000" height="3074" loading="lazy" decoding="async" style="width:60%;height:auto;left:48%;top:210%;transform:translate(-48%,-210%);"></span>
+                    <article class="new_mac_mini animate aj-product-image-card" style="background-size: 60%; background-position: 48% 210%; display: block; background-image: url(&quot;../images/mac-mini-2024.jpg&quot;); opacity: 1;"><picture class="aj-product-image-layer"><source type="image/webp" srcset="/images/responsive-20260925c/mac-mini-2024-1056.db0e2f8bde70.webp 1056w, /images/mac-mini-2024.jpg 4000w" data-aj-image-size="570" sizes="(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 285px, (max-device-width: 500px) and (orientation: portrait) and (pointer: coarse) and (scripting: enabled) 342px, 570px"><img class="aj-product-image" src="../images/mac-mini-2024.jpg" alt="Mac mini M4" width="4000" height="3074" loading="lazy" decoding="async" style="width:60%;height:auto;left:48%;top:210%;transform:translate(-48%,-210%);"></picture>
                         <h2>Mac mini M4*</h2>
                         <ul>
                             <li>Mac mini 2024 M4 10-Core/ 16GB/ 256GB SSD 10-core GPU — <span>78 000</span> ₽</li>
@@ -3523,7 +3654,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 </nav>
 </section>
 <script src="/js/catalog-navigation-early.9040c741554b.js" async></script>
-<script src="js/price-refresh.js?v=focus-e770d8eb9ce1" data-minutes="20"></script>
+<script src="js/price-refresh.js?v=focus-e770d8eb9ce1" data-minutes="20" defer></script>
 <!-- END content --><!-- footer  -->
 <footer class="footer">
     <div id="subMenuFooter"><span class="current">Продукция Apple</span><a href="watch.html">Apple Watch</a><a href="games.html">Приставки</a><a href="audio.html">Акустика</a><a href="headphones.html">Наушники</a><a href="auto.html">Автоаксессуары</a><a href="handwers.html">Чехлы и аксессуары Handwers</a><a href="chargers.html">Зарядки и аккумуляторы</a><a href="foto.html">Фото и видео</a><a href="sticker.html">Наклейки на MacBook</a></div>	<div class="info">
