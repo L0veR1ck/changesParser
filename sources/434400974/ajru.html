@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
     <link rel="stylesheet" type="text/css" href="css/style_main.css?v=focus-e4417a86942b">
     <link rel="stylesheet" href="/css/semantic-headings.f63c331a5064.css">
+    <link rel="stylesheet" href="/css/cards-visible.efb44c5a07f6.css">
     <link rel="stylesheet" href="css/iphone18-pro.css?v=e40f7d35c788">
     <script>
         if (location.protocol != 'https:') {
@@ -34,7 +35,7 @@
   var orderReady = false, galleryReady = false, galleryClicks = [];
   var active = null, opener = null, pendingSubmit = false;
   var closeTimer = 0, closedAt = 0, timeout = 0;
-  var cardObserver = null, backgroundObserver = null;
+  var backgroundObserver = null;
 
   function visible(node) { return !!(node && (node.offsetWidth || node.offsetHeight || node.getClientRects().length)); }
   function stale() { return visible(document.getElementById('aj-stale')); }
@@ -63,11 +64,10 @@
   }
   function reveal(card) {
     if (!card) return;
-    card.classList.add('animate'); card.style.opacity = '1';
+    card.style.opacity = '1';
     if (card.parentElement) card.parentElement.style.backgroundImage = 'none';
     var row = card.closest('li.pre_cancel');
     if (row) { row.classList.remove('pre_cancel'); row.classList.add('cancel'); }
-    if (cardObserver) cardObserver.unobserve(card);
   }
   function setOpacity(node, value) {
     if (!node) return;
@@ -214,23 +214,17 @@
     document.removeEventListener('readystatechange', parsedNow);
     // Critical visibility also works during a prolonged dependency download,
     // including lower cards reached by search, hash links or manual scrolling.
-    var cards = document.querySelector('.handwers') ? [] : Array.prototype.slice.call(document.querySelectorAll('.container > li > article'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.container > li > article'));
     var backgrounds = Array.prototype.slice.call(document.querySelectorAll('article[data-original]'));
-    cards.slice(0, 4).forEach(function (card) { reveal(card); loadBackground(card); });
+    cards.forEach(reveal);
+    cards.slice(0, 4).forEach(loadBackground);
     if ('IntersectionObserver' in window) {
       var height = window.innerHeight || document.documentElement.clientHeight;
-      cardObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          var bottom = entry.rootBounds ? entry.rootBounds.bottom : height * 0.75;
-          if (entry.isIntersecting || entry.boundingClientRect.top < bottom) reveal(entry.target);
-        });
-      }, {rootMargin:'0px 0px -' + Math.round(height * 0.25) + 'px 0px'});
-      cards.slice(4).forEach(function (card) { cardObserver.observe(card); });
       backgroundObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) { if (entry.isIntersecting) loadBackground(entry.target); });
       }, {rootMargin:Math.max(300, height) + 'px 0px'});
       backgrounds.forEach(function (card) { if (!card.ajBackgroundRequested) backgroundObserver.observe(card); });
-    } else { cards.forEach(reveal); backgrounds.forEach(loadBackground); }
+    } else { backgrounds.forEach(loadBackground); }
     var callbacks = parsedCallbacks; parsedCallbacks = [];
     callbacks.forEach(function (callback) { callback(); });
   }
@@ -244,9 +238,8 @@
     onParsed: function (callback) { if (parsed || document.readyState !== 'loading') { parsedNow(); callback(); } else parsedCallbacks.push(callback); },
     reveal: function (card) { reveal(card); if (card) loadBackground(card); },
     releaseCards: function () {
-      if (cardObserver) cardObserver.disconnect();
       if (backgroundObserver) backgroundObserver.disconnect();
-      cardObserver = backgroundObserver = null;
+      backgroundObserver = null;
     },
     takeOrder: function () {
       orderReady = true;
@@ -273,7 +266,7 @@
     <script src="js/jquery.easing.1.3.js" type="text/javascript" defer></script>
     <script src="js/jquery.placeholder.min.js" type="text/javascript" defer></script>
         
-    <script src="js/custom-deferred.074e24b8b7da.js" type="text/javascript" defer></script>
+    <script src="js/custom-deferred.49b498b25fe9.js" type="text/javascript" defer></script>
     
 
     <meta name="google-site-verification" content="4s1DqL_eAc9y-AXUnpJDGG3DkJxrDBzl4TJ7XRVU76s" />
