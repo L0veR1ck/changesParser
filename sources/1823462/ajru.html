@@ -9,139 +9,10 @@
   gtag('js', new Date());
   gtag('config', 'G-J9F7W69L9C');
 </script>
-    <!-- META -->
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=950">
-<script data-aj-image-scale>
-/* Raise responsive-image quality for actual page zoom; initial choices stay in HTML. */
-(function (window, document) {
-  'use strict';
-  if (window.AJImageScale) return;
-  var viewport = window.visualViewport;
-  var records = [], byImage = new WeakMap();
-  var started = false, scanned = false, managed = false, timer = 0, pendingFrame = 0;
-  var previousFloor = 1, reconcile = false;
-  var frame = window.requestAnimationFrame || function (callback) { return setTimeout(callback, 16); };
-  var phone430 = window.matchMedia('(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse)');
-  var phone500 = window.matchMedia('(max-device-width: 500px) and (orientation: portrait) and (pointer: coarse)');
-
-  function floor() { return phone430.matches ? 0.5 : phone500.matches ? 0.6 : 1; }
-  function factor() {
-    var minimum = floor(), scale = viewport && Number(viewport.scale);
-    // A safety margin applies only after genuine zoom beyond the static floor.
-    // At normal desktop scale, 1 must remain 1 (not 1.05 and the next candidate).
-    return scale > minimum + 0.001 ? scale * 1.05 : minimum;
-  }
-  function collect(root) {
-    var found = [], sources = root.querySelectorAll('source[data-aj-image-size]');
-    for (var i = 0; i < sources.length; i++) {
-      var source = sources[i], picture = source.parentNode;
-      var base = Number(source.getAttribute('data-aj-image-size'));
-      if (!(base > 0 && isFinite(base)) || !picture || picture.nodeName !== 'PICTURE') continue;
-      var img = picture.querySelector('img');
-      if (!img) continue;
-      var record = byImage.get(img);
-      if (!record) {
-        record = {img: img, sources: [], factor: 0};
-        byImage.set(img, record);
-        records.push(record);
-      }
-      if (!record.sources.some(function (entry) { return entry.node === source; })) {
-        record.sources.push({node: source, base: base});
-      }
-      if (found.indexOf(record) < 0) found.push(record);
-    }
-    return found;
-  }
-  function raise(record, requested) {
-    // Never overwrite normal responsive markup merely to restate its default.
-    if (!record.factor && viewport && requested <= floor()) return;
-    var next = Math.max(record.factor, requested);
-    if (next <= record.factor) return;
-    record.sources.forEach(function (entry) {
-      // Gallery error fallback may deliberately remove srcset; do not undo it.
-      if (!entry.node.hasAttribute('srcset')) return;
-      var value = (Math.round(entry.base * next * 1000) / 1000) + 'px';
-      if (entry.node.getAttribute('sizes') !== value) entry.node.setAttribute('sizes', value);
-    });
-    record.factor = next;
-    managed = true;
-  }
-  function run() {
-    pendingFrame = 0;
-    if (!started) return;
-    var requested = viewport ? factor() : 1;
-    var mustReconcile = reconcile;
-    reconcile = false;
-    if (viewport && requested <= floor() && !mustReconcile) return;
-    if (!scanned) { collect(document); scanned = true; }
-    var left = viewport ? viewport.offsetLeft : 0;
-    var top = viewport ? viewport.offsetTop : 0;
-    var right = left + (viewport ? viewport.width : window.innerWidth);
-    var bottom = top + (viewport ? viewport.height : window.innerHeight);
-    var visible = [];
-    // Batch layout reads before sizes writes. Do not activate inert noscript frames.
-    records.forEach(function (record) {
-      if (!record.img.isConnected || requested <= record.factor) return;
-      if (viewport && !record.factor && requested <= floor()) return;
-      var rect = record.img.getBoundingClientRect();
-      if (rect.width > 0 && rect.height > 0 && rect.right > left && rect.left < right && rect.bottom > top && rect.top < bottom) visible.push(record);
-    });
-    visible.forEach(function (record) { raise(record, requested); });
-  }
-  function schedule(force) {
-    if (!started) return;
-    var currentFloor = floor();
-    if (force === true || (managed && currentFloor !== previousFloor)) reconcile = true;
-    previousFloor = currentFloor;
-    // A rotated, already-managed image may still need the new baseline when
-    // it later enters view; normal untouched pages do no scroll layout work.
-    if (managed && records.some(function (record) { return record.img.isConnected && record.factor > 0 && record.factor < currentFloor; })) reconcile = true;
-    if (viewport && factor() <= currentFloor && !reconcile) return;
-    window.clearTimeout(timer);
-    // Pinch/pan event bursts result in one pass after the gesture settles.
-    timer = window.setTimeout(function () {
-      timer = 0;
-      if (!pendingFrame) pendingFrame = frame(run);
-    }, 85);
-  }
-  function reveal(source) {
-    if (!source || !source.parentNode) return false;
-    var template = document.createElement('template');
-    template.innerHTML = source.textContent;
-    // template.content is inert: no smaller request can start before sizes is set.
-    var found = collect(template.content);
-    var requested = viewport && document.readyState === 'loading' ? floor() : viewport ? factor() : 1;
-    found.forEach(function (record) { raise(record, requested); });
-    source.parentNode.insertBefore(template.content, source);
-    source.parentNode.removeChild(source);
-    return true;
-  }
-  window.AJImageScale = Object.freeze({
-    reveal: reveal,
-    refresh: function () { scanned = false; schedule(true); }
-  });
-  function start() {
-    // visualViewport.scale can transiently be 1 while the initial HTML is parsing.
-    // Wait for the first complete layout before deciding to raise any live image.
-    frame(function () {
-      started = true;
-      previousFloor = floor();
-      schedule(!viewport);
-    });
-  }
-  if (viewport) {
-    viewport.addEventListener('resize', schedule, {passive: true});
-    viewport.addEventListener('scroll', schedule, {passive: true});
-  }
-  window.addEventListener('resize', schedule, {passive: true});
-  window.addEventListener('scroll', schedule, {passive: true});
-  window.addEventListener('pageshow', function () { schedule(managed); }, {passive: true});
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
-  else start();
-})(window, document);
-
-</script>
+<script data-aj-image-scale>(function(window,document){'use strict';if(window.AJImageScale)return;var viewport=window.visualViewport;var records=[],byImage=new WeakMap();var started=false,scanned=false,managed=false,timer=0,pendingFrame=0;var previousFloor=1,reconcile=false;var frame=window.requestAnimationFrame||function(callback){return setTimeout(callback,16);};var phone430=window.matchMedia('(max-device-width: 430px) and (orientation: portrait) and (pointer: coarse)');var phone500=window.matchMedia('(max-device-width: 500px) and (orientation: portrait) and (pointer: coarse)');function floor(){return phone430.matches?0.5:phone500.matches?0.6:1;}function factor(){var minimum=floor(),scale=viewport&&Number(viewport.scale);return scale>minimum+0.001?scale*1.05:minimum;}function collect(root){var found=[],sources=root.querySelectorAll('source[data-aj-image-size]');for(var i=0;i<sources.length;i++){var source=sources[i],picture=source.parentNode;var base=Number(source.getAttribute('data-aj-image-size'));if(!(base>0&&isFinite(base))||!picture||picture.nodeName!=='PICTURE')continue;var img=picture.querySelector('img');if(!img)continue;var record=byImage.get(img);if(!record){record={img:img,sources:[],factor:0};byImage.set(img,record);records.push(record);}if(!record.sources.some(function(entry){return entry.node===source;})){record.sources.push({node:source,base:base});}if(found.indexOf(record)<0)found.push(record);}return found;}function raise(record,requested){if(!record.factor&&viewport&&requested<=floor())return;var next=Math.max(record.factor,requested);if(next<=record.factor)return;record.sources.forEach(function(entry){if(!entry.node.hasAttribute('srcset'))return;var value=Math.round(entry.base*next*1000)/1000+'px';if(entry.node.getAttribute('sizes')!==value)entry.node.setAttribute('sizes',value);});record.factor=next;managed=true;}function run(){pendingFrame=0;if(!started)return;var requested=viewport?factor():1;var mustReconcile=reconcile;reconcile=false;if(viewport&&requested<=floor()&&!mustReconcile)return;if(!scanned){collect(document);scanned=true;}var left=viewport?viewport.offsetLeft:0;var top=viewport?viewport.offsetTop:0;var right=left+(viewport?viewport.width:window.innerWidth);var bottom=top+(viewport?viewport.height:window.innerHeight);var visible=[];records.forEach(function(record){if(!record.img.isConnected||requested<=record.factor)return;if(viewport&&!record.factor&&requested<=floor())return;var rect=record.img.getBoundingClientRect();if(rect.width>0&&rect.height>0&&rect.right>left&&rect.left<right&&rect.bottom>top&&rect.top<bottom)visible.push(record);});visible.forEach(function(record){raise(record,requested);});}function schedule(force){if(!started)return;var currentFloor=floor();if(force===true||managed&&currentFloor!==previousFloor)reconcile=true;previousFloor=currentFloor;if(managed&&records.some(function(record){return record.img.isConnected&&record.factor>0&&record.factor<currentFloor;}))reconcile=true;if(viewport&&factor()<=currentFloor&&!reconcile)return;window.clearTimeout(timer);timer=window.setTimeout(function(){timer=0;if(!pendingFrame)pendingFrame=frame(run);},85);}function reveal(source){if(!source||!source.parentNode)return false;var template=document.createElement('template');template.innerHTML=source.textContent;var found=collect(template.content);var requested=viewport&&document.readyState==='loading'?floor():viewport?factor():1;found.forEach(function(record){raise(record,requested);});source.parentNode.insertBefore(template.content,source);source.parentNode.removeChild(source);return true;}window.AJImageScale=Object.freeze({reveal:reveal,refresh:function(){scanned=false;schedule(true);}});function start(){frame(function(){started=true;previousFloor=floor();schedule(!viewport);});}if(viewport){viewport.addEventListener('resize',schedule,{passive:true});viewport.addEventListener('scroll',schedule,{passive:true});}window.addEventListener('resize',schedule,{passive:true});window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('pageshow',function(){schedule(managed);},{passive:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();})(window,document);</script>
     <link rel="apple-touch-icon" href="apple-touch-favicon.png" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -149,7 +20,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <!-- CSS -->
+    
     <link rel="stylesheet" type="text/css" href="css/reset.min.78aba5572649.css" />
     <link rel="stylesheet" type="text/css" href="css/style_main.min.b833da461f1c.css">
     <link rel="stylesheet" href="/css/semantic-headings.min.ce4f9acc3af7.css">
@@ -162,243 +33,8 @@
 
     </script>
 
-            <script>
-/* Critical interactions while the ordered dependency chain downloads.
- * No network/submission logic: pending submit is handed to the existing handler.
- */
-(function () {
-  'use strict';
-  if (window.AJBootstrap) return;
-  var parsed = false, parsedCallbacks = [];
-  var orderReady = false, galleryReady = false, galleryClicks = [];
-  var active = null, opener = null, pendingSubmit = false;
-  var closeTimer = 0, closedAt = 0, timeout = 0;
-  var backgroundObserver = null;
-
-  function visible(node) { return !!(node && (node.offsetWidth || node.offsetHeight || node.getClientRects().length)); }
-  function stale() { return visible(document.getElementById('aj-stale')); }
-  function focus(node, preserveScroll) {
-    if (!node || stale()) return;
-    var left = window.pageXOffset, top = window.pageYOffset;
-    try { node.focus(preserveScroll ? {preventScroll: true} : undefined); }
-    catch (_) { node.focus(); }
-    if (left !== window.pageXOffset || top !== window.pageYOffset) window.scrollTo(left, top);
-  }
-  function field(dialog) {
-    return Array.prototype.find.call(dialog.querySelectorAll('input[type=text], input:not([type]), input[type=tel], input[type=email], textarea'), function (node) {
-      return !node.disabled && visible(node);
-    }) || dialog;
-  }
-  function cancel(event) { event.preventDefault(); event.stopImmediatePropagation(); }
-  function loadBackground(card) {
-    var source = card.getAttribute('data-original');
-    if (!source || card.ajBackgroundRequested) return;
-    card.ajBackgroundRequested = true;
-    if (backgroundObserver) backgroundObserver.unobserve(card);
-    var image = new Image();
-    image.onload = function () { card.style.backgroundImage = 'url(' + JSON.stringify(source) + ')'; image.onload = image.onerror = null; };
-    image.onerror = function () { card.classList.add('image-load-error'); image.onload = image.onerror = null; };
-    image.src = source;
-  }
-  function reveal(card) {
-    if (!card) return;
-    card.style.opacity = '1';
-    if (card.parentElement) card.parentElement.style.backgroundImage = 'none';
-    var row = card.closest('li.pre_cancel');
-    if (row) { row.classList.remove('pre_cancel'); row.classList.add('cancel'); }
-  }
-  function setOpacity(node, value) {
-    if (!node) return;
-    node.style.transition = 'opacity 300ms ease';
-    node.style.webkitTransition = 'opacity 300ms ease';
-    node.style.opacity = value;
-  }
-  function prepare(dialog) {
-    dialog.setAttribute('role', 'dialog');
-    dialog.setAttribute('aria-modal', 'true');
-    dialog.setAttribute('tabindex', '-1');
-    var title = dialog.querySelector('h3');
-    if (title) {
-      if (!title.id) title.id = 'aj-order-title';
-      dialog.setAttribute('aria-labelledby', title.id);
-    } else dialog.setAttribute('aria-label', 'Оформление заказа');
-    if (!dialog.querySelector('.close')) {
-      var close = document.createElement('a');
-      close.className = 'close aj-order-close';
-      close.href = '#'; close.setAttribute('role', 'button');
-      close.setAttribute('aria-label', 'Закрыть форму заказа');
-      dialog.appendChild(close);
-    }
-    updateButton();
-  }
-  function updateButton() {
-    var dialog = document.querySelector('.send_req');
-    if (!dialog) return;
-    var button = dialog.querySelector('.big');
-    if (!button) return;
-    var checks = dialog.querySelectorAll('#agree1, #agree2');
-    var agreed = Array.prototype.every.call(checks, function (node) { return node.checked; });
-    var disabled = pendingSubmit || !agreed;
-    button.disabled = disabled;
-    button.setAttribute('aria-disabled', String(disabled));
-    button.style.opacity = disabled ? '0.5' : '1';
-    button.textContent = pendingSubmit ? 'Подготовка отправки…' : 'Отправить';
-  }
-  function productTitle(button) {
-    var nodes = Array.prototype.slice.call(button.parentElement.querySelectorAll('h2, h1.aj-heading'));
-    if (!nodes.length) {
-      var parent = button.parentElement;
-      while (parent && parent.parentElement) {
-        Array.prototype.forEach.call(parent.parentElement.children, function (node) {
-          if (node !== parent && (node.tagName === 'H2' || (node.tagName === 'H1' && node.classList.contains('aj-heading'))) && nodes.indexOf(node) < 0) nodes.push(node);
-        });
-        parent = parent.parentElement;
-      }
-      nodes.sort(function (a, b) { return a.compareDocumentPosition(b) & 2 ? 1 : -1; });
-    }
-    return nodes.map(function (node) { return node.textContent; }).join('');
-  }
-  function dependencyError() {
-    timeout = 0;
-    if (orderReady || !active) return;
-    pendingSubmit = false; updateButton();
-    var alarm = active.querySelector('.alarm_no');
-    if (alarm) {
-      alarm.setAttribute('role', 'alert'); alarm.setAttribute('aria-live', 'polite');
-      alarm.textContent = 'Не удалось загрузить обработчик заказа. Пожалуйста, свяжитесь с нами по контактам в шапке сайта.';
-      alarm.style.opacity = '1'; alarm.style.display = 'block';
-      var button = active.querySelector('.big');
-      if (button && button.parentNode) button.parentNode.insertBefore(alarm, button);
-    }
-  }
-  function open(button) {
-    var dialog = document.querySelector('.send_req'), overlay = document.querySelector('.popup_overlay');
-    if (!dialog || !overlay || stale()) return false;
-    clearTimeout(closeTimer); closeTimer = 0; closedAt = 0;
-    pendingSubmit = false; active = dialog; opener = button;
-    prepare(dialog);
-    var title = productTitle(button);
-    Array.prototype.forEach.call(document.querySelectorAll('textarea[name=message], input[name=item]'), function (node) { node.value = title; });
-    dialog.style.display = overlay.style.display = 'block';
-    void dialog.offsetWidth;
-    setOpacity(overlay, 0.8); setOpacity(dialog, 1);
-    dialog.scrollTop = 0;
-    // Run in the actual trusted click, preserving iPhone keyboard activation.
-    focus(field(dialog));
-    if (!timeout) timeout = setTimeout(dependencyError, 15000);
-    return true;
-  }
-  function close() {
-    pendingSubmit = false; updateButton();
-    clearTimeout(timeout); timeout = 0;
-    var previous = active, returnTo = opener;
-    active = null; closedAt = Date.now();
-    var surfaces = document.querySelectorAll('.popup_overlay, .send_req, .thanks, .popup_gallery');
-    Array.prototype.forEach.call(surfaces, function (node) { setOpacity(node, 0); });
-    clearTimeout(closeTimer);
-    closeTimer = setTimeout(function () {
-      closeTimer = 0; closedAt = 0;
-      Array.prototype.forEach.call(surfaces, function (node) { node.style.display = 'none'; });
-      if (previous && visible(returnTo)) focus(returnTo, true);
-    }, 300);
-  }
-  function queueSubmit(event) {
-    cancel(event);
-    if (!active || stale() || pendingSubmit) return;
-    var button = active.querySelector('.big');
-    if (button && (button.disabled || button.getAttribute('aria-disabled') === 'true')) return;
-    pendingSubmit = true; updateButton();
-    if (!timeout) timeout = setTimeout(dependencyError, 15000);
-  }
-  function click(event) {
-    var target = event.target.nodeType === 1 ? event.target : event.target.parentElement;
-    if (!target) return;
-    if (!orderReady) {
-      var buy = target.closest('.container .button, .watch .button, .sticker .button');
-      if (buy) { if (open(buy)) cancel(event); return; }
-      if (target.closest('.send_req .big')) { queueSubmit(event); return; }
-      if (active && target.closest('.popup_overlay, .send_req .close')) { cancel(event); close(); return; }
-    }
-    if (!galleryReady) {
-      var control = target.closest('.gallery-handler, .jcarousel-control-prev, .jcarousel-control-next');
-      if (control) {
-        cancel(event);
-        // Like the carousel's animation lock, retain the first action and
-        // ignore repeated clicks while it cannot process another transition.
-        if (!galleryClicks.length) galleryClicks = [control];
-      }
-    }
-  }
-  function submit(event) { if (!orderReady && event.target.closest('.send_req')) queueSubmit(event); }
-  function change(event) { if (!orderReady && event.target.matches('#agree1, #agree2')) updateButton(); }
-  function keydown(event) {
-    if (orderReady || !active || stale() || event.defaultPrevented) return;
-    if (event.key === 'Escape') { cancel(event); close(); return; }
-    if (event.key === ' ' && event.target.matches('a.close, a.big')) { cancel(event); event.target.click(); return; }
-    if (event.key !== 'Tab') return;
-    var nodes = Array.prototype.filter.call(active.querySelectorAll('a[href], button, input, select, textarea, [tabindex]'), function (node) {
-      return visible(node) && !node.disabled && node.type !== 'hidden' && node.tabIndex >= 0 && node.getAttribute('aria-disabled') !== 'true';
-    });
-    if (!nodes.length) { event.preventDefault(); focus(active); return; }
-    var first = nodes[0], last = nodes[nodes.length - 1], current = document.activeElement;
-    if (!active.contains(current) || current === active || (!event.shiftKey && current === last) || (event.shiftKey && current === first)) {
-      event.preventDefault(); focus(event.shiftKey ? last : first);
-    }
-  }
-  function focusin(event) { if (!orderReady && active && !stale() && !active.contains(event.target)) focus(field(active)); }
-  function parsedNow() {
-    if (parsed || document.readyState === 'loading') return;
-    parsed = true;
-    document.removeEventListener('readystatechange', parsedNow);
-    // Critical visibility also works during a prolonged dependency download,
-    // including lower cards reached by search, hash links or manual scrolling.
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.container > li > article'));
-    var backgrounds = Array.prototype.slice.call(document.querySelectorAll('article[data-original]'));
-    cards.forEach(reveal);
-    cards.slice(0, 4).forEach(loadBackground);
-    if ('IntersectionObserver' in window) {
-      var height = window.innerHeight || document.documentElement.clientHeight;
-      backgroundObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) { if (entry.isIntersecting) loadBackground(entry.target); });
-      }, {rootMargin:Math.max(300, height) + 'px 0px'});
-      backgrounds.forEach(function (card) { if (!card.ajBackgroundRequested) backgroundObserver.observe(card); });
-    } else { backgrounds.forEach(loadBackground); }
-    var callbacks = parsedCallbacks; parsedCallbacks = [];
-    callbacks.forEach(function (callback) { callback(); });
-  }
-  document.addEventListener('click', click, true);
-  document.addEventListener('submit', submit, true);
-  document.addEventListener('change', change, true);
-  document.addEventListener('keydown', keydown, false);
-  document.addEventListener('focusin', focusin, false);
-  document.addEventListener('readystatechange', parsedNow);
-  window.AJBootstrap = {
-    onParsed: function (callback) { if (parsed || document.readyState !== 'loading') { parsedNow(); callback(); } else parsedCallbacks.push(callback); },
-    reveal: function (card) { reveal(card); if (card) loadBackground(card); },
-    releaseCards: function () {
-      if (backgroundObserver) backgroundObserver.disconnect();
-      backgroundObserver = null;
-    },
-    takeOrder: function () {
-      orderReady = true;
-      clearTimeout(timeout); clearTimeout(closeTimer);
-      document.removeEventListener('submit', submit, true);
-      document.removeEventListener('change', change, true);
-      document.removeEventListener('keydown', keydown, false);
-      document.removeEventListener('focusin', focusin, false);
-      return {dialog: active, opener: opener, pendingSubmit: pendingSubmit, closing: !!closedAt, closingRemaining: closedAt ? Math.max(0, 300 - (Date.now() - closedAt)) : 0};
-    },
-    galleryReady: function () {
-      galleryReady = true;
-      if (orderReady) document.removeEventListener('click', click, true);
-      var queued = galleryClicks; galleryClicks = [];
-      queued.forEach(function (node) { if (document.documentElement.contains(node)) node.click(); });
-    }
-  };
-  parsedNow();
-}());
-    </script>
-            <!-- JS -->
+            <script>(function(){'use strict';if(window.AJBootstrap)return;var parsed=false,parsedCallbacks=[];var orderReady=false,galleryReady=false,galleryClicks=[];var active=null,opener=null,pendingSubmit=false;var closeTimer=0,closedAt=0,timeout=0;var backgroundObserver=null;function visible(node){return!!(node&&(node.offsetWidth||node.offsetHeight||node.getClientRects().length));}function stale(){return visible(document.getElementById('aj-stale'));}function focus(node,preserveScroll){if(!node||stale())return;var left=window.pageXOffset,top=window.pageYOffset;try{node.focus(preserveScroll?{preventScroll:true}:undefined);}catch(_){node.focus();}if(left!==window.pageXOffset||top!==window.pageYOffset)window.scrollTo(left,top);}function field(dialog){return Array.prototype.find.call(dialog.querySelectorAll('input[type=text], input:not([type]), input[type=tel], input[type=email], textarea'),function(node){return!node.disabled&&visible(node);})||dialog;}function cancel(event){event.preventDefault();event.stopImmediatePropagation();}function loadBackground(card){var source=card.getAttribute('data-original');if(!source||card.ajBackgroundRequested)return;card.ajBackgroundRequested=true;if(backgroundObserver)backgroundObserver.unobserve(card);var image=new Image();image.onload=function(){card.style.backgroundImage='url('+JSON.stringify(source)+')';image.onload=image.onerror=null;};image.onerror=function(){card.classList.add('image-load-error');image.onload=image.onerror=null;};image.src=source;}function reveal(card){if(!card)return;card.style.opacity='1';if(card.parentElement)card.parentElement.style.backgroundImage='none';var row=card.closest('li.pre_cancel');if(row){row.classList.remove('pre_cancel');row.classList.add('cancel');}}function setOpacity(node,value){if(!node)return;node.style.transition='opacity 300ms ease';node.style.webkitTransition='opacity 300ms ease';node.style.opacity=value;}function prepare(dialog){dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('tabindex','-1');var title=dialog.querySelector('h3');if(title){if(!title.id)title.id='aj-order-title';dialog.setAttribute('aria-labelledby',title.id);}else dialog.setAttribute('aria-label','Оформление заказа');if(!dialog.querySelector('.close')){var close=document.createElement('a');close.className='close aj-order-close';close.href='#';close.setAttribute('role','button');close.setAttribute('aria-label','Закрыть форму заказа');dialog.appendChild(close);}updateButton();}function updateButton(){var dialog=document.querySelector('.send_req');if(!dialog)return;var button=dialog.querySelector('.big');if(!button)return;var checks=dialog.querySelectorAll('#agree1, #agree2');var agreed=Array.prototype.every.call(checks,function(node){return node.checked;});var disabled=pendingSubmit||!agreed;button.disabled=disabled;button.setAttribute('aria-disabled',String(disabled));button.style.opacity=disabled?'0.5':'1';button.textContent=pendingSubmit?'Подготовка отправки…':'Отправить';}function productTitle(button){var nodes=Array.prototype.slice.call(button.parentElement.querySelectorAll('h2, h1.aj-heading'));if(!nodes.length){var parent=button.parentElement;while(parent&&parent.parentElement){Array.prototype.forEach.call(parent.parentElement.children,function(node){if(node!==parent&&(node.tagName==='H2'||node.tagName==='H1'&&node.classList.contains('aj-heading'))&&nodes.indexOf(node)<0)nodes.push(node);});parent=parent.parentElement;}nodes.sort(function(a,b){return a.compareDocumentPosition(b)&2?1:-1;});}return nodes.map(function(node){return node.textContent;}).join('');}function dependencyError(){timeout=0;if(orderReady||!active)return;pendingSubmit=false;updateButton();var alarm=active.querySelector('.alarm_no');if(alarm){alarm.setAttribute('role','alert');alarm.setAttribute('aria-live','polite');alarm.textContent='Не удалось загрузить обработчик заказа. Пожалуйста, свяжитесь с нами по контактам в шапке сайта.';alarm.style.opacity='1';alarm.style.display='block';var button=active.querySelector('.big');if(button&&button.parentNode)button.parentNode.insertBefore(alarm,button);}}function open(button){var dialog=document.querySelector('.send_req'),overlay=document.querySelector('.popup_overlay');if(!dialog||!overlay||stale())return false;clearTimeout(closeTimer);closeTimer=0;closedAt=0;pendingSubmit=false;active=dialog;opener=button;prepare(dialog);var title=productTitle(button);Array.prototype.forEach.call(document.querySelectorAll('textarea[name=message], input[name=item]'),function(node){node.value=title;});dialog.style.display=overlay.style.display='block';void dialog.offsetWidth;setOpacity(overlay,0.8);setOpacity(dialog,1);dialog.scrollTop=0;focus(field(dialog));if(!timeout)timeout=setTimeout(dependencyError,15000);return true;}function close(){pendingSubmit=false;updateButton();clearTimeout(timeout);timeout=0;var previous=active,returnTo=opener;active=null;closedAt=Date.now();var surfaces=document.querySelectorAll('.popup_overlay, .send_req, .thanks, .popup_gallery');Array.prototype.forEach.call(surfaces,function(node){setOpacity(node,0);});clearTimeout(closeTimer);closeTimer=setTimeout(function(){closeTimer=0;closedAt=0;Array.prototype.forEach.call(surfaces,function(node){node.style.display='none';});if(previous&&visible(returnTo))focus(returnTo,true);},300);}function queueSubmit(event){cancel(event);if(!active||stale()||pendingSubmit)return;var button=active.querySelector('.big');if(button&&(button.disabled||button.getAttribute('aria-disabled')==='true'))return;pendingSubmit=true;updateButton();if(!timeout)timeout=setTimeout(dependencyError,15000);}function click(event){var target=event.target.nodeType===1?event.target:event.target.parentElement;if(!target)return;if(!orderReady){var buy=target.closest('.container .button, .watch .button, .sticker .button');if(buy){if(open(buy))cancel(event);return;}if(target.closest('.send_req .big')){queueSubmit(event);return;}if(active&&target.closest('.popup_overlay, .send_req .close')){cancel(event);close();return;}}if(!galleryReady){var control=target.closest('.gallery-handler, .jcarousel-control-prev, .jcarousel-control-next');if(control){cancel(event);if(!galleryClicks.length)galleryClicks=[control];}}}function submit(event){if(!orderReady&&event.target.closest('.send_req'))queueSubmit(event);}function change(event){if(!orderReady&&event.target.matches('#agree1, #agree2'))updateButton();}function keydown(event){if(orderReady||!active||stale()||event.defaultPrevented)return;if(event.key==='Escape'){cancel(event);close();return;}if(event.key===' '&&event.target.matches('a.close, a.big')){cancel(event);event.target.click();return;}if(event.key!=='Tab')return;var nodes=Array.prototype.filter.call(active.querySelectorAll('a[href], button, input, select, textarea, [tabindex]'),function(node){return visible(node)&&!node.disabled&&node.type!=='hidden'&&node.tabIndex>=0&&node.getAttribute('aria-disabled')!=='true';});if(!nodes.length){event.preventDefault();focus(active);return;}var first=nodes[0],last=nodes[nodes.length-1],current=document.activeElement;if(!active.contains(current)||current===active||!event.shiftKey&&current===last||event.shiftKey&&current===first){event.preventDefault();focus(event.shiftKey?last:first);}}function focusin(event){if(!orderReady&&active&&!stale()&&!active.contains(event.target))focus(field(active));}function parsedNow(){if(parsed||document.readyState==='loading')return;parsed=true;document.removeEventListener('readystatechange',parsedNow);var cards=Array.prototype.slice.call(document.querySelectorAll('.container > li > article'));var backgrounds=Array.prototype.slice.call(document.querySelectorAll('article[data-original]'));cards.forEach(reveal);cards.slice(0,4).forEach(loadBackground);if('IntersectionObserver'in window){var height=window.innerHeight||document.documentElement.clientHeight;backgroundObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)loadBackground(entry.target);});},{rootMargin:Math.max(300,height)+'px 0px'});backgrounds.forEach(function(card){if(!card.ajBackgroundRequested)backgroundObserver.observe(card);});}else{backgrounds.forEach(loadBackground);}var callbacks=parsedCallbacks;parsedCallbacks=[];callbacks.forEach(function(callback){callback();});}document.addEventListener('click',click,true);document.addEventListener('submit',submit,true);document.addEventListener('change',change,true);document.addEventListener('keydown',keydown,false);document.addEventListener('focusin',focusin,false);document.addEventListener('readystatechange',parsedNow);window.AJBootstrap={onParsed:function(callback){if(parsed||document.readyState!=='loading'){parsedNow();callback();}else parsedCallbacks.push(callback);},reveal:function(card){reveal(card);if(card)loadBackground(card);},releaseCards:function(){if(backgroundObserver)backgroundObserver.disconnect();backgroundObserver=null;},takeOrder:function(){orderReady=true;clearTimeout(timeout);clearTimeout(closeTimer);document.removeEventListener('submit',submit,true);document.removeEventListener('change',change,true);document.removeEventListener('keydown',keydown,false);document.removeEventListener('focusin',focusin,false);return{dialog:active,opener:opener,pendingSubmit:pendingSubmit,closing:!!closedAt,closingRemaining:closedAt?Math.max(0,300-(Date.now()-closedAt)):0};},galleryReady:function(){galleryReady=true;if(orderReady)document.removeEventListener('click',click,true);var queued=galleryClicks;galleryClicks=[];queued.forEach(function(node){if(document.documentElement.contains(node))node.click();});}};parsedNow();})();</script>
+            
     <script src="js/jquery-1.7.1.min.js" type="text/javascript" defer></script>
         <script src="js/jquery.easing.1.3.js" type="text/javascript" defer></script>
             
@@ -500,20 +136,8 @@
             <li class="telegram" style="margin-left: 5px!important;"><a href="https://t.me/applejesuschannel" target="_blank" style="background-image: url(/images/responsive-20260925b/telegram-100.b1de83b56a9b.webp); background-size: 100%; border-radius: 5px;"></a></li>
 			<li class="twitter" style="margin-left: 5px!important;"><a href="https://x.com/applejesus" target="_blank"></a></li>
 		</ul>
-		<!-- <address>
-			<p><a href="tel:+7 (495) 540 49 00">+7 (495) 540 49 00</a><br/>&nbsp;&nbsp;<a href="tel:8 (800) 333 59 66">8 (800) 333 59 66</a></p>
-			<ul>
-				<li class="mail"><a target="_blank" href="mailto:info@aj.ru"><i></i>info@aj.ru</a></li>
-				<li class="skype"><a target="_blank" href="skype:applejesus.ru?call"><i></i>applejesus.ru</a></li>
-				<li class="icq"><a><i></i>673948021</a></li>
-				<li class="address"><a href="contacts.html"><i></i>Багратионовский пр., 7к20В</a></li>
-			</ul>
-		</address> -->
-		<!-- <ul class="socials">
-			<li class="instagram"><a href="http://instagram.com/applejesus"></a></li>
-					<li class="twitter"><a href="https://twitter.com/applejesus"></a></li>
-						<li class="vkontakte"><a href="http://vk.com/public39915550"></a></li>
-		</ul> -->
+		
+		
 	</div>
 </div>
 
@@ -573,11 +197,11 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
     <li><a href="#iphone_14_pro">iPhone 14 Pro</a></li>
     <li><a href="#iphone_14">iPhone 14</a></li>
     <li><a href="#iphone_13">iPhone 13</a></li>
-   <!-- <li><a href="#iphone_12_pro">iPhone 12 Pro</a></li> -->
+   
     <li><a href="#iphone_12">iPhone 12</a></li>
     <li><a href="#iphone_11">iPhone 11</a></li>
     <li><a href="#iphone_se_2022">iPhone SE 2022</a></li>
-    <!-- <li><a href="#iphone_xr">iPhone XR</a></li> -->
+    
       </ul>
       </li>
     <li><a class="topmenu-element" href="#airpods_max" data-category="AirPods">AirPods</a>
@@ -1291,34 +915,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
             </article>
             </li>
             
-        <!-- <a id="iphone_12_pro" class="for_sticky_header"></a>
-        <li id="iphone_12_pro_">
-            <article class="iphone12_pro" data-original="../images/iPhone12_pro.png" style="background-size: 30%; background-position: 97.5%;">
-
-                <h2>iPhone 12 Pro</h2>
-                <ul>
-                    <li>серебристый/графитовый/золотой/«тихоокеанский синий»</li>
-                    <li style="margin-bottom:15px"></li>
-
-                    <li>iPhone 12 Pro 128GB &mdash; <span>70 000</span> ₽ </li>
-                    <li>iPhone 12 Pro 256GB &mdash; <span>75 000</span> ₽ </li>
-                    <li>iPhone 12 Pro 512GB &mdash; <span>79 000</span> ₽ </li>
-                </ul>
-                <li><br /></li>
-
-                <ul>
-                    <li style="margin-bottom:15px"></li>
-
-                    <li>iPhone 12 Pro Max 128GB &mdash; <span>звоните!</span></li>
-                    <li>iPhone 12 Pro Max 256GB &mdash; <span>звоните!</span></li>
-                    <li>iPhone 12 Pro Max 512GB &mdash; <span>звоните!</span></li>
-                </ul>
-                <a href="#" class="button">Купить</a>
-                <br>
-                    <li>На не Ростест айфоны гарантия только от магазина &mdash; 1 год.</li>
-        <li><br /></li>
-        </article>
-        </li> -->
+        
         
         <li id="iphone_12_"><span id="iphone_12" class="for_sticky_header catalog-section-anchor"></span>
             <article class="iphone12 aj-product-image-card" style="background-position: center 35%; background-size: 47%; text-align: center;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iphone_12_new.jpg" alt="iPhone 12" width="441" height="332" loading="lazy" decoding="async" style="width:47%;height:auto;left:50%;top:35%;transform:translate(-50%,-35%);"></span>
@@ -1393,41 +990,9 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                                                 <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
                 </article>
                 </li>
-       <!-- <a id="iphone_se" class="for_sticky_header"></a>
-                <li id="iphone_se_">
-                    <article class="iphoneSE" data-original="../images/iphoneSE2020.png">
-
-                        <h2>iPhone SE (2020)</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">белый/чёрный/красный</li>
-                            <li style="margin-bottom:15px"></li>
-
-                            <li>iPhone SE 2020 64GB &mdash; <span>35 000</span> ₽ </li>
-                            <li>iPhone SE 2020 128GB &mdash; <span>40 000</span> ₽ </li>
-                            <li>iPhone SE 2020 256GB &mdash; <span>45 000</span> ₽ </li>
-                        </ul>
-                        <a href="#" class="button">Купить</a>
-                        <br>
-                </article>
-                </li> -->
+       
                 
-        <!-- <a id="iphone_xr" class="for_sticky_header"></a>
-                <li id="iphone_xr_">
-                    <article class="iphoneXR" data-original="../images/iphone-xr.jpg" style="background-size: 38%; background-position: 560px !important;">
-
-                        <h2>iPhone XR</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">желтый/коралловый/красный/черный/синий/белый</li>
-                            <li style="margin-bottom:15px"></li>
-
-                            <li>iPhone XR 64GB &mdash; <span>43 000</span> ₽ </li>
-                            <li>iPhone XR 128GB &mdash; <span>звоните!</span></li>
-                        </ul>
-                        <a href="#" class="button">Купить</a>
-                        <br>
-                    <li>На не Ростест айфоны гарантия только от магазина &mdash; 1 год.</li>
-                </article>
-                </li> -->
+        
 
 
                 <li id="airpods_max_"><span id="airpods_max" class="for_sticky_header catalog-section-anchor"></span>
@@ -1492,7 +1057,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         <li id="airpods_5_"><span id="airpods_5" class="for_sticky_header catalog-section-anchor"></span>
 <article class="autumn-product autumn-airpods">
 <h2>AirPods 5*</h2>
-<img class="autumn-photo" src="images/catalog-20260918/airpods5-wireless.jpg?v=6d7d8e4ad870" alt="AirPods 5 с беспроводным зарядным футляром" width="976" height="916" loading="lazy" decoding="async">
+<picture style="display:contents"><source style="display:none;" type="image/webp" srcset="/images/catalog-q98-20260926/airpods5-wireless.4b974286dd6d.webp"><img class="autumn-photo" src="images/catalog-20260918/airpods5-wireless.jpg?v=6d7d8e4ad870" alt="AirPods 5 с беспроводным зарядным футляром" width="976" height="916" loading="lazy" decoding="async"></picture>
 <p class="autumn-feature">Активное шумоподавление в обеих версиях</p>
 <ul class="autumn-options"><li>AirPods 5 с зарядным футляром USB-C &mdash; <span>17 500</span> ₽</li><li>AirPods 5 с беспроводным зарядным футляром &mdash; <span>18 800</span> ₽</li></ul>
 <img class="autumn-new" src="images/new.png" alt="Новинка">
@@ -1813,63 +1378,11 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
         
         
-        <!--<a id="macbook_pro_16_2019" class="for_sticky_header"></a>
-                <li id="macbook_pro_16_2019_">
-                    <article class="MacBookPro2019" style="background: 50% 22% no-repeat; background-size: 67%;" data-original=" images/mbp16.jpg">
-                        <h2 style="text-align:center;">MacBook Pro 16" 2019</h2>
-                        <br>
-                        <ul style="margin-top: 41%; text-align:center;">
-                            <br><br>
-                            <br><br>
-                            <li>16" 6-Core i7 2.6GHz/ 16GB/ 512GB SSD AMD Radeon Pro 5300M 4GB — <span>186 000</span> ₽</li>
-                            <li>16" 8-Core i9 2.3GHz/ 16GB/ 1TB SSD AMD Radeon Pro 5500M 4GB — <span>218 000</span> ₽</li>
-                            <br><br>
-                            <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-                            <br><br>
-                        </ul>
-                        <a href="#" class="button" style="margin:0 auto;">Купить</a>
-                    </article>
-                </li> -->
+        
 		
-        <!-- <a id="macbook_pro_13_m1" class="for_sticky_header"></a>
-                <li id="macbook_pro_13_m1_">
-                    <article class="MacBookProM1" style="background-position: center 130px; background-size: 55%;" data-original="images/macbookpro_m1.jpg">
-                        <h2 style="text-align:center;">MacBook Pro 13" M1</h2>
-                        <ul style="margin-top: 41%; text-align:center;">
-                            <br><br>
-                            <br><br>
-                            <li>Pro 13" M1 8-Core/ 8GB/ 256GB SSD 8-core GPU &mdash; <span>115 000</span> ₽ </li>
-                            <li>Pro 13" M1 8-Core/ 8GB/ 512GB SSD 8-core GPU &mdash; <span>135 000</span> ₽ </li>
+        
 
-                            <li>13" M1 8-Core/ 16GB/ 256GB SSD 8-core GPU &mdash; <span>звоните!</span> </li> 
-                            <li>Pro 13" M1 8-Core/ 16GB/ 512GB SSD 8-core GPU &mdash; <span>170 000</span> ₽ </li>
-
-                            <br><br>
-                            <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-                            <br><br>
-                        </ul>
-                        <a href="#" class="button" style="margin:0 auto;">Купить</a>
-                    </article>
-                </li> -->
-
-        <!--<a id="macbook_pro_13_2020" class="for_sticky_header"></a>
-                <li id="macbook_pro_13_2020_">
-                    <article class="MacBookPro2020" style="background: 50% 105px  no-repeat;  background-size: 333px 321px;" data-original="images/m20.jpg">
-                        <h2 style="text-align:center;">MacBook Pro 2020</h2>
-                        <ul style="margin-top: 41%; text-align:center;">
-                            <li>13" Core i5 1.4GHz/ 8GB/ 256GB SSD Intel Iris Plus Graphics 645 c Touch Bar — <span>99 900</span> ₽</li>
-                            <li>13" Core i5 1.4GHz/ 8GB/ 512GB SSD Intel Iris Plus Graphics 645 c Touch Bar — <span>109 900</span> ₽</li>
-                            <br><br>
-                            <li>13" Core i5 2.0GHz/ 16GB/ 512GB SSD Intel Iris Plus Graphics c Touch Bar — <span>145 000</span> ₽</li>
-                            <li>13" Core i5 2.0GHz/ 16GB/ 1ТB SSD Intel Iris Plus Graphics c Touch Bar — <span>155 000</span> ₽</li>
-                            <br><br>
-                            <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-                            <br><br>
-                        </ul>
-                        <a href="#" class="button" style="margin:0 auto;">Купить</a>
-                        <img src="images/new.png" alt="MacBook Pro 2020">
-                    </article>
-                </li> -->
+        
 
                 <li class="pre_cancel">
                     <article class="left mac12multiPort aj-product-image-card"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/accessories/MJ1K2.jpg" alt="Многопортовый цифровой AV-адаптер USB-C" width="400" height="400" loading="lazy" decoding="async" style="width:65%;height:auto;left:100%;top:40px;transform:translate(-100%,0px);"></span>
@@ -1986,14 +1499,9 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                         <p style="font-size: 20px; text-align: center; margin-top: -18px">«серый космос»/серебристый/золотой</p>
                         <ul style="margin-top: 41%; text-align:center;">
                             <li>Air 13" M1 8-Core/ 8GB/ 256GB SSD 7-core GPU &mdash; <span>68 000</span> ₽ </li>
-                          <!--   <li>Air 13" M1 8-Core/ 8GB/ 512GB SSD 8-core GPU &mdash; <span>115 000</span> ₽ </li>
-<br>
-                            <li>13" M1 8-Core/ 16GB/ 256GB SSD 7-core GPU &mdash; <span>звоните!</span> </li>
-                            <li>13" M1 8-Core/ 16GB/ 512GB SSD 8-core GPU &mdash; <span>звоните!</span> </li>
-                            <li>13" M1 8-Core/ 16GB/ 512GB SSD 7-core GPU &mdash; <span>звоните!</span> </li> -->
+                          
                             <li class="catalog-list-spacing" aria-hidden="true"><br><br></li>
-                            <!-- <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-                            <br><br> -->
+                            
                         </ul>
                         <a href="#" class="button" style="margin:0 auto;">Купить</a>
                         <br>
@@ -2159,114 +1667,8 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 
         
                 
-				<!-- <a id="ipadpro-12-2021" class="for_sticky_header"></a>
-                <li id="ipadpro-12-2021_">
-                    <article class="ipadpro-12-2021" data-original="../images/iPad_m1.png" style="background-position: 91% 22%; background-size: 42%;">
-
-                        <h2>iPad Pro 12,9" 2021</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">«серый космос»/серебристый</li>
-
-                            <li>128GB WiFi + LTE &mdash; <span>86 000</span> ₽ </li>
-                            <li>256GB WiFi + LTE &mdash; <span>98 000</span> ₽ </li>
-                            <li>512GB WiFi + LTE &mdash; <span>111 000</span> ₽ </li>
-                            <li>1TB WiFi + LTE &mdash; <span>130 000</span> ₽ </li>
-                            <li>2TB WiFi + LTE &mdash; <span>142 000</span> ₽ </li>
-                            <li><br /></li>
-                            <li>128GB WiFi &mdash; <span>82 000</span> ₽ </li>
-                            <li>256GB WiFi &mdash; <span>91 000</span> ₽ </li>
-                            <li>512GB WiFi &mdash; <span>102 000</span> ₽ </li>
-                            <li>1TB WiFi &mdash; <span>120 000</span> ₽ </li>
-                            <li>2TB WiFi &mdash; <span>звоните!</span></li>
-                            <li><br /></li>
-                            <li>Magic Keyboard для iPad Pro 12,9" с гравировкой русских букв, чёрная/белая &mdash; <span>34 000</span> ₽ </li>
-                            <li>Smart Keyboard Folio для iPad Pro 12,9" с гравировкой русских букв &mdash; <span>23 000</span> ₽ </li>
-                            <li>Apple Pencil 2 &mdash; <span>11 500</span> ₽ </li>
-                            <li><br /></li>
-                        </ul>
-                        <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li>
-        <a id="ipadpro-11-2021" class="for_sticky_header"></a>
-                <li id="ipadpro-11-2021_">
-                    <article class="ipadpro-11-2021" data-original="../images/iPad11_m1.png" style="background-position: right 20%;">
-
-                        <h2>iPad Pro 11" 2021</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">«серый космос»/серебристый</li>
-
-                            <li>128GB WiFi + LTE &mdash; <span>81 000</span> ₽</li>
-                            <li>256GB WiFi + LTE &mdash; <span>90 000</span> ₽ </li>
-                            <li>512GB WiFi + LTE &mdash; <span>95 000</span> ₽ </li>
-                            <li>1TB WiFi + LTE &mdash; <span>105 000</span> ₽</li>
-                            <li>2TB WiFi + LTE &mdash; <span>129 000</span> ₽ </li>
-                            <li><br /></li>
-                            <li>128GB WiFi &mdash; <span>70 000</span> ₽ </li>
-                            <li>256GB WiFi &mdash; <span>80 000</span> ₽ </li>
-                            <li>512GB WiFi &mdash; <span>91 000</span> ₽ </li>
-                            <li>1TB WiFi &mdash; <span>100 000</span> ₽ </li>
-                            <li>2TB WiFi &mdash; <span>122 000</span> ₽ </li>
-                            <li><br /></li>
-                            <li>Magic Keyboard для iPad Pro 11" с гравировкой русских букв, чёрная/белая &mdash; <span>30 000</span> ₽</li>
-                            <li>Smart Keyboard Folio для iPad Pro 11" с гравировкой русских букв &mdash; <span>28 000</span> ₽</li>
-                            <li>Apple Pencil 2 &mdash; <span>11 500</span> ₽ </li>
-                            <li><br /></li>
-                        </ul>
-                        <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li> -->
-        <!--<a id="ipadpro-12-2020" class="for_sticky_header"></a>
-                <li id="ipadpro-12-2020_">
-                    <article class="ipadpro-12-2020" data-original="../images/iPad12_2020_1.png">
-
-                        <h2>iPad Pro 12,9" 2020</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">«серый космос»/серебристый</li>
-
-                            <li>128GB WiFi + LTE &mdash; <span>86 000</span> ₽</li>
-                            <li>256GB WiFi + LTE &mdash; <span>99 000</span> ₽</li>
-                            <li>512GB WiFi + LTE &mdash; <span>104 000</span> ₽</li>
-                            <li>1TB WiFi + LTE &mdash; <span>114 000</span> ₽</li>
-                            <li><br /></li>
-                            <li>128GB WiFi &mdash; <span>79 000</span> ₽</li>
-                            <li>256GB WiFi &mdash; <span>86 000</span> ₽</li>
-                            <li>512GB WiFi &mdash; <span>98 000</span> ₽</li>
-                            <li>1TB WiFi &mdash; <span>113 000</span> ₽</li>
-                            <li><br /></li>
-                            <li>Клавиатура Magic Keyboard для iPad Pro 12,9" (2020)<br />с гравировкой русских букв &mdash; <span>29 500</span> ₽ </li>
-                            <li>Клавиатура Smart Keyboard Folio для iPad Pro 12,9"<br />с гравировкой русских букв &mdash; <span>16 900</span> ₽</li>
-                            <li>Apple Pencil 2 &mdash; <span>11 000</span> ₽</li>
-                            <li><br /></li>
-                        </ul>
-                        <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li>
-        <a id="ipadpro-11-2020" class="for_sticky_header"></a>
-                <li id="ipadpro-11-2020_">
-                    <article class="ipadpro-11-2020" data-original="../images/iPad11_2020.png">
-
-                        <h2>iPad Pro 11" 2020</h2>
-                        <ul>
-                            <li style="margin-bottom:15px">«серый космос»/серебристый</li>
-
-                            <li>128GB WiFi + LTE &mdash; <span>73 000</span> ₽</li>
-                            <li>256GB WiFi + LTE &mdash; <span>84 000</span> ₽</li>
-                            <li>512GB WiFi + LTE &mdash; <span>93 000</span> ₽</li>
-                            <li>1TB WiFi + LTE &mdash; <span>109 000</span> ₽</li>
-                            <li><br /></li>
-                            <li>128GB WiFi &mdash; <span>62 000</span> ₽</li>
-                            <li>256GB WiFi &mdash; <span>68 000</span> ₽</li>
-                            <li>512GB WiFi &mdash; <span>77 000</span> ₽</li>
-                            <li>1TB WiFi &mdash; <span>88 000</span> ₽</li>
-                            <li><br /></li>
-                            <li>Клавиатура Magic Keyboard для iPad Pro 11" (2020)<br />с гравировкой русских букв &mdash;<span>28 000</span> ₽</li>
-                            <li>Клавиатура Smart Keyboard Folio для iPad Pro 11" (2020)<br />с гравировкой русских букв &mdash; <span>15 900</span> ₽</li>
-                            <li>Apple Pencil 2 &mdash; <span>11 000</span> ₽</li>
-                            <li><br /></li>
-                        </ul>
-                        <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li> -->
+				
+        
         
                 <li id="ipad-2025_"><span id="ipad-2025" class="for_sticky_header catalog-section-anchor"></span>
                     <article class="ipad_2025 aj-product-image-card" style="background-size: 110%; background-position: -200%; height: 580px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/iPad_A16.jpg" alt="iPad 2025 (A16)" width="5120" height="2880" loading="lazy" decoding="async" style="width:110%;height:auto;left:-200%;top:50%;transform:translate(200%,-50%);"></span>
@@ -2350,28 +1752,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 
-        <!--<a id="ipad-2020" class="for_sticky_header"></a>
-                <li id="ipad-2020_">
-                    <article class="ipad2019" data-original="../images/iPad2020.jpg">
-                <li style="height: 430px;">
-
-                   <h2>iPad 2020</h2>
-                    <ul>
-                        <li style="margin-bottom:30px">«серый космос»/серебристый/золотой</li>
-
-                        <li>32GB WiFi + LTE &mdash; <span>41 500</span> ₽</li>
-                        <li>128GB WiFi + LTE &mdash; <span>50 500</span> ₽</li>
-                        <li><br /></li>
-                        <li>32GB WiFi &mdash; <span>29 500</span> ₽</li>
-                        <li>128GB WiFi &mdash; <span>38 500</span> ₽</li>
-                        <li><br /></li>
-                        <li>Apple Pencil &mdash; <span>8 400</span> ₽</li>
-                        <li>Клавиатура Smart Keyboard Folio для iPad<br />с гравировкой русских букв &mdash; <span>13 800</span> ₽</li>
-                        <li><br /></li> 
-                    </ul> 
-                    <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li> -->
+        
         
                 
                 <li id="ipad_air_11_2026_"><span id="ipad_air_11_2026" class="for_sticky_header catalog-section-anchor"></span>
@@ -2556,31 +1937,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
         
                 
                 
-        <!-- <a id="ipad_air_2020" class="for_sticky_header"></a>
-                <li id="ipad_air_2020_">
-                    <article class="ipad2018" data-original="../images/Air2020.png" style="height: 530px; background-position: 115%;">
-
-                    <h2>iPad Air 2020</h2>
-                    <ul>
-                        <li>«серый космос»/серебристый/«розовое золото»/</li>
-                        <li>зелёный/«голубое небо»</li>
-                        <li><br /></li>
-                        <li>64GB WiFi + LTE &mdash; <span>60 000</span> ₽ </li>
-                        <li>256GB WiFi + LTE &mdash; <span>70 000</span> ₽ </li>
-                        <li><br /></li>
-                        <li>64GB WiFi &mdash; <span>48 000</span> ₽ </li>
-                        <li>256GB WiFi &mdash; <span>62 000</span> ₽ </li>
-                        <li><br /></li>
-                        <li>Magic Keyboard для iPad Pro 11" <br>с гравировкой русских букв, чёрная/белая &mdash; <span>35 000</span> ₽*</li>
-                        <li>Smart Keyboard Folio для iPad Pro 11" <br>с гравировкой русских букв &mdash; <span>25 000</span> ₽*</li>
-						<li>Apple Pencil 2 &mdash; <span>11 000</span> ₽ </li>
-                        <li><br /></li>
-                    </ul><br>
-                    <a href="#" class="button" style="margin-top:-15px !important;">Купить</a>
-                        <br>
-                        <li>*подходит для Air; клавиатуры специально для Air не выпускаются.</li><br>
-                    </article>
-                </li> -->
+        
 
                <li id="ipad-mini-2024_"><span id="ipad-mini-2024" class="for_sticky_header catalog-section-anchor"></span>
                     <article class="ipad-mini-2024 aj-product-image-card" style="background-size: 110%; background-position: 120px 0; height: 520px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="/images/optimized/ipad_mini_2024.bc44519089ad.webp" alt="iPad mini 2024 (A17 Pro)" width="5120" height="2880" loading="lazy" decoding="async" style="width:110%;height:auto;left:120px;top:0px;transform:translate(0px,0px);"></span>
@@ -2635,27 +1992,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
                 
-        <!--<a id="ipadmini-2019" class="for_sticky_header"></a>
-                <li id="ipadmini-2019">
-                    <article class="ipad2018" data-original="../images/mini2019.png" style="background-size: 50%; background-position: 400px 70px;">
-                <li style="height: 430px;" </li>
-
-                    <h2>iPad mini 2019</h2>
-                    <ul>
-                        <li style="margin-bottom:30px">«серый космос»/серебристый/золотой</li>
-
-                        <li>64GB WiFi + LTE &mdash; <span>43 000</span> ₽</li>
-                        <li>256GB WiFi + LTE &mdash; <span>53 000</span> ₽</li>
-                        <li><br /></li>
-                        <li>64GB WiFi &mdash; <span>34 500</span> ₽</li>
-                        <li>256GB WiFi &mdash; <span>44 000</span> ₽</li>
-                        <li><br /></li>
-                        <li>Apple Pencil &mdash; <span>8 400</span> ₽</li>
-                        <li><br /></li>
-                    </ul>
-                    <a href="#" class="button" style="margin-top:15px !important;">Купить</a>
-                    </article>
-                </li>  -->
+        
                 
                 <li class="pre_cancel"><span id="Keyboard" class="for_sticky_header catalog-section-anchor"></span>
                     <article class="left applePencil aj-product-image-card" style="background-size: 47%; background-position: 102% 5%; height: 220px;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/Magic_Keyboard.jpg" alt="Magic Keyboard для iPad" width="1144" height="1144" loading="lazy" decoding="async" style="width:47%;height:auto;left:102%;top:5%;transform:translate(-102%,-5%);"></span>
@@ -2754,20 +2091,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 </li>
 
         
-        <!--<a id="macbookair2020" class="for_sticky_header"></a>
-                <li id="macbookair2020_">
-                    <article class="macpro" style="background-size: 75%; background-position: center 125px;" data-original="../images/mbair19_1.png">
-                        <h2 style="text-align:center;">MacBook Air</h2>
-                        <ul style="margin-top: 41%; text-align:center;">
-                            <li><span><b>2020</b></span> 13” Core i3 1.1GHz/ 8GB/ 256GB SSD с Touch ID и True Tone &mdash; <span>79 900</span> ₽</li>
-                            <li><span><b>2020</b></span> 13” Core i5 1.1GHz/ 8GB/ 512GB SSD с Touch ID и True Tone &mdash; <span>94 900</span> ₽</li>
-                            <br><br>
-                            <br><br>
-
-                        </ul>
-                        <a href="#" class="button" style="margin:0 auto;">Купить</a>
-                    </article>
-                </li> -->
+        
 
                 <li>
                     <article class="speck animate aj-product-image-card" style="height: 350px; display: block; background-image: url(&quot;../images/speck.jpg&quot;); opacity: 1;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/speck.jpg" alt="Чехол пластиковый" width="373" height="303" loading="lazy" decoding="async" style="width:auto;height:auto;left:556px;top:57px;transform:translate(0px,0px);"></span>
@@ -2914,24 +2238,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                     </article>
                 </li>
         
-                           <!-- <a id="imac-2020" class="for_sticky_header"></a>
-                <li id="imac-2020_">
-
-                    <article class="new_imac5K-2017" style="background-size: 430px; height:580px;" data-original="../images/imac2020.png">
-                        <h2>iMac 2020</h2>
-                        <ul>
-                            <li>21" 2-Core i5 2.3GHz/ 8GB/ 256GB SSD/ Intel Iris Plus Graphics 640 &mdash; <span>звоните!</span></li>
-                            <li>21" Retina 4K/ 4-Core i3 3.6GHz/ 8GB/ 256GB SSD/ Radeon Pro 555X 2GB &mdash; <span>звоните!</span></li>
-                            <li>21" Retina 4K/ 6-Core i5 3.0GHz/ 8GB/ 256GB SSD/ Radeon Pro 560X 4GB &mdash; <span>звоните!</span></li>
-                            <li><br /></li>
-                            <li>27" Retina 5K/ 6-Core i5 3.1GHz/ 8GB/ 256GB SSD/ Radeon Pro 5300 4GB &mdash; <span>звоните!</span></li>
-                            <li>27" Retina 5K/ 6-Core i5 3.3GHz/ 8GB/ 512GB SSD/ Radeon Pro 5300 4GB &mdash; <span>звоните!</span></li>
-                            <li>27" Retina 5K/ 8-Core i7 3.8GHz/ 8GB/ 512GB SSD Radeon Pro 5500 XT 8GB &mdash; <span>звоните!</span></li>
-                            <br><br>
-                            <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-                            <a href="#" class="button">Купить</a>
-                    </article>
-                </li> -->
+                           
         
                 <li id="mac_studio_2026_"><span id="mac_studio_2026" class="for_sticky_header catalog-section-anchor"></span>
 <article class="autumn-product autumn-mac macstudio">
@@ -3030,19 +2337,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                 
                 
         
-                    <!--<a id="macpro2019" class="for_sticky_header"></a>
-                <li id="macpro2019_">
-                    <article class="macpro" data-original="../images/2019_macpro.jpg">
-                        <h2>Mac Pro 2019</h2>
-                        <ul>
-                            <li>Intel Xeon W 8-Core 3.5GHz/ 32GB DIMMs/ 256GB SSD/ AMD Radeon Pro 580X &mdash; <span>звоните!</li>
-                            <li>Кастомная модель с желаемыми характеристиками — <span>пишите, посчитаем!</span></li>
-
-                        </ul>
-                        <img alt="iMac 27 Retina 5K" src="images/new.png" />
-                        <a href="#" class="button">Заказать</a>
-                    </article>
-                </li> -->
+                    
         
                 
                 <li id="accessories_"><span id="accessories" class="for_sticky_header catalog-section-anchor"></span>
@@ -3256,17 +2551,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
                                                 <p style="text-align: center">* <i>все цены указаны с учётом акционной скидки за оплату наличными</i></p>
             </article>
             </li>
-                <!-- <li>
-                    <article class="atv4" data-original="../images/apple-tv-4.png" style="background-size: 30%; background-position: 78% 155%;">
-                        <h2>Apple TV 2017</h2>
-                        <ul>
-                            <li><span><b>2017</b></span> Apple TV 4K 32GB &mdash; <span>звоните!</span></li>
-                            <li><span><b>2017</b></span> Apple TV 4K 64GB &mdash; <span>звоните!</span></li>
-                        </ul>
-
-                        <a href="#" class="button">Купить</a>
-                    </article>
-                </li> -->
+                
 <li class="pre_cancel">
                     <article class="left magic_keyboard_2024 aj-product-image-card" style="background-size: 55%; background-position: 207px 0px!important;"><span class="aj-product-image-layer"><img class="aj-product-image" src="../images/keyboard_white_touch.jpeg" alt="Magic Keyboard 2024 с Touch ID, USB-C" width="1144" height="1144" loading="lazy" decoding="async" style="width:55%;height:auto;left:207px;top:0px;transform:translate(0px,0px);"></span>
                         <hgroup>
@@ -3560,11 +2845,11 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
     <li><a href="#iphone_14_pro">iPhone 14 Pro</a></li>
     <li><a href="#iphone_14">iPhone 14</a></li>
     <li><a href="#iphone_13">iPhone 13</a></li>
-   <!-- <li><a href="#iphone_12_pro">iPhone 12 Pro</a></li> -->
+   
     <li><a href="#iphone_12">iPhone 12</a></li>
     <li><a href="#iphone_11">iPhone 11</a></li>
     <li><a href="#iphone_se_2022">iPhone SE 2022</a></li>
-    <!-- <li><a href="#iphone_xr">iPhone XR</a></li> -->
+    
       </ul>
       </li>
     <li><a class="topmenu-element" href="#airpods_max">AirPods</a> / 
@@ -3656,18 +2941,7 @@ transition: all 0.4s ease-out;" href="https://aj.ru/watch.html">Подробне
 <!-- END content --><!-- footer  -->
 <footer class="footer">
     <div id="subMenuFooter"><span class="current">Продукция Apple</span><a href="watch.html">Apple Watch</a><a href="games.html">Приставки</a><a href="audio.html">Акустика</a><a href="headphones.html">Наушники</a><a href="auto.html">Автоаксессуары</a><a href="handwers.html">Чехлы и аксессуары Handwers</a><a href="chargers.html">Зарядки и аккумуляторы</a><a href="foto.html">Фото и видео</a><a href="sticker.html">Наклейки на MacBook</a></div>	<div class="info">
-		<!-- <ul class="contacts-header">
-			<li class="mail"><a target="_blank" href="mailto:info@aj.ru"><i></i>info@aj.ru</a></li>
-			<li class="skype"><a target="_blank" href="skype:aj.ru.skype?call"><i></i>aj.ru.skype</a></li>
-			<li class="messengers">
-				<i class="icq"></i>
-				<i class="viber"></i>
-				<i class="telegram"></i>
-				<i class="whatsup"></i>
-				8 926 372 8 100
-			</li>
-			<li class="address"><a href="contacts.html"><i></i>Багратионовский пр., 7к20В</a></li>
-		</ul> -->
+		
 		<ul>
 			<li class="mail"><a target="_blank" href="mailto:info@aj.ru"><i></i>info@aj.ru</a></li>
 
@@ -3729,7 +3003,7 @@ button:disabled {
 
 <form id="secure-form" method="POST" action="/contact-send-to.php">
     <input name="item" type="hidden" value=""/>
-    <!-- honeypot -->
+    
     <input type="text" name="middle_name" style="display:none">
 
     <ul>
@@ -3738,7 +3012,7 @@ button:disabled {
         <li><input type="text" name="email" placeholder="E-mail (не обязательно)"></li>
         <li><textarea name="message" placeholder="Ваше сообщение"></textarea></li>
 
-        <!-- чекбоксы -->
+        
 <li>
   <label style="display:inline-flex; flex-direction:row; align-items:center; gap:8px; cursor:pointer; width:auto; line-height:1;">
     <input
@@ -3792,42 +3066,11 @@ button:disabled {
 	</div>
 </div>
 
-<!--<div class="popup_overlay_review" onclick="buttonReviewClose()"></div>
-<div class="popup_window_review send_req_review">
-    <div class="alarm_no_review"></div>
-	<div class="alarm_ok_review"></div>
-<div class="relative_review">
-    <h3>Оставьте, пожалуйста, ваш отзыв:</h3>
-<form method="post" id="form" onsubmit="send(event, 'send.php')" style="text-align:center;">
- 	<textarea name="text_review" required></textarea><br>
- 	<button class="big_review" type="submit" onclick="progress()">Отправить</button>
-</form>
-</div>
-</div>
-<div class="popup_window_review thanks_review">
-	<div class="relative_review">
-		<p>Спасибо! Отзыв отправлен.</p>
-		<span></span>
-		<a class="close_review" onclick="buttonReviewClose()"></a>
-	</div>
-</div> -->
+
 
 <aside class="counters">
 </aside>
-<!-- <style>#Callbutton * { animation: none !important;}</style>
 
-<script crossorigin="anonymous" async type="text/javascript" src="//api.pozvonim.com/widget/callback/v3/3a22b86be0d96bfc690af0027dd7fc64/connect" id="check-code-pozvonim" charset="UTF-8"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-70261239-1', 'auto');
-  ga('send', 'pageview');
-
-</script> -->
 <a href="#" class="scrollup">Наверх</a>
 </body>
 </html>
